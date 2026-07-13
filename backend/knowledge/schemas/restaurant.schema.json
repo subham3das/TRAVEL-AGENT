@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Restaurant",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "destinationId",
+    "name",
+    "cuisine",
+    "priceLevel",
+    "vegetarian",
+    "vegan",
+    "halal",
+    "openingHours",
+    "averageMealCost",
+    "rating",
+    "metadata",
+    "version",
+    "updatedAt",
+    "verifiedAt",
+    "tags",
+    "sources",
+    "confidence"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "type": { "type": "string", "enum": ["restaurant"] },
+    "destinationId": { "type": "string" },
+    "name": { "type": "string" },
+    "cuisine": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "priceLevel": { "type": "string" },
+    "vegetarian": { "type": "boolean" },
+    "vegan": { "type": "boolean" },
+    "halal": { "type": "boolean" },
+    "openingHours": { "type": "string" },
+    "averageMealCost": { "type": "number" },
+    "rating": { "type": "number", "minimum": 0, "maximum": 5 },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "target", "weight", "confidence"],
+        "properties": {
+          "type": { "type": "string" },
+          "target": { "type": "string" },
+          "weight": { "type": "number", "minimum": 0, "maximum": 1 },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "metadata": { "type": "object" },
+    "version": { "type": "string" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "verifiedAt": { "type": "string", "format": "date-time" },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "sources": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+  },
+  "additionalProperties": false
+}

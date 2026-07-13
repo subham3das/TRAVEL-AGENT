@@ -1,0 +1,64 @@
+{
+  "id": "goa_attraction_bom_jesus",
+  "type": "attraction",
+  "destinationId": "goa",
+  "name": "Basilica of Bom Jesus",
+  "category": "Church",
+  "coordinates": {
+    "latitude": 15.5009,
+    "longitude": 73.9116
+  },
+  "openingHours": "09:00 AM - 06:30 PM",
+  "closingDays": [],
+  "difficulty": "Easy",
+  "budgetCategory": "budget",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 85,
+  "adventureScore": 10,
+  "historicalScore": 95,
+  "edges": [],
+  "plannerHints": {
+    "idealVisitOrder": 1,
+    "avoidWeekend": false,
+    "visitBefore": "Morning",
+    "combineWith": []
+  },
+  "plannerScore": {
+    "budget": 100,
+    "luxury": 80,
+    "family": 90,
+    "solo": 80,
+    "photography": 85
+  },
+  "weatherProfile": {
+    "sunny": 100,
+    "rain": 90,
+    "winter": 100,
+    "summer": 80
+  },
+  "crowdProfile": {
+    "Monday": 40,
+    "Saturday": 80,
+    "Morning": 30,
+    "Evening": 70
+  },
+  "estimatedSpend": {
+    "budget": 0,
+    "mid": 0,
+    "luxury": 0
+  },
+  "insights": [
+    "UNESCO World Heritage Site holding the remains of St. Francis Xavier",
+    "Dress modestly; cover shoulders and knees",
+    "Very peaceful in the early morning"
+  ],
+  "metadata": {},
+  "version": "1.0.0",
+  "updatedAt": "2026-07-13T22:00:00Z",
+  "verifiedAt": "2026-07-13T22:00:00Z",
+  "tags": ["history", "church", "heritage", "culture"],
+  "sources": ["Wikipedia", "Goa Tourism Board"],
+  "confidence": 0.99
+}

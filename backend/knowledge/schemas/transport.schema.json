@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transport",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "destinationId",
+    "name",
+    "transportType",
+    "averageCost",
+    "availability",
+    "operatingHours",
+    "metadata",
+    "version",
+    "updatedAt",
+    "verifiedAt",
+    "tags",
+    "sources",
+    "confidence"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "type": { "type": "string", "enum": ["transport"] },
+    "destinationId": { "type": "string" },
+    "name": { "type": "string" },
+    "transportType": { "type": "string" },
+    "averageCost": { "type": "number" },
+    "availability": { "type": "string" },
+    "operatingHours": { "type": "string" },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "target", "weight", "confidence"],
+        "properties": {
+          "type": { "type": "string" },
+          "target": { "type": "string" },
+          "weight": { "type": "number", "minimum": 0, "maximum": 1 },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "metadata": { "type": "object" },
+    "version": { "type": "string" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "verifiedAt": { "type": "string", "format": "date-time" },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "sources": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,17 @@
+{
+  "id": "goa_transport_taxi",
+  "type": "transport",
+  "destinationId": "goa",
+  "name": "Goa Private Cabs",
+  "transportType": "taxi",
+  "averageCost": 1500,
+  "availability": "Available 24/7 at taxi stands or via GoaMiles app",
+  "operatingHours": "24 Hours",
+  "metadata": {},
+  "version": "1.0.0",
+  "updatedAt": "2026-07-13T22:00:00Z",
+  "verifiedAt": "2026-07-13T22:00:00Z",
+  "tags": ["taxi", "private transport", "cabs"],
+  "sources": ["Goa Tourism Board"],
+  "confidence": 0.90
+}

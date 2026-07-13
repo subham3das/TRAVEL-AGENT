@@ -1,0 +1,149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Attraction",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "destinationId",
+    "name",
+    "category",
+    "coordinates",
+    "openingHours",
+    "closingDays",
+    "difficulty",
+    "budgetCategory",
+    "familyFriendly",
+    "coupleFriendly",
+    "soloFriendly",
+    "photographyScore",
+    "adventureScore",
+    "historicalScore",
+    "edges",
+    "plannerHints",
+    "plannerScore",
+    "weatherProfile",
+    "crowdProfile",
+    "estimatedSpend",
+    "insights",
+    "metadata",
+    "version",
+    "updatedAt",
+    "verifiedAt",
+    "tags",
+    "sources",
+    "confidence"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "type": { "type": "string", "enum": ["attraction"] },
+    "destinationId": { "type": "string" },
+    "name": { "type": "string" },
+    "category": { "type": "string" },
+    "coordinates": {
+      "type": "object",
+      "required": ["latitude", "longitude"],
+      "properties": {
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" }
+      }
+    },
+    "openingHours": { "type": "string" },
+    "closingDays": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "difficulty": { "type": "string" },
+    "budgetCategory": { "type": "string", "enum": ["budget", "mid", "luxury"] },
+    "familyFriendly": { "type": "boolean" },
+    "coupleFriendly": { "type": "boolean" },
+    "soloFriendly": { "type": "boolean" },
+    "photographyScore": { "type": "number", "minimum": 0, "maximum": 100 },
+    "adventureScore": { "type": "number", "minimum": 0, "maximum": 100 },
+    "historicalScore": { "type": "number", "minimum": 0, "maximum": 100 },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "target", "weight", "confidence"],
+        "properties": {
+          "type": { "type": "string" },
+          "target": { "type": "string" },
+          "weight": { "type": "number", "minimum": 0, "maximum": 1 },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "plannerHints": {
+      "type": "object",
+      "required": ["idealVisitOrder", "avoidWeekend", "visitBefore", "combineWith"],
+      "properties": {
+        "idealVisitOrder": { "type": "number" },
+        "avoidWeekend": { "type": "boolean" },
+        "visitBefore": { "type": "string" },
+        "combineWith": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "plannerScore": {
+      "type": "object",
+      "required": ["budget", "luxury", "family", "solo", "photography"],
+      "properties": {
+        "budget": { "type": "number", "minimum": 0, "maximum": 100 },
+        "luxury": { "type": "number", "minimum": 0, "maximum": 100 },
+        "family": { "type": "number", "minimum": 0, "maximum": 100 },
+        "solo": { "type": "number", "minimum": 0, "maximum": 100 },
+        "photography": { "type": "number", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "weatherProfile": {
+      "type": "object",
+      "required": ["sunny", "rain", "winter", "summer"],
+      "properties": {
+        "sunny": { "type": "number", "minimum": 0, "maximum": 100 },
+        "rain": { "type": "number", "minimum": 0, "maximum": 100 },
+        "winter": { "type": "number", "minimum": 0, "maximum": 100 },
+        "summer": { "type": "number", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "crowdProfile": {
+      "type": "object",
+      "required": ["Monday", "Saturday", "Morning", "Evening"],
+      "properties": {
+        "Monday": { "type": "number", "minimum": 0, "maximum": 100 },
+        "Saturday": { "type": "number", "minimum": 0, "maximum": 100 },
+        "Morning": { "type": "number", "minimum": 0, "maximum": 100 },
+        "Evening": { "type": "number", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "estimatedSpend": {
+      "type": "object",
+      "required": ["budget", "mid", "luxury"],
+      "properties": {
+        "budget": { "type": "number" },
+        "mid": { "type": "number" },
+        "luxury": { "type": "number" }
+      }
+    },
+    "insights": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "metadata": { "type": "object" },
+    "version": { "type": "string" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "verifiedAt": { "type": "string", "format": "date-time" },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "sources": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+  },
+  "additionalProperties": false
+}

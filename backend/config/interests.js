@@ -1,0 +1,17 @@
+module.exports = {
+  nature: ["nature", "natural"],
+  adventure: ["adventure", "adventurous"],
+  mountains: ["mountain", "mountains", "hill", "hills", "hill station"],
+  beach: ["beach", "beaches", "coastal", "sea", "ocean", "coast"],
+  food: ["food", "culinary"],
+  cafe: ["cafe", "cafes", "coffee"],
+  history: ["history", "historical", "heritage", "ancient", "fort", "palace"],
+  shopping: ["shopping", "market", "bazaar", "mall"],
+  nightlife: ["nightlife", "night", "club", "clubbing"],
+  wildlife: ["wildlife", "safari", "national park", "sanctuary", "jungle"],
+  temples: ["temple", "temples", "pilgrimage", "spiritual"],
+  photography: ["photography", "photo", "photoshoot"],
+  roadtrip: ["road trip", "roadtrip", "road"],
+  camping: ["camping", "camp", "campsite"],
+  trekking: ["trek", "trekking", "hike", "hiking", "trail"],
+};

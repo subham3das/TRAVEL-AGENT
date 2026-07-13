@@ -1,0 +1,26 @@
+{
+  "id": "goa_rule_tourist",
+  "type": "rule",
+  "destinationId": "goa",
+  "name": "Goa Local Tourist Regulations",
+  "category": "Local Regulations",
+  "cashCard": "Cash is highly preferred at beach shacks and cab drivers; cards and UPI are accepted at formal hotels and restaurants.",
+  "dressCodes": [
+    "No swimwear in towns or cities",
+    "Modest dress required inside churches and temples (shoulders and knees covered)"
+  ],
+  "permits": [],
+  "photographyRestrictions": "No photography allowed inside church altars or temple sanctums.",
+  "alcoholRules": "Drinking on beaches is strictly prohibited and subject to fines; permitted only within licensed beach shacks and bars.",
+  "localCustoms": [
+    "Remove footwear before entering temples and some heritage homes",
+    "Negotiate cab fares before boarding or use prepaid booths"
+  ],
+  "metadata": {},
+  "version": "1.0.0",
+  "updatedAt": "2026-07-13T22:00:00Z",
+  "verifiedAt": "2026-07-13T22:00:00Z",
+  "tags": ["rules", "customs", "dress-code", "alcohol"],
+  "sources": ["Goa Government Travel Portal"],
+  "confidence": 0.99
+}

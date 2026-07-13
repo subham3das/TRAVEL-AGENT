@@ -1,0 +1,84 @@
+{
+  "id": "goa_attraction_baga_beach",
+  "type": "attraction",
+  "destinationId": "goa",
+  "name": "Baga Beach",
+  "category": "Beach",
+  "coordinates": {
+    "latitude": 15.5553,
+    "longitude": 73.7517
+  },
+  "openingHours": "24 Hours",
+  "closingDays": [],
+  "difficulty": "Easy",
+  "budgetCategory": "budget",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 90,
+  "adventureScore": 85,
+  "historicalScore": 10,
+  "edges": [
+    {
+      "type": "NEARBY_EATERY",
+      "target": "goa_restaurant_britannia",
+      "weight": 0.95,
+      "confidence": 0.98
+    },
+    {
+      "type": "NEARBY_STAY",
+      "target": "goa_hotel_taj",
+      "weight": 0.88,
+      "confidence": 0.95
+    },
+    {
+      "type": "LOCAL_TRANSIT",
+      "target": "goa_transport_taxi",
+      "weight": 0.9,
+      "confidence": 0.99
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 1,
+    "avoidWeekend": true,
+    "visitBefore": "Evening",
+    "combineWith": ["goa_restaurant_britannia"]
+  },
+  "plannerScore": {
+    "budget": 95,
+    "luxury": 70,
+    "family": 90,
+    "solo": 95,
+    "photography": 90
+  },
+  "weatherProfile": {
+    "sunny": 95,
+    "rain": 15,
+    "winter": 100,
+    "summer": 75
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 95,
+    "Morning": 20,
+    "Evening": 90
+  },
+  "estimatedSpend": {
+    "budget": 0,
+    "mid": 800,
+    "luxury": 3000
+  },
+  "insights": [
+    "Best before sunset",
+    "Avoid weekends due to heavy crowd",
+    "Great street food shacks nearby",
+    "Water sports are operational mostly in winter months"
+  ],
+  "metadata": {},
+  "version": "1.0.0",
+  "updatedAt": "2026-07-13T22:00:00Z",
+  "verifiedAt": "2026-07-13T22:00:00Z",
+  "tags": ["beach", "sunset", "adventure", "water sports"],
+  "sources": ["Wikipedia", "OpenStreetMap"],
+  "confidence": 0.94
+}

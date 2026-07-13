@@ -1,0 +1,25 @@
+{
+  "id": "goa_hotel_taj",
+  "type": "hotel",
+  "destinationId": "goa",
+  "name": "Taj Exotica Resort & Spa",
+  "category": "luxury",
+  "averagePrice": 18000,
+  "amenities": ["WiFi", "Pool", "Spa", "Gym", "Private Beach", "Bar"],
+  "location": {
+    "latitude": 15.2638,
+    "longitude": 73.9348,
+    "address": "Benaulim Beach, Goa 403716"
+  },
+  "checkIn": "14:00",
+  "checkOut": "12:00",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "metadata": {},
+  "version": "1.0.0",
+  "updatedAt": "2026-07-13T22:00:00Z",
+  "verifiedAt": "2026-07-13T22:00:00Z",
+  "tags": ["resort", "luxury", "beachfront"],
+  "sources": ["Booking.com", "Official Site"],
+  "confidence": 0.97
+}

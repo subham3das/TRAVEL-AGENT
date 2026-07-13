@@ -1,0 +1,27 @@
+{
+  "id": "goa",
+  "type": "destination",
+  "name": "Goa",
+  "state": "Goa",
+  "country": "India",
+  "coordinates": {
+    "latitude": 15.2993,
+    "longitude": 74.1240
+  },
+  "timezone": "Asia/Kolkata",
+  "currency": "INR",
+  "languages": ["Konkani", "English", "Hindi"],
+  "bestMonths": ["November", "December", "January", "February"],
+  "averageBudget": {
+    "budget": 2000,
+    "mid": 5000,
+    "luxury": 15000
+  },
+  "metadata": {},
+  "version": "1.0.0",
+  "updatedAt": "2026-07-13T22:00:00Z",
+  "verifiedAt": "2026-07-13T22:00:00Z",
+  "tags": ["beach", "nightlife", "history"],
+  "sources": ["Google Travel", "Wikipedia"],
+  "confidence": 0.95
+}

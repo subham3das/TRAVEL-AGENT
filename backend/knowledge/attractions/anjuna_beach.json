@@ -1,0 +1,71 @@
+{
+  "id": "goa_attraction_anjuna_beach",
+  "type": "attraction",
+  "destinationId": "goa",
+  "name": "Anjuna Beach",
+  "category": "Beach",
+  "coordinates": {
+    "latitude": 15.5828,
+    "longitude": 73.7411
+  },
+  "openingHours": "24 Hours",
+  "closingDays": [],
+  "difficulty": "Easy",
+  "budgetCategory": "budget",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 95,
+  "adventureScore": 80,
+  "historicalScore": 30,
+  "edges": [
+    {
+      "type": "NEARBY_ATTRACTION",
+      "target": "goa_attraction_baga_beach",
+      "weight": 0.90,
+      "confidence": 0.98
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 2,
+    "avoidWeekend": false,
+    "visitBefore": "Evening",
+    "combineWith": ["goa_attraction_baga_beach"]
+  },
+  "plannerScore": {
+    "budget": 95,
+    "luxury": 70,
+    "family": 85,
+    "solo": 95,
+    "photography": 95
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 15,
+    "winter": 100,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 90,
+    "Morning": 25,
+    "Evening": 85
+  },
+  "estimatedSpend": {
+    "budget": 0,
+    "mid": 500,
+    "luxury": 2000
+  },
+  "insights": [
+    "Famous for the Wednesday flea market",
+    "Spectacular sunset view over rocky shores",
+    "Great cafes nearby"
+  ],
+  "metadata": {},
+  "version": "1.0.0",
+  "updatedAt": "2026-07-13T22:00:00Z",
+  "verifiedAt": "2026-07-13T22:00:00Z",
+  "tags": ["beach", "sunset", "shopping", "flea market"],
+  "sources": ["Wikipedia", "Wikitravel"],
+  "confidence": 0.95
+}
