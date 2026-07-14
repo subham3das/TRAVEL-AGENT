@@ -1,10 +1,17 @@
+import { createRequire } from "module";
 import providerRegistry from "./provider_registry.js";
+import { tools } from "./tools.js";
+
+const require = createRequire(import.meta.url);
+const executionEngine = require("../execution/execution_engine.js");
+const responseComposer = require("../response/response_composer.js");
+const conversationState = require("../conversation/conversation_state.js");
 
 /**
  * Travel Intelligence OS - LLM Adapter.
  *
  * Core coordinator linking configuration options to target provider classes.
- * Conforms to llm_adapter_spec.md and implements retries and Response Contracts.
+ * Conforms to llm_adapter_spec.md and implements native tool calling orchestration.
  *
  * @module llm_adapter
  */
@@ -109,11 +116,11 @@ class LLMAdapter {
   }
 
   // 3. Tool call resolution
-  async toolCall(prompt, tools = [], providerName = this.defaultProvider) {
+  async toolCall(prompt, toolsList = [], providerName = this.defaultProvider) {
     const startTime = Date.now();
     try {
       const provider = providerRegistry.get(providerName);
-      return await provider.toolCall(prompt, tools);
+      return await provider.toolCall(prompt, toolsList);
     } catch (err) {
       return {
         success: false,
@@ -143,6 +150,115 @@ class LLMAdapter {
         metadata: { timestamp: new Date().toISOString() }
       };
     }
+  }
+
+  // 5. Orchestration Pipeline
+  async processNaturalLanguage(message, previousContext = null) {
+    const startTime = Date.now();
+    try {
+      // Step 1: Ask LLM to select tool call
+      const toolRes = await this.toolCall(message, tools, "gemini");
+      if (!toolRes.success) {
+        throw new Error(toolRes.errors[0]);
+      }
+
+      const { toolRequested, arguments: toolArgs, text } = toolRes.data;
+
+      // Step 2: General chat branch (no tool call)
+      if (!toolRequested) {
+        return {
+          success: true,
+          data: {
+            text: text || "General chat query processed.",
+            toolRequested: null,
+            executionSummary: "No backend tool executed."
+          },
+          errors: [],
+          warnings: [],
+          confidence: 0.98,
+          processingTime: Date.now() - startTime,
+          metadata: { provider: "gemini" }
+        };
+      }
+
+      // Step 3: Map arguments to TravelContext
+      const context = {
+        originalQuery: message,
+        request: { query: message },
+        state: {
+          intent: this.mapToolToIntent(toolRequested),
+          normalizedEntities: {
+            destination: toolArgs.destination || null,
+            durationDays: toolArgs.durationDays || null,
+            travelStyle: toolArgs.travelStyle || null,
+            travelersType: toolArgs.travelersType || null,
+            budget: toolArgs.budget || null,
+            travelDates: toolArgs.startDate ? { startDate: toolArgs.startDate } : null,
+            interests: toolArgs.interests || null
+          },
+          entityConfidence: {
+            destination: toolArgs.destination ? 1.0 : 0.0,
+            durationDays: toolArgs.durationDays ? 1.0 : 0.0,
+            travelDates: toolArgs.startDate ? 1.0 : 0.0,
+            travelersType: toolArgs.travelersType ? 1.0 : 0.0,
+            travelStyle: toolArgs.travelStyle ? 1.0 : 0.0,
+            budget: toolArgs.budget ? 1.0 : 0.0
+          },
+          conversationState: conversationState.createConversationState()
+        }
+      };
+
+      // Step 4: Run Execution Engine
+      const execRes = await executionEngine.execute(context, previousContext);
+
+      // Step 5: Consolidate Response Composer
+      const composed = responseComposer.compose(context, execRes);
+
+      // Step 6: Generate final friendly natural language explanation
+      let summaryText = "";
+      if (composed.success) {
+        const prompt = `You are a travel assistant. The backend calculated this deterministic result: ${JSON.stringify(composed.data)}. Explain it friendly, concisely, and accurately to the user. Do not add or change any travel decisions.`;
+        const genRes = await this.generate(prompt, {}, "gemini");
+        summaryText = genRes.success ? genRes.data.text : "Trip planned successfully.";
+      } else {
+        summaryText = `Failed to process plan: ${composed.errors.join(", ")}`;
+      }
+
+      return {
+        success: composed.success,
+        data: {
+          text: summaryText,
+          toolRequested,
+          toolArguments: toolArgs,
+          backendOutput: composed.data,
+          executionSummary: composed.data?.executionSummary || "Pipeline completed."
+        },
+        errors: composed.errors,
+        warnings: composed.warnings,
+        confidence: composed.confidence,
+        processingTime: Date.now() - startTime,
+        metadata: {
+          provider: "gemini",
+          composerMetadata: composed.metadata
+        }
+      };
+
+    } catch (err) {
+      return {
+        success: false,
+        data: null,
+        errors: [err.message],
+        warnings: [],
+        confidence: 0.0,
+        processingTime: Date.now() - startTime,
+        metadata: { provider: "gemini" }
+      };
+    }
+  }
+
+  mapToolToIntent(tool) {
+    if (tool === "book_trip") return "BOOK_TRIP";
+    return "GENERATE_PLAN";
   }
 }
 

@@ -222,20 +222,75 @@ class GeminiProvider extends BaseLLMProvider {
     }
   }
 
-  async toolCall(prompt, tools = []) {
+  async toolCall(prompt, toolsList = []) {
     const startTime = Date.now();
-    return {
-      success: true,
-      data: {
-        toolRequested: null,
-        arguments: {}
-      },
-      errors: [],
-      warnings: [],
-      confidence: 1.0,
-      processingTime: Date.now() - startTime,
-      metadata: { provider: "gemini", timestamp: new Date().toISOString() }
-    };
+    try {
+      const initRes = await this.initialize();
+      if (!initRes.success) {
+        throw new Error(initRes.errors[0]);
+      }
+
+      const modelName = config.modelName;
+
+      // Map dynamic tool calls to SDK declarations shape
+      const sdkTools = toolsList.length > 0 ? [
+        {
+          functionDeclarations: toolsList.map(t => ({
+            name: t.name,
+            description: t.description,
+            parameters: t.parameters
+          }))
+        }
+      ] : [];
+
+      const response = await this.client.models.generateContent({
+        model: modelName,
+        contents: prompt,
+        config: {
+          tools: sdkTools
+        }
+      });
+
+      const functionCalls = response.functionCalls;
+      if (functionCalls && functionCalls.length > 0) {
+        return {
+          success: true,
+          data: {
+            toolRequested: functionCalls[0].name,
+            arguments: functionCalls[0].args
+          },
+          errors: [],
+          warnings: [],
+          confidence: 0.98,
+          processingTime: Date.now() - startTime,
+          metadata: { provider: "gemini", timestamp: new Date().toISOString() }
+        };
+      }
+
+      return {
+        success: true,
+        data: {
+          toolRequested: null,
+          text: response.text
+        },
+        errors: [],
+        warnings: [],
+        confidence: 0.98,
+        processingTime: Date.now() - startTime,
+        metadata: { provider: "gemini", timestamp: new Date().toISOString() }
+      };
+
+    } catch (err) {
+      return {
+        success: false,
+        data: null,
+        errors: [this.mapError(err)],
+        warnings: [],
+        confidence: 0.0,
+        processingTime: Date.now() - startTime,
+        metadata: { provider: "gemini", timestamp: new Date().toISOString() }
+      };
+    }
   }
 
   validateResponse(response, responseFormat = "text") {

@@ -1,53 +1,78 @@
-import assert from "assert";
+const assert = require("assert").strict;
+const knowledgeService = require("../knowledge/knowledge_service.js");
+
+// Initialize Knowledge cache for underlying trip planning engine calls
+knowledgeService.loadKnowledge();
 
 // Set dummy API key for testing
 process.env.GEMINI_API_KEY = "mock-key";
 
-import adapter from "../llm/llm_adapter.js";
-import registry from "../llm/provider_registry.js";
-import BaseLLMProvider from "../llm/providers/base_provider.js";
+async function runAll() {
+  console.log("=== STARTING LLM ADAPTER E2E MOCK TESTS ===");
 
-const geminiProvider = registry.get("gemini");
+  // Dynamic imports for the ES modules
+  const { default: adapter } = await import("../llm/llm_adapter.js");
+  const { default: registry } = await import("../llm/provider_registry.js");
+  const { default: BaseLLMProvider } = await import("../llm/providers/base_provider.js");
+  const { default: GeminiProvider } = await import("../llm/providers/gemini_provider.js");
+  const { default: config } = await import("../config/llm.config.js");
 
-// Inject mock client to simulate official Google SDK responses deterministically
-const mockModel = {
-  async generateContent(req, opts) {
-    // Small delay to allow AbortSignal timeout to fire in event loop
-    await new Promise(resolve => setTimeout(resolve, 10));
+  const geminiProvider = registry.get("gemini");
 
-    if (opts && opts.signal && opts.signal.aborted) {
-      const err = new Error("Aborted");
-      err.name = "AbortError";
-      throw err;
-    }
+  // Inject mock client to simulate official Google SDK responses deterministically
+  const mockModel = {
+    async generateContent(req, opts) {
+      await new Promise(resolve => setTimeout(resolve, 10));
+
+      if (opts && opts.signal && opts.signal.aborted) {
+        const err = new Error("Aborted");
+        err.name = "AbortError";
+        throw err;
+      }
+      
+      if (req.contents === "trigger-empty") {
+        return { text: "" };
+      }
+
+      if (req.config?.tools) {
+        return {
+          functionCalls: [
+            {
+              name: "plan_trip",
+              args: { 
+                destination: "goa", 
+                durationDays: 3, 
+                travelStyle: "budget",
+                travelersType: "solo",
+                startDate: "2026-07-15"
+              }
+            }
+          ]
+        };
+      }
+
+      const isJson = req.config?.responseMimeType === "application/json";
+      return {
+        text: isJson 
+          ? '{"destination": "goa", "durationDays": 3, "travelStyle": "budget"}' 
+          : "Mocked natural language trip explanation."
+      };
+    },
     
-    // Simulate empty response case
-    if (req.contents === "trigger-empty") {
-      return { text: "" };
+    async generateContentStream() {
+      return [
+        { text: "Gemini" },
+        { text: " stream" },
+        { text: " output" }
+      ];
     }
+  };
 
-    const isJson = req.config?.responseMimeType === "application/json";
-    return {
-      text: isJson 
-        ? '{"destination": "goa", "durationDays": 3, "travelStyle": "budget"}' 
-        : "Gemini response text"
-    };
-  },
-  
-  async generateContentStream() {
-    return [
-      { text: "Gemini" },
-      { text: " stream" },
-      { text: " output" }
-    ];
-  }
-};
+  geminiProvider.client = {
+    models: mockModel
+  };
 
-geminiProvider.client = {
-  models: mockModel
-};
-
-async function testProviderRegistry() {
+  // 1. Registry
   console.log("Running Test: Provider Registry...");
   const gemini = registry.get("gemini");
   assert.ok(gemini);
@@ -60,134 +85,107 @@ async function testProviderRegistry() {
   const dummy = registry.get("dummy");
   assert.strictEqual(dummy.constructor.name, "DummyProvider");
   console.log("  => Provider Registry passed!");
-}
 
-async function testInvalidProvider() {
+  // 2. Invalid Provider
   console.log("Running Test: Invalid Provider...");
   assert.throws(() => registry.get("non-existent"), /Unregistered LLM provider/);
   console.log("  => Invalid Provider passed!");
-}
 
-async function testMissingAPIKey() {
+  // 3. Missing Key
   console.log("Running Test: Missing API Key...");
   const oldKey = process.env.GEMINI_API_KEY;
-  const { default: config } = await import("../config/llm.config.js");
   const oldConfigKey = config.apiKey;
-  
   delete process.env.GEMINI_API_KEY;
   config.apiKey = null;
   
-  const { default: GeminiProvider } = await import("../llm/providers/gemini_provider.js");
   const prov = new GeminiProvider();
-  
-  const res = await prov.initialize();
+  let res = await prov.initialize();
   assert.strictEqual(res.success, false);
   assert.ok(res.errors[0].includes("Missing API key"));
 
   process.env.GEMINI_API_KEY = oldKey;
   config.apiKey = oldConfigKey;
   console.log("  => Missing API Key passed!");
-}
 
-async function testInvalidCredentials() {
+  // 4. Invalid Credentials
   console.log("Running Test: Invalid Credentials...");
-  const oldKey = process.env.GEMINI_API_KEY;
-  const { default: config } = await import("../config/llm.config.js");
-  const oldConfigKey = config.apiKey;
-
+  const oldKey2 = process.env.GEMINI_API_KEY;
+  const oldConfigKey2 = config.apiKey;
   process.env.GEMINI_API_KEY = "invalid-key";
   config.apiKey = "invalid-key";
 
-  const { default: GeminiProvider } = await import("../llm/providers/gemini_provider.js");
-  const prov = new GeminiProvider();
-
-  const res = await prov.initialize();
+  const prov2 = new GeminiProvider();
+  res = await prov2.initialize();
   assert.strictEqual(res.success, false);
   assert.ok(res.errors[0].includes("Invalid API key"));
 
-  process.env.GEMINI_API_KEY = oldKey;
-  config.apiKey = oldConfigKey;
+  process.env.GEMINI_API_KEY = oldKey2;
+  config.apiKey = oldConfigKey2;
   console.log("  => Invalid Credentials passed!");
-}
 
-async function testGeminiNormalGeneration() {
+  // 5. Normal Gen
   console.log("Running Test: Gemini Normal Generation...");
-  const res = await adapter.generate("Hello", {}, "gemini");
-  
+  res = await adapter.generate("Hello", {}, "gemini");
   assert.ok(res.success);
-  assert.strictEqual(res.data.text, "Gemini response text");
+  assert.strictEqual(res.data.text, "Mocked natural language trip explanation.");
   assert.strictEqual(res.metadata.provider, "gemini");
   console.log("  => Gemini Normal Generation passed!");
-}
 
-async function testStructuredJsonParsing() {
+  // 6. JSON
   console.log("Running Test: Structured JSON Parsing...");
-  const res = await adapter.generate("Convert to JSON", { responseFormat: "json" }, "gemini");
-
+  res = await adapter.generate("Convert to JSON", { responseFormat: "json" }, "gemini");
   assert.ok(res.success);
   const parsed = JSON.parse(res.data.text);
   assert.strictEqual(parsed.destination, "goa");
   assert.strictEqual(parsed.durationDays, 3);
   console.log("  => Structured JSON Parsing passed!");
-}
 
-async function testTimeoutHandling() {
+  // 7. Timeout
   console.log("Running Test: Timeout Handling...");
-  const res = await adapter.generate("Hello", { timeout: 1 }, "gemini");
+  res = await adapter.generate("Hello", { timeout: 1 }, "gemini");
   assert.strictEqual(res.success, false);
   assert.ok(res.errors[0].includes("Request timeout exceeded"));
   console.log("  => Timeout Handling passed!");
-}
 
-async function testEmptyResponseHandling() {
+  // 8. Empty
   console.log("Running Test: Empty Response Handling...");
-  const res = await adapter.generate("trigger-empty", {}, "gemini");
+  res = await adapter.generate("trigger-empty", {}, "gemini");
   assert.strictEqual(res.success, false);
   assert.ok(res.errors[0].includes("Empty response returned"));
   console.log("  => Empty Response Handling passed!");
-}
 
-async function testStreamingInterface() {
+  // 9. Stream
   console.log("Running Test: Streaming Interface...");
   const output = [];
-  
   await adapter.stream("Hello stream", {}, (chunk) => {
     output.push(chunk.text);
   }, "gemini");
-
   assert.strictEqual(output.join(""), "Gemini stream output");
   console.log("  => Streaming Interface passed!");
-}
 
-async function testHealthCheck() {
+  // 10. Health check
   console.log("Running Test: Health Check...");
-  // Temporarily stub generate for healthcheck to return OK
   const originalGenerate = geminiProvider.generate;
   geminiProvider.generate = async () => ({
     success: true,
     data: { text: "OK" }
   });
-
-  const res = await adapter.healthCheck("gemini");
+  res = await adapter.healthCheck("gemini");
   assert.strictEqual(res.success, true);
   assert.strictEqual(res.data.active, true);
-
   geminiProvider.generate = originalGenerate;
   console.log("  => Health Check passed!");
-}
 
-async function runAll() {
-  console.log("=== STARTING LLM ADAPTER E2E MOCK TESTS ===");
-  await testProviderRegistry();
-  await testInvalidProvider();
-  await testMissingAPIKey();
-  await testInvalidCredentials();
-  await testGeminiNormalGeneration();
-  await testStructuredJsonParsing();
-  await testTimeoutHandling();
-  await testEmptyResponseHandling();
-  await testStreamingInterface();
-  await testHealthCheck();
+  // 11. Orchestration
+  console.log("Running Test: Orchestration Pipeline (processNaturalLanguage)...");
+  res = await adapter.processNaturalLanguage("I want to plan a 3-day budget trip to Goa");
+  assert.ok(res.success);
+  assert.strictEqual(res.data.toolRequested, "plan_trip");
+  assert.strictEqual(res.data.toolArguments.destination, "goa");
+  assert.strictEqual(res.data.text, "Mocked natural language trip explanation.");
+  assert.ok(res.data.backendOutput.tripSummary);
+  console.log("  => Orchestration Pipeline passed!");
+
   console.log("\n=== ALL LLM ADAPTER TESTS PASSED ===");
 }
 
