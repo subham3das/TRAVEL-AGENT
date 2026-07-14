@@ -23,6 +23,8 @@ console.log("Type your travel request (e.g., 'Plan a 3-day budget trip to Goa')"
 console.log("Type 'exit' or 'quit' to close.");
 console.log("=========================================\n");
 
+let activeContext = null;
+
 function promptUser() {
   rl.question("You: ", async (query) => {
     const clean = query.trim();
@@ -38,8 +40,12 @@ function promptUser() {
 
     console.log("\n[Processing request...]");
     try {
-      const res = await adapter.processNaturalLanguage(clean);
+      const res = await adapter.processNaturalLanguage(clean, activeContext);
       
+      if (res.success && res.metadata && res.metadata.activeContext) {
+        activeContext = res.metadata.activeContext;
+      }
+
       console.log("\n--- LLM Orchestrator Response ---");
       console.log(res.data?.text || "No summary response.");
       

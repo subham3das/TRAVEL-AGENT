@@ -6,6 +6,7 @@ const require = createRequire(import.meta.url);
 const executionEngine = require("../execution/execution_engine.js");
 const responseComposer = require("../response/response_composer.js");
 const conversationState = require("../conversation/conversation_state.js");
+const conversationClassifier = require("../conversation/conversation_classifier.js");
 
 /**
  * Travel Intelligence OS - LLM Adapter.
@@ -156,6 +157,8 @@ class LLMAdapter {
   async processNaturalLanguage(message, previousContext = null) {
     const startTime = Date.now();
     try {
+      let context = previousContext ? JSON.parse(JSON.stringify(previousContext)) : null;
+
       // Step 1: Ask LLM to select tool call
       const toolRes = await this.toolCall(message, tools, "gemini");
       if (!toolRes.success) {
@@ -164,53 +167,125 @@ class LLMAdapter {
 
       const { toolRequested, arguments: toolArgs, text } = toolRes.data;
 
-      // Step 2: General chat branch (no tool call)
+      // Step 2: Handle general chat, plan questions, or pending clarifications
       if (!toolRequested) {
-        return {
-          success: true,
-          data: {
-            text: text || "General chat query processed.",
-            toolRequested: null,
-            executionSummary: "No backend tool executed."
-          },
-          errors: [],
-          warnings: [],
-          confidence: 0.98,
-          processingTime: Date.now() - startTime,
-          metadata: { provider: "gemini" }
+        const classification = conversationClassifier.detectConversationType(
+          message,
+          context?.state?.conversationState?.currentState || "IDLE",
+          context?.recommendations ? true : false
+        );
+
+        const isClarification = classification.type === "CLARIFICATION_RESPONSE";
+
+        if (isClarification && context?.state?.conversationState?.currentState === "WAITING_FOR_CLARIFICATION") {
+          const targetField = context.state.conversationState.clarificationTarget;
+          
+          if (targetField) {
+            const extractPrompt = `The traveler was asked for clarification on: '${targetField}'. They responded: '${message}'. Extract the parsed value in JSON format: { "value": ... } (e.g. for travelDates, return an object like {"startDate": "YYYY-MM-DD"}).`;
+            const extractRes = await this.generate(extractPrompt, { responseFormat: "json" }, "gemini");
+            
+            if (extractRes.success) {
+              const parsed = JSON.parse(extractRes.data.text);
+              if (parsed && parsed.value !== undefined) {
+                context.state.normalizedEntities[targetField] = parsed.value;
+                context.state.entityConfidence[targetField] = 1.0;
+                
+                context.state.conversationState.clarificationTarget = null;
+                context.state.conversationState.currentState = "IDLE";
+              }
+            }
+          }
+        } else {
+          // General travel question or chat - answer directly from LLM
+          const planCtx = context?.recommendations ? `Active Plan Context: ${JSON.stringify(context.recommendations)}` : "";
+          const chatPrompt = `You are a helpful travel assistant. ${planCtx}\nUser message: ${message}\nAnswer their question directly and helpfully.`;
+          const chatRes = await this.generate(chatPrompt, {}, "gemini");
+          
+          return {
+            success: true,
+            data: {
+              text: chatRes.success ? chatRes.data.text : (text || "I am not sure how to assist with that."),
+              toolRequested: null,
+              executionSummary: "Answered directly by LLM."
+            },
+            errors: [],
+            warnings: [],
+            confidence: 0.98,
+            processingTime: Date.now() - startTime,
+            metadata: { 
+              provider: "gemini",
+              activeContext: context
+            }
+          };
+        }
+      }
+
+      // Step 3: Initialize context if missing
+      if (!context) {
+        context = {
+          originalQuery: message,
+          request: { query: message },
+          state: {
+            intent: this.mapToolToIntent(toolRequested),
+            normalizedEntities: {
+              destination: null,
+              durationDays: null,
+              travelStyle: null,
+              travelersType: null,
+              budget: null,
+              travelDates: null,
+              interests: null
+            },
+            entityConfidence: {
+              destination: 0.0,
+              durationDays: 0.0,
+              travelDates: 0.0,
+              travelersType: 0.0,
+              travelStyle: 0.0,
+              budget: 0.0
+            },
+            conversationState: conversationState.createConversationState()
+          }
         };
       }
 
-      // Step 3: Map arguments to TravelContext
-      const context = {
-        originalQuery: message,
-        request: { query: message },
-        state: {
-          intent: this.mapToolToIntent(toolRequested),
-          normalizedEntities: {
-            destination: toolArgs.destination || null,
-            durationDays: toolArgs.durationDays || null,
-            travelStyle: toolArgs.travelStyle || null,
-            travelersType: toolArgs.travelersType || null,
-            budget: toolArgs.budget || null,
-            travelDates: toolArgs.startDate ? { startDate: toolArgs.startDate } : null,
-            interests: toolArgs.interests || null
-          },
-          entityConfidence: {
-            destination: toolArgs.destination ? 1.0 : 0.0,
-            durationDays: toolArgs.durationDays ? 1.0 : 0.0,
-            travelDates: toolArgs.startDate ? 1.0 : 0.0,
-            travelersType: toolArgs.travelersType ? 1.0 : 0.0,
-            travelStyle: toolArgs.travelStyle ? 1.0 : 0.0,
-            budget: toolArgs.budget ? 1.0 : 0.0
-          },
-          conversationState: conversationState.createConversationState()
+      // Merge new tool call parameters into active context
+      if (toolRequested) {
+        context.state.intent = this.mapToolToIntent(toolRequested);
+        
+        if (toolArgs.destination) {
+          context.state.normalizedEntities.destination = toolArgs.destination;
+          context.state.entityConfidence.destination = 1.0;
         }
-      };
+        if (toolArgs.durationDays) {
+          context.state.normalizedEntities.durationDays = toolArgs.durationDays;
+          context.state.entityConfidence.durationDays = 1.0;
+        }
+        if (toolArgs.travelStyle) {
+          context.state.normalizedEntities.travelStyle = toolArgs.travelStyle;
+          context.state.entityConfidence.travelStyle = 1.0;
+        }
+        if (toolArgs.travelersType) {
+          context.state.normalizedEntities.travelersType = toolArgs.travelersType;
+          context.state.entityConfidence.travelersType = 1.0;
+        }
+        if (toolArgs.budget) {
+          context.state.normalizedEntities.budget = toolArgs.budget;
+          context.state.entityConfidence.budget = 1.0;
+        }
+        if (toolArgs.startDate) {
+          context.state.normalizedEntities.travelDates = { startDate: toolArgs.startDate };
+          context.state.entityConfidence.travelDates = 1.0;
+        }
+        if (toolArgs.interests) {
+          context.state.normalizedEntities.interests = toolArgs.interests;
+          context.state.entityConfidence.interests = 1.0;
+        }
+      }
 
       // STEP 1 DEBUG LOGS
-      console.log(`\nDetected Tool: ${toolRequested}`);
-      console.log(`Parsed Arguments: ${JSON.stringify(toolArgs, null, 2)}`);
+      console.log(`\nDetected Tool: ${toolRequested || "clarification_resolve"}`);
+      console.log(`Parsed Arguments: ${JSON.stringify(toolArgs || {}, null, 2)}`);
       console.log(`Generated TravelContext: ${JSON.stringify(context, null, 2)}\n`);
 
       // STEP 2 LOG
@@ -264,7 +339,7 @@ class LLMAdapter {
           success: true,
           data: {
             text: blockedMsg,
-            toolRequested,
+            toolRequested: toolRequested || "clarification_resolve",
             toolArguments: toolArgs,
             backendOutput: composed.data,
             executionSummary: composed.data?.executionSummary || "Pipeline blocked."
@@ -273,7 +348,10 @@ class LLMAdapter {
           warnings: [],
           confidence: composed.confidence,
           processingTime: Date.now() - startTime,
-          metadata: { provider: "gemini" }
+          metadata: { 
+            provider: "gemini",
+            activeContext: context
+          }
         };
       }
 
@@ -291,7 +369,7 @@ class LLMAdapter {
         success: composed.success,
         data: {
           text: summaryText,
-          toolRequested,
+          toolRequested: toolRequested || "clarification_resolve",
           toolArguments: toolArgs,
           backendOutput: composed.data,
           executionSummary: composed.data?.executionSummary || "Pipeline completed."
@@ -302,7 +380,8 @@ class LLMAdapter {
         processingTime: Date.now() - startTime,
         metadata: {
           provider: "gemini",
-          composerMetadata: composed.metadata
+          composerMetadata: composed.metadata,
+          activeContext: context
         }
       };
 

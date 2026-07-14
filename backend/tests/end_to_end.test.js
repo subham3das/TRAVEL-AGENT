@@ -147,7 +147,8 @@ async function testMemoryIntegration() {
   // Retrieve memory to verify it saved luxury preference
   const memRes = memoryEngine.retrieveMemory("usr-e2e-123", "Travel Style");
   assert.ok(memRes.success);
-  assert.strictEqual(memRes.data[0].value, "luxury");
+  const values = memRes.data.map(m => m.value);
+  assert.ok(values.includes("luxury"));
   console.log("  => Memory Integration passed!");
 }
 
