@@ -1,4 +1,5 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
 /**
  * Travel Intelligence OS - LLM Configuration.
@@ -8,7 +9,7 @@ require("dotenv").config();
  * @module llm_config
  */
 
-module.exports = {
+export default {
   apiKey: process.env.GEMINI_API_KEY || null,
   modelName: process.env.GEMINI_MODEL || "gemini-2.5-flash",
   temperature: 0.2,

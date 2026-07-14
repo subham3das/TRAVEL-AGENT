@@ -1,10 +1,10 @@
-const providerRegistry = require("./provider_registry");
+import providerRegistry from "./provider_registry.js";
 
 /**
  * Travel Intelligence OS - LLM Adapter.
  *
  * Core coordinator linking configuration options to target provider classes.
- * Conforms to llm_adapter_spec.md.
+ * Conforms to llm_adapter_spec.md and implements retries and Response Contracts.
  *
  * @module llm_adapter
  */
@@ -15,59 +15,66 @@ class LLMAdapter {
   }
 
   // 1. Generate text or JSON responses (Includes retry strategy on json checks)
-  async generate(prompt, config = {}, providerName = this.defaultProvider) {
+  async generate(promptOrConfig, config = {}, providerName = this.defaultProvider) {
     const startTime = Date.now();
     const errors = [];
 
+    // Support passing object or string
+    let prompt = promptOrConfig;
+    let localConfig = { ...config };
+    if (promptOrConfig && typeof promptOrConfig === "object") {
+      prompt = promptOrConfig.prompt;
+      localConfig = { ...promptOrConfig, ...config };
+    }
+
+    const provider = providerRegistry.get(providerName);
+    const modelName = localConfig.model || "default";
+
     try {
-      const provider = providerRegistry.get(providerName);
-      const initSuccess = await provider.initialize();
-      if (!initSuccess) {
-        throw new Error(`Failed to initialize provider: '${providerName}'`);
+      const initRes = await provider.initialize();
+      if (!initRes.success) {
+        throw new Error(initRes.errors[0] || `Failed to initialize provider: '${providerName}'`);
       }
 
       let response = null;
       let retries = 0;
-      const maxRetries = config.responseFormat === "json" ? 3 : 1;
+      const maxRetries = localConfig.responseFormat === "json" ? 3 : 1;
 
       while (retries < maxRetries) {
-        response = await provider.generate(prompt, config);
+        response = await provider.generate(prompt, localConfig);
         
         if (response && response.success) {
-          if (config.responseFormat === "json") {
-            const isValid = provider.validateResponse(response);
-            if (isValid) {
-              break;
-            } else {
-              retries++;
-              if (retries >= maxRetries) {
-                throw new Error("Structured JSON response parsing failed after 3 attempts.");
-              }
-            }
-          } else {
+          const isValid = provider.validateResponse(response, localConfig.responseFormat);
+          if (isValid) {
             break;
+          } else {
+            retries++;
+            if (retries >= maxRetries) {
+              throw new Error("Structured JSON response parsing failed after 3 attempts.");
+            }
           }
         } else {
-          retries++;
-          if (retries >= maxRetries) {
-            throw new Error(response?.error || `Generation failed on provider: '${providerName}'`);
-          }
+          // If JSON mode was requested, we only retry if generation succeeded but validation failed
+          throw new Error(response?.errors?.[0] || `Generation failed on provider: '${providerName}'`);
         }
       }
 
       return {
         success: true,
         data: {
-          text: response.text,
-          raw: response.raw
+          text: response.data.text,
+          raw: response.data.raw
         },
-        errors,
+        errors: [],
         warnings: [],
         confidence: 0.98,
         processingTime: Date.now() - startTime,
         metadata: {
           provider: providerName,
-          retries
+          model: modelName,
+          retries,
+          streamed: false,
+          timestamp: new Date().toISOString()
         }
       };
 
@@ -81,17 +88,21 @@ class LLMAdapter {
         confidence: 0.0,
         processingTime: Date.now() - startTime,
         metadata: {
-          provider: providerName
+          provider: providerName,
+          model: modelName,
+          retries: 0,
+          streamed: false,
+          timestamp: new Date().toISOString()
         }
       };
     }
   }
 
   // 2. Stream completions
-  async stream(prompt, config = {}, callback, providerName = this.defaultProvider) {
+  async stream(promptOrConfig, config = {}, callback, providerName = this.defaultProvider) {
     try {
       const provider = providerRegistry.get(providerName);
-      await provider.stream(prompt, config, callback);
+      await provider.stream(promptOrConfig, config, callback);
     } catch (err) {
       callback({ text: "", done: true, error: err.message });
     }
@@ -100,36 +111,18 @@ class LLMAdapter {
   // 3. Tool call resolution
   async toolCall(prompt, tools = [], providerName = this.defaultProvider) {
     const startTime = Date.now();
-    const errors = [];
-
     try {
       const provider = providerRegistry.get(providerName);
-      const res = await provider.toolCall(prompt, tools);
-      
-      return {
-        success: res.success,
-        data: res,
-        errors,
-        warnings: [],
-        confidence: 0.98,
-        processingTime: Date.now() - startTime,
-        metadata: {
-          provider: providerName
-        }
-      };
-
+      return await provider.toolCall(prompt, tools);
     } catch (err) {
-      errors.push(err.message);
       return {
         success: false,
         data: null,
-        errors,
+        errors: [err.message],
         warnings: [],
         confidence: 0.0,
         processingTime: Date.now() - startTime,
-        metadata: {
-          provider: providerName
-        }
+        metadata: { provider: providerName, timestamp: new Date().toISOString() }
       };
     }
   }
@@ -139,10 +132,18 @@ class LLMAdapter {
     try {
       const provider = providerRegistry.get(providerName);
       return await provider.healthCheck();
-    } catch {
-      return false;
+    } catch (err) {
+      return {
+        success: false,
+        data: { active: false },
+        errors: [err.message],
+        warnings: [],
+        confidence: 0.0,
+        processingTime: 0,
+        metadata: { timestamp: new Date().toISOString() }
+      };
     }
   }
 }
 
-module.exports = new LLMAdapter();
+export default new LLMAdapter();

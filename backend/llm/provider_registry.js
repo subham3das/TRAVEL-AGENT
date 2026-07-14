@@ -1,7 +1,7 @@
-const GeminiProvider = require("./providers/gemini_provider");
-const OpenAIProvider = require("./providers/openai_provider");
-const ClaudeProvider = require("./providers/claude_provider");
-const LocalProvider = require("./providers/local_provider");
+import GeminiProvider from "./providers/gemini_provider.js";
+import OpenAIProvider from "./providers/openai_provider.js";
+import ClaudeProvider from "./providers/claude_provider.js";
+import LocalProvider from "./providers/local_provider.js";
 
 /**
  * Travel Intelligence OS - LLM Provider Registry.
@@ -37,4 +37,4 @@ class ProviderRegistry {
   }
 }
 
-module.exports = new ProviderRegistry();
+export default new ProviderRegistry();

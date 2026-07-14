@@ -1,4 +1,4 @@
-const BaseLLMProvider = require("./base_provider");
+import BaseLLMProvider from "./base_provider.js";
 
 /**
  * Travel Intelligence OS - OpenAI GPT Provider stub.
@@ -38,4 +38,4 @@ class OpenAIProvider extends BaseLLMProvider {
   }
 }
 
-module.exports = OpenAIProvider;
+export default OpenAIProvider;

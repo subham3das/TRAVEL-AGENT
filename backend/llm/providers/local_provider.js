@@ -1,4 +1,4 @@
-const BaseLLMProvider = require("./base_provider");
+import BaseLLMProvider from "./base_provider.js";
 
 /**
  * Travel Intelligence OS - Local Llama Provider stub.
@@ -38,4 +38,4 @@ class LocalProvider extends BaseLLMProvider {
   }
 }
 
-module.exports = LocalProvider;
+export default LocalProvider;

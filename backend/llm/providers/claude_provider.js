@@ -1,4 +1,4 @@
-const BaseLLMProvider = require("./base_provider");
+import BaseLLMProvider from "./base_provider.js";
 
 /**
  * Travel Intelligence OS - Claude Anthropic Provider stub.
@@ -38,4 +38,4 @@ class ClaudeProvider extends BaseLLMProvider {
   }
 }
 
-module.exports = ClaudeProvider;
+export default ClaudeProvider;
