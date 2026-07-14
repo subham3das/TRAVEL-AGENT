@@ -208,11 +208,74 @@ class LLMAdapter {
         }
       };
 
-      // Step 4: Run Execution Engine
-      const execRes = await executionEngine.execute(context, previousContext);
+      // STEP 1 DEBUG LOGS
+      console.log(`\nDetected Tool: ${toolRequested}`);
+      console.log(`Parsed Arguments: ${JSON.stringify(toolArgs, null, 2)}`);
+      console.log(`Generated TravelContext: ${JSON.stringify(context, null, 2)}\n`);
 
-      // Step 5: Consolidate Response Composer
+      // STEP 2 LOG
+      console.log("Execution Engine Started");
+
+      // STEP 3 INTERCEPT LOGGING
+      const originalRegistry = { ...executionEngine.registry };
+      for (const stageName of Object.keys(executionEngine.registry)) {
+        const originalRun = executionEngine.registry[stageName].run;
+        executionEngine.registry[stageName].run = async (...args) => {
+          if (stageName === "planner") console.log("Planner Started");
+          if (stageName === "decision") console.log("Decision Started");
+          if (stageName === "optimizer") console.log("Route Optimizer Started");
+          if (stageName === "budget") console.log("Budget Started");
+          if (stageName === "recommendation") console.log("Recommendation Started");
+          if (stageName === "booking") console.log("Booking Started");
+          return originalRun(...args);
+        };
+      }
+
+      let execRes;
+      try {
+        execRes = await executionEngine.execute(context, previousContext);
+      } finally {
+        executionEngine.registry = originalRegistry;
+      }
+
+      // STEP 3 LOG COMPOSER
+      console.log("Response Composer Started");
       const composed = responseComposer.compose(context, execRes);
+
+      // STEP 4 BLOCKED PIPELINE LOGS
+      if (execRes.data?.executionStatus === "WAITING_CLARIFICATION") {
+        const missingFieldsList = [];
+        const MANDATORY_PLANNING_FIELDS = ["destination", "travelDates", "durationDays", "travelersType"];
+        for (const field of MANDATORY_PLANNING_FIELDS) {
+          const val = context.state.normalizedEntities[field];
+          if (val === undefined || val === null || val === "") {
+            missingFieldsList.push(field);
+          }
+        }
+        
+        console.log("Clarification Engine blocked execution.");
+        console.log("Missing fields:");
+        missingFieldsList.forEach(f => console.log(`- ${f}`));
+
+        const listStr = missingFieldsList.map(f => `- ${f}`).join("\n");
+        const blockedMsg = `Clarification Engine blocked execution.\nMissing fields:\n${listStr}`;
+
+        return {
+          success: true,
+          data: {
+            text: blockedMsg,
+            toolRequested,
+            toolArguments: toolArgs,
+            backendOutput: composed.data,
+            executionSummary: composed.data?.executionSummary || "Pipeline blocked."
+          },
+          errors: [],
+          warnings: [],
+          confidence: composed.confidence,
+          processingTime: Date.now() - startTime,
+          metadata: { provider: "gemini" }
+        };
+      }
 
       // Step 6: Generate final friendly natural language explanation
       let summaryText = "";

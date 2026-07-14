@@ -247,7 +247,8 @@ class GeminiProvider extends BaseLLMProvider {
         model: modelName,
         contents: prompt,
         config: {
-          tools: sdkTools
+          tools: sdkTools,
+          systemInstruction: "You are the Travel Operating System. Whenever the user requests to plan, modify, book, calculate budget, or recommend places for a trip, you MUST call the matching native tool. Do not ask clarification questions to the user yourself; the deterministic backend engines will handle clarification. If a year is missing in a date, assume the next upcoming occurrence."
         }
       });
 
