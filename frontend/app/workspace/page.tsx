@@ -387,7 +387,6 @@ export default function WorkspacePage() {
                           isStreaming={isStreaming}
                           showClarification={showClarification}
                           onSelectOption={(opt) => {
-                            setShowClarification(false);
                             handleSendMessage(opt);
                           }}
                         />

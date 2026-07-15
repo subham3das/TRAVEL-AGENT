@@ -134,38 +134,42 @@ export function StatusDetailsPanel({ status }: StatusDetailsPanelProps) {
           <Server className="h-3.5 w-3.5 text-primary" />
           System Health
         </div>
-        <div className="grid grid-cols-2 gap-y-1.5 text-[11px]">
-          <div className="flex items-center justify-between pr-2">
+        <div className="space-y-2 text-[11px]">
+          <div className="flex items-center justify-between border-b border-border/10 pb-1.5">
             <span className="text-muted">LLM Provider</span>
             <span className="font-mono font-medium text-primary text-[10px]">{provider}</span>
           </div>
-          <div className="flex items-center justify-between pl-2 border-l border-border/30">
+          <div className="flex items-center justify-between border-b border-border/10 pb-1.5">
             <span className="text-muted">Orchestrator</span>
             <span className="text-emerald-500 font-medium capitalize">{system.gemini}</span>
           </div>
-          <div className="flex items-center justify-between pr-2">
+          <div className="flex items-center justify-between border-b border-border/10 pb-1.5">
             <span className="text-muted">Knowledge Graph</span>
             <span className="text-emerald-500 font-medium capitalize">{system.knowledgeGraph}</span>
           </div>
-          <div className="flex items-center justify-between pl-2 border-l border-border/30">
+          <div className="flex items-center justify-between border-b border-border/10 pb-1.5">
             <span className="text-muted">Planner Engine</span>
             <span className="text-emerald-500 font-medium capitalize">{system.planner}</span>
           </div>
-          <div className="flex items-center justify-between pr-2">
+          <div className="flex items-center justify-between border-b border-border/10 pb-1.5">
             <span className="text-muted">Budget Engine</span>
             <span className="text-emerald-500 font-medium capitalize">{system.budget}</span>
           </div>
-          <div className="flex items-center justify-between pl-2 border-l border-border/30">
+          <div className="flex items-center justify-between border-b border-border/10 pb-1.5">
             <span className="text-muted">Recommendation</span>
             <span className="text-emerald-500 font-medium capitalize">{system.recommendation}</span>
           </div>
-          <div className="flex items-center justify-between pr-2">
+          <div className="flex items-center justify-between border-b border-border/10 pb-1.5">
             <span className="text-muted">Weather API</span>
             <span className="text-emerald-500 font-medium capitalize">{system.weather}</span>
           </div>
-          <div className="flex items-center justify-between pl-2 border-l border-border/30">
+          <div className="flex items-center justify-between border-b border-border/10 pb-1.5">
             <span className="text-muted">Maps Provider</span>
             <span className="text-emerald-500 font-medium capitalize">{system.maps}</span>
+          </div>
+          <div className="flex items-center justify-between border-b border-border/10 pb-1.5">
+            <span className="text-muted">Vector DB (Pinecone)</span>
+            <span className="text-emerald-500 font-medium capitalize">{system.pinecone}</span>
           </div>
         </div>
       </motion.div>
