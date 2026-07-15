@@ -21,16 +21,14 @@ import {
   Trash2,
   Check,
   AlertTriangle,
-  RefreshCw,
-  Info
+  RefreshCw
 } from "lucide-react";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { MessageList } from "@/components/chat/MessageList";
 import { ItineraryTimeline } from "@/components/itinerary/ItineraryTimeline";
 import { BudgetSummary } from "@/components/itinerary/BudgetSummary";
 import { LeafletMap } from "@/components/map/LeafletMap";
-import { MOCK_GOA_TRIP } from "@/lib/mockData";
-import { SkeletonCard } from "@/components/ui/SkeletonCard";
+import { useSSE } from "@/hooks/useSSE";
 
 type ScreenState = "splash" | "home" | "ai-plan" | "trip-edit";
 
@@ -44,24 +42,20 @@ export default function WorkspacePage() {
   const messages = useChatStore((s) => s.messages);
   const addMessage = useChatStore((s) => s.addMessage);
   const isStreaming = useChatStore((s) => s.isStreaming);
-  const setStreaming = useChatStore((s) => s.setStreaming);
   const currentTokens = useChatStore((s) => s.currentTokens);
-  const appendTokens = useChatStore((s) => s.appendTokens);
   const clearChat = useChatStore((s) => s.clearChat);
 
   const dailyPlan = useItineraryStore((s) => s.dailyPlan);
   const budgetSummary = useItineraryStore((s) => s.budgetSummary);
+  const activeContext = useItineraryStore((s) => s.activeContext);
+  const weatherInfo = useItineraryStore((s) => s.weather);
+  const packingList = useItineraryStore((s) => s.packing);
   const setItinerary = useItineraryStore((s) => s.setItinerary);
   const clearItinerary = useItineraryStore((s) => s.clearItinerary);
 
-  const [showClarification, setShowClarification] = React.useState(false);
+  const { startStream, error: sseError } = useSSE();
   const [budgetLimit, setBudgetLimit] = React.useState(40000);
-  const [weatherInfo, setWeatherInfo] = React.useState<any>(null);
-  const [packingList, setPackingList] = React.useState<string[]>([]);
-
-  // Simulation flags for error testing
-  const [errorActive, setErrorActive] = React.useState(false);
-  const [errorMsg, setErrorMsg] = React.useState("");
+  const [showClarification, setShowClarification] = React.useState(false);
 
   // 1. Splash Timeout
   React.useEffect(() => {
@@ -73,52 +67,31 @@ export default function WorkspacePage() {
     }
   }, [currentScreen]);
 
-  // 2. Mock AI Request flow simulating progressive reveal
-  const handleSendMessage = (text: string) => {
-    if (text.toLowerCase().includes("fail") || text.toLowerCase().includes("error")) {
-      addMessage(text, "user");
-      setStreaming(true);
-      setCurrentScreen("ai-plan");
-      setTimeout(() => {
-        setStreaming(false);
-        setErrorMsg("Gateway timeout: backend engine unavailable (Simulated Error).");
-        setErrorActive(true);
-      }, 1500);
-      return;
+  // 2. Transition automatically when plan loads
+  React.useEffect(() => {
+    if (dailyPlan && currentScreen === "ai-plan") {
+      setCurrentScreen("trip-edit");
     }
+  }, [dailyPlan, currentScreen]);
 
-    addMessage(text, "user");
-    setStreaming(true);
-    setCurrentScreen("ai-plan");
+  // Check for clarification states in context
+  React.useEffect(() => {
+    if (
+      activeContext?.state?.conversationState?.currentState ===
+      "WAITING_FOR_CLARIFICATION"
+    ) {
+      setShowClarification(true);
+    } else {
+      setShowClarification(false);
+    }
+  }, [activeContext]);
 
-    // Simulate system trace logs
-    setTimeout(() => {
-      const tokens = MOCK_GOA_TRIP.data.composedText.split(" ");
-      let tokenIdx = 0;
-
-      const interval = setInterval(() => {
-        if (tokenIdx < tokens.length) {
-          appendTokens(tokens[tokenIdx] + " ");
-          tokenIdx++;
-        } else {
-          clearInterval(interval);
-          setStreaming(false);
-
-          // Progressive reveal of Itinerary cards, weather, and budget
-          setTimeout(() => {
-            setItinerary(MOCK_GOA_TRIP.data.dailyPlan, MOCK_GOA_TRIP.data.budgetSummary);
-            setWeatherInfo(MOCK_GOA_TRIP.data.weather);
-            setPackingList(MOCK_GOA_TRIP.data.packing);
-            setCurrentScreen("trip-edit");
-          }, 800);
-        }
-      }, 85);
-    }, 1500);
+  // 3. Connect real SSE handler
+  const handleSendMessage = (text: string) => {
+    startStream(text, activeContext);
   };
 
   const handleRetry = () => {
-    setErrorActive(false);
-    setErrorMsg("");
     clearChat();
     handleSendMessage("Plan a 5 day Goa trip");
   };
@@ -138,14 +111,12 @@ export default function WorkspacePage() {
       }
       return d;
     });
-    setItinerary(updatedPlan, budgetSummary);
+    setItinerary(updatedPlan, budgetSummary, activeContext, weatherInfo, packingList);
   };
 
   const handleStartPlanning = () => {
     clearChat();
     clearItinerary();
-    setErrorActive(false);
-    setErrorMsg("");
     setCurrentScreen("ai-plan");
   };
 
@@ -254,16 +225,6 @@ export default function WorkspacePage() {
               </div>
 
               <div className="p-4 border-t border-border flex flex-col gap-2">
-                {/* Simulated Error triggers */}
-                <button
-                  onClick={() => {
-                    setErrorMsg("Connection Timeout (Simulated).");
-                    setErrorActive(true);
-                  }}
-                  className="w-full text-left text-[10px] font-mono text-muted/60 hover:text-primary transition-colors"
-                >
-                  [Simulate Timeout Alert]
-                </button>
                 <div className="text-[9px] font-mono text-muted/40">v1.0.0-rc1</div>
               </div>
             </aside>
@@ -305,7 +266,7 @@ export default function WorkspacePage() {
               <main className="flex-1 overflow-y-auto p-6 bg-background relative">
                 {/* Active Error Panel */}
                 <AnimatePresence>
-                  {errorActive && (
+                  {sseError && (
                     <motion.div
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -317,7 +278,7 @@ export default function WorkspacePage() {
                         <h4 className="text-xs font-semibold text-destructive uppercase tracking-wider">
                           Connection Interrupted
                         </h4>
-                        <p className="text-xs text-muted leading-relaxed">{errorMsg}</p>
+                        <p className="text-xs text-muted leading-relaxed">{sseError}</p>
                         <button
                           onClick={handleRetry}
                           className="py-1.5 px-3 bg-destructive/15 hover:bg-destructive/20 text-[11px] font-semibold text-destructive rounded flex items-center gap-1.5 transition-colors"
@@ -436,7 +397,7 @@ export default function WorkspacePage() {
                           showClarification={showClarification}
                           onSelectOption={(opt) => {
                             setShowClarification(false);
-                            addMessage(`Group size selected: ${opt}`, "user");
+                            handleSendMessage(opt);
                           }}
                         />
                       </div>
@@ -512,7 +473,7 @@ export default function WorkspacePage() {
                           />
                         )}
 
-                        {/* Weather Card */}
+                        {/* Weather advice Card */}
                         {weatherInfo && (
                           <div className="border border-border bg-card rounded-lg p-5 space-y-3">
                             <div className="flex items-center justify-between text-sm font-heading font-semibold">
@@ -520,8 +481,8 @@ export default function WorkspacePage() {
                               <CloudSun className="h-4 w-4 text-primary" />
                             </div>
                             <div className="flex items-baseline justify-between font-mono text-xs">
-                              <span className="text-foreground text-lg font-semibold">{weatherInfo.temp}</span>
-                              <span className="text-muted">{weatherInfo.condition}</span>
+                              <span className="text-foreground text-lg font-semibold">{weatherInfo.temp || "29°C"}</span>
+                              <span className="text-muted text-right max-w-[70%]">{weatherInfo.condition}</span>
                             </div>
                             <p className="text-[10px] text-muted font-mono">{weatherInfo.precipitation}</p>
                           </div>

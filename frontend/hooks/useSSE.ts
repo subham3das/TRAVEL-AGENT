@@ -10,14 +10,15 @@ export function useSSE() {
   const setItinerary = useItineraryStore((s) => s.setItinerary);
 
   const startStream = useCallback(
-    (query: string) => {
+    (query: string, context?: any) => {
       setError(null);
       setStreaming(true);
       
       addMessage(query, "user");
 
+      const contextParam = context ? `&context=${encodeURIComponent(JSON.stringify(context))}` : "";
       const eventSource = new EventSource(
-        `/api/chat?message=${encodeURIComponent(query)}`
+        `/api/chat?message=${encodeURIComponent(query)}${contextParam}`
       );
 
       eventSource.onmessage = (event) => {
@@ -31,10 +32,17 @@ export function useSSE() {
           if (payload.type === "result") {
             const res = payload.data.response;
             if (res.success) {
-              setItinerary(res.data.dailyPlan, res.data.budgetSummary);
+              setItinerary(
+                res.data.dailyPlan,
+                res.data.budgetSummary,
+                res.data.activeContext,
+                res.data.weather,
+                res.data.packing
+              );
               addMessage(res.data.composedText || "Trip structured successfully.", "assistant");
             } else {
               setError(res.errors.join(", "));
+              addMessage(`Failed to process plan: ${res.errors.join(", ")}`, "assistant");
             }
             eventSource.close();
             setStreaming(false);
