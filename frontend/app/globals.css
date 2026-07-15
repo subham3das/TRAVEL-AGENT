@@ -24,26 +24,26 @@
 
 :root {
   /* Light Mode Variables - Theme System Specification */
-  --background: 0 0% 98%;
-  --foreground: 240 10% 4%;
-  --card: 0 0% 100%;
-  --border: 240 5% 90%;
-  --primary: 38 92% 45%;
-  --accent: 198 80% 40%;
-  --muted: 240 5% 45%;
-  --ring: 38 92% 45%;
+  --background: hsl(0 0% 98%);
+  --foreground: hsl(240 10% 4%);
+  --card: hsl(0 0% 100%);
+  --border: hsl(240 5% 90%);
+  --primary: hsl(38 92% 45%);
+  --accent: hsl(198 80% 40%);
+  --muted: hsl(240 5% 45%);
+  --ring: hsl(38 92% 45%);
 }
 
 .dark {
   /* Dark Mode Variables - Theme System Specification */
-  --background: 240 10% 4%;
-  --foreground: 0 0% 98%;
-  --card: 240 6% 7%;
-  --border: 240 5% 12%;
-  --primary: 38 92% 50%;
-  --accent: 198 80% 45%;
-  --muted: 240 5% 65%;
-  --ring: 38 92% 50%;
+  --background: hsl(240 10% 4%);
+  --foreground: hsl(0 0% 98%);
+  --card: hsl(240 6% 7%);
+  --border: hsl(240 5% 12%);
+  --primary: hsl(38 92% 50%);
+  --accent: hsl(198 80% 45%);
+  --muted: hsl(240 5% 65%);
+  --ring: hsl(38 92% 50%);
 }
 
 @layer base {

@@ -159,7 +159,7 @@ export default function WorkspacePage() {
             {/* Sidebar Navigation */}
             <aside
               className={`fixed inset-y-0 left-0 z-20 flex flex-col w-[240px] bg-card border-r border-border transform transition-transform duration-300 ease-in-out md:static md:translate-x-0 ${
-                sidebarOpen ? "translate-x-0" : "-translate-x-full"
+                sidebarOpen ? "translate-x-0 block" : "-translate-x-full hidden md:flex"
               }`}
             >
               <div className="flex h-14 items-center justify-between px-4 border-b border-border">
