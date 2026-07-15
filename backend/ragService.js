@@ -1,12 +1,16 @@
 const { Pinecone } = require("@pinecone-database/pinecone");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const pineconeConfig = require("./config/pinecone.config");
 
 function getGenAI() {
   return new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 }
 
 function getPinecone() {
-  return new Pinecone({ apiKey: process.env.PINECONE_API_KEY });
+  if (!pineconeConfig.apiKey) {
+    throw new Error("Pinecone client configuration requires an apiKey.");
+  }
+  return new Pinecone({ apiKey: pineconeConfig.apiKey });
 }
 
 async function generateEmbedding(text) {
