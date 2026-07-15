@@ -399,8 +399,12 @@ class LLMAdapter {
   }
 
   mapToolToIntent(tool) {
+    if (tool === "plan_trip") return "GENERATE_PLAN";
+    if (tool === "modify_trip") return "MODIFY_PLAN";
     if (tool === "book_trip") return "BOOK_TRIP";
-    return "GENERATE_PLAN";
+    if (tool === "calculate_budget") return "CALCULATE_BUDGET";
+    if (tool === "recommend_places") return "RECOMMEND_PLACES";
+    return "UNKNOWN";
   }
 }
 

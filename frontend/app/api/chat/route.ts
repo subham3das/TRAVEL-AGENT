@@ -58,13 +58,15 @@ export async function GET(req: NextRequest) {
               response: {
                 success: true,
                 data: {
-                  dailyPlan: data.data.backendOutput?.dailyPlan?.map((dayPlan: any) => ({
-                    ...dayPlan,
-                    slots: dayPlan.slots?.map((slot: any, idx: number) => ({
-                      ...slot,
-                      nodeId: `day-${dayPlan.day}-idx-${idx}-${slot.nodeId || "unknown"}`,
-                    })) || [],
-                  })) || [],
+                  dailyPlan: data.data.backendOutput
+                    ? (data.data.backendOutput.dailyPlan?.map((dayPlan: any) => ({
+                        ...dayPlan,
+                        slots: dayPlan.slots?.map((slot: any, idx: number) => ({
+                          ...slot,
+                          nodeId: `day-${dayPlan.day}-idx-${idx}-${slot.nodeId || "unknown"}`,
+                        })) || [],
+                      })) || [])
+                    : null,
                   budgetSummary: data.data.backendOutput?.budgetSummary || null,
                   composedText: text,
                   activeContext: data.metadata?.activeContext || null,

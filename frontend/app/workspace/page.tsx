@@ -69,7 +69,7 @@ export default function WorkspacePage() {
 
   // 2. Transition automatically when plan loads
   React.useEffect(() => {
-    if (dailyPlan && currentScreen === "ai-plan") {
+    if (dailyPlan && dailyPlan.length > 0 && currentScreen === "ai-plan") {
       setCurrentScreen("trip-edit");
     }
   }, [dailyPlan, currentScreen]);

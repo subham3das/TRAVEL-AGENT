@@ -32,13 +32,17 @@ export function useSSE() {
           if (payload.type === "result") {
             const res = payload.data.response;
             if (res.success) {
-              setItinerary(
-                res.data.dailyPlan,
-                res.data.budgetSummary,
-                res.data.activeContext,
-                res.data.weather,
-                res.data.packing
-              );
+              if (res.data.dailyPlan) {
+                setItinerary(
+                  res.data.dailyPlan,
+                  res.data.budgetSummary,
+                  res.data.activeContext,
+                  res.data.weather,
+                  res.data.packing
+                );
+              } else if (res.data.activeContext) {
+                useItineraryStore.setState({ activeContext: res.data.activeContext });
+              }
               addMessage(res.data.composedText || "Trip structured successfully.", "assistant");
             } else {
               setError(res.errors.join(", "));
