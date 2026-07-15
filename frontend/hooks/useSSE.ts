@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { useChatStore } from "@/store/chatStore";
 import { useItineraryStore } from "@/store/itineraryStore";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function useSSE() {
   const [error, setError] = useState<string | null>(null);
@@ -11,6 +12,7 @@ export function useSSE() {
   const finalizeAssistantMessage = useChatStore((s) => s.finalizeAssistantMessage);
 
   const setItinerary = useItineraryStore((s) => s.setItinerary);
+  const queryClient = useQueryClient();
 
   const startStream = useCallback(
     (query: string, context?: any) => {
@@ -48,6 +50,8 @@ export function useSSE() {
               setError(res.errors.join(", "));
               finalizeAssistantMessage(activeId, "error", `Failed to process plan: ${res.errors.join(", ")}`);
             }
+            // Invalidate system capacity stats after completing transaction
+            queryClient.invalidateQueries({ queryKey: ["systemStatus"] });
             eventSource.close();
             setStreaming(false);
           }
@@ -55,6 +59,7 @@ export function useSSE() {
           console.error("Failed to parse SSE payload:", err);
           setError("Malformed stream data received");
           finalizeAssistantMessage(activeId, "error", "Error occurred during response generation.");
+          queryClient.invalidateQueries({ queryKey: ["systemStatus"] });
           eventSource.close();
           setStreaming(false);
         }
@@ -64,6 +69,7 @@ export function useSSE() {
         console.error("SSE stream error:", err);
         setError("Connection to stream failed");
         finalizeAssistantMessage(activeId, "error", "Connection to travel assistant was lost.");
+        queryClient.invalidateQueries({ queryKey: ["systemStatus"] });
         eventSource.close();
         setStreaming(false);
       };
@@ -80,6 +86,7 @@ export function useSSE() {
       updateAssistantMessage,
       finalizeAssistantMessage,
       setItinerary,
+      queryClient,
     ]
   );
 

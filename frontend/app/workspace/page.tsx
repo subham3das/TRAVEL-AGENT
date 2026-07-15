@@ -29,6 +29,7 @@ import { ItineraryTimeline } from "@/components/itinerary/ItineraryTimeline";
 import { BudgetSummary } from "@/components/itinerary/BudgetSummary";
 import { LeafletMap } from "@/components/map/LeafletMap";
 import { useSSE } from "@/hooks/useSSE";
+import { SystemStatusWidget } from "@/components/status/SystemStatusWidget";
 
 type ScreenState = "splash" | "home" | "ai-plan" | "trip-edit";
 
@@ -250,6 +251,7 @@ export default function WorkspacePage() {
                 </div>
 
                 <div className="flex items-center gap-3">
+                  <SystemStatusWidget />
                   <button
                     onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                     className="p-2 rounded-md hover:bg-muted text-muted transition-colors"
