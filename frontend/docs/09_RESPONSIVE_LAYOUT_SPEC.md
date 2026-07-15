@@ -1,6 +1,6 @@
 # Responsive Layout Specification - Travel Intelligence OS
 
-This document details the responsive breakpoints, fluid typography formulas, panel adaptations, and device-specific layouts.
+This document defines layout breakpoints, structural adaptations, touch interactions, and keyboard navigation systems.
 
 ---
 
@@ -39,11 +39,20 @@ We define four responsive breakpoints to scale the workspace smoothly:
 
 ---
 
-## 3. Mobile Navigation Tab Bar
-On screens below `768px`, a fixed bottom navigation bar is loaded. The bar contains three triggers:
-1. **`Timeline Tab`**: Renders the day timeline. Day selection is controlled by a sticky horizontal top bar.
-2. **`Map Tab`**: Renders the Map view full-screen, with floating action buttons to swap layers.
-3. **`Chat Tab`**: Renders the chat input field with floating bubbles.
+## 3. Responsive Screen Behaviors
+
+### Mobile Layout (390px)
+- **Single Column Viewport**: Navigation sidebar, chat inputs, timeline view, and map view collapse into a single panel.
+- **Bottom Navigation Tab Bar**: Tab bar triggers switch the active panel state `activeMobileTab` (`chat`, `timeline`, `map`). Buttons use large touch boundaries (`48px`).
+- **Collapsible Widgets**: Cards stack vertically with horizontal margins of `16px`.
+
+### Tablet Layout (768px)
+- **Split Workspace View**: Screen split between timeline and map. Navigation bar is rendered on the left, but collapses into an icon list.
+- **Pop-out Chat Overlay**: Chat panel appears as a slide-out overlay sheet rather than taking up grid columns.
+
+### Desktop Layout (1280px+)
+- **Concurrency Workspace**: Sidebar, Chat, Itinerary, and Map are all visible concurrently.
+- **Information Density**: Side panels reveal metrics, weather charts, and rule inspectors.
 
 ---
 

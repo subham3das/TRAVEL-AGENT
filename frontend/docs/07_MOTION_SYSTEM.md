@@ -1,6 +1,6 @@
 # Motion System Specification - Travel Intelligence OS
 
-This document details the Framer Motion transition curves, gesture animation physics, and structural page/card animation properties for Travel OS.
+This document details the Framer Motion transition curves, gesture animation physics, and responsive panel/card animation properties for the Travel OS.
 
 ---
 
@@ -60,7 +60,26 @@ export const workspaceVariants = {
 
 ---
 
-## 3. Card & List Animations
+## 3. Responsive Motion Adaptations
+
+### Mobile Layout (390px)
+- **Swipe-to-Close Gestures**: Details sheets support dragging down to dismiss:
+  `drag="y" dragConstraints={{ top: 0, bottom: 200 }} dragElastic={0.2}`.
+- **Scroll Snapping**: Vertical scrolling snaps on day boundaries using simple CSS snap-points:
+  `scroll-snap-type: y mandatory`.
+- **Streamlined Transitions**: Disables complex multi-element layout animations to prevent frame drops on mobile processors.
+
+### Tablet Layout (768px)
+- **Overlay Drawer enters**: Sidebar menu slides out from the left:
+  `initial={{ x: "-100%" }} animate={{ x: 0 }}`.
+
+### Desktop Layout (1280px+)
+- **Shared Layout Animations (`layoutId`)**: Tapping a card expands it in-line to show details, animating layout recalculations smoothly across the workspace.
+- **Drag-to-Reorder animations**: Reordering list items animates changes in sibling heights.
+
+---
+
+## 4. Card & List Animations
 
 ### Itinerary Days Stagger Enter
 When the itinerary page loads, day cards slide in from the bottom in sequence:
@@ -84,11 +103,3 @@ export const itemCardVariants = {
   }
 };
 ```
-
----
-
-## 4. Gesture & Scroll Animations
-- **`Drag-to-Reorder List`**: Framer Motion's `<Reorder.Group>` is configured with `layout` animations to smoothly shift items when dragged.
-- **`Scroll-Linked Maps Refocus`**: We use Framer Motion's `useScroll` Hook on the daily timeline to track the visible day card. The active day index triggers map coordinate refocusing.
-- **`Hover Actions`**: Cards lift slightly on hover (`y: -2`) using `whileHover={{ y: -2, transition: transitions.micro }}`.
-- **`Streaming Glow Animation`**: A pulsing CSS box-shadow glows on the chat boundary while messages are streaming.

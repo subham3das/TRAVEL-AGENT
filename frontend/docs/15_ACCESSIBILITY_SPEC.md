@@ -28,16 +28,25 @@ All interactive elements must support complete keyboard navigation:
 
 ---
 
-## 3. ARIA & Screen Reader Standards
+## 3. Responsive Touch & Targeting Standards
+
+### Mobile Layout (390px)
+- **Minimum Touch targets**: All buttons, triggers, and tab bar links must have an active targeting box of at least `48px` x `48px` to support mobile user thumbs.
+- **Orientation Adaptation**: In landscape view, the bottom tab bar shifts to a vertical left bar to maximize vertical reading space.
+- **Reduced Motion Support**: When the browser reads `prefers-reduced-motion: reduce`, all screen sliding, panning, and staggers are disabled, falling back to clean opacity fades.
+
+### Tablet Layout (768px)
+- **Compact touch targets**: Target areas scale to a minimum of `40px` x `40px` since cursor-based overlays or precise fingers are dominant.
+
+### Desktop Layout (1280px+)
+- **Screen Reader navigation**: Navigation links must support rapid tab hopping and heading jumps.
+
+---
+
+## 4. ARIA & Screen Reader Standards
 All custom components must declare descriptive ARIA roles and labels:
 
 - **Timeline Slots**: Each slot card declares:
   `aria-label="Activity slot: Baga Beach. Scheduled for 09:00 AM - 12:00 PM"`
 - **Streaming Explainers**: The streaming container uses the `aria-live="polite"` attribute to announce newly arrived tokens without interrupting screen reader focus.
 - **Visual-only Images**: Decorator imagery or desaturated photography details carry an empty `alt=""` attribute to prevent screen reader noise.
-
----
-
-## 4. Mobile & Touch Screen targets
-- **Touch Target Size**: Interactive buttons, swap icons, and timeline links must have a minimum target size of `44px` x `44px` on mobile layouts.
-- **Dampened Motion support**: The application reads `prefers-reduced-motion: reduce`. When active, all sliding panel transitions and staggers are disabled, reverting transitions to instant fades.

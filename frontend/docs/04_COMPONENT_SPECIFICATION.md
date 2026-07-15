@@ -26,7 +26,10 @@ This document provides technical design specifications for every reusable UI com
   - *Loading*: Input is disabled while streaming is active.
   - *Error*: Outline turns crimson if post fails.
 - **Animations**: Subtle spring hover scale transition.
-- **Responsive Behavior**: Max-width `720px`. Full-width on mobile.
+- **Responsive Behavior**:
+  - *Mobile*: Fixed to screen bottom, height `54px`, large text, full-width.
+  - *Tablet*: Fixed to bottom of Chat panel, height `48px`.
+  - *Desktop*: Embedded in the Chat sidebar panel.
 - **API Dependency**: Posts message directly to `/api/chat`.
 
 ---
@@ -58,7 +61,10 @@ This document provides technical design specifications for every reusable UI com
 - **Loading / Error / Empty States**:
   - *Loading*: Displays skeletal placeholder when replanning is active.
 - **Animations**: Slide up enter stagger. Scale hover (`1.01x`).
-- **Responsive Behavior**: Horizontal alignment on wide screens; vertical list stack on mobile.
+- **Responsive Behavior**:
+  - *Mobile*: Height `80px` card. Tap reveals details. Swiping left triggers swap action directly (one-hand friendly gesture).
+  - *Tablet*: Dynamic height based on content. Swap icon visible on card edge.
+  - *Desktop*: Drag-to-reorder enabled. Interactive hover reveals quick action popups.
 - **API Dependency**: Calls `/api/chat` with modification context on swap.
 
 ---
@@ -86,5 +92,8 @@ This document provides technical design specifications for every reusable UI com
   - `risk`: Cost is near or exceeds limits (Yellow/Red indicator bars).
 - **Accessibility**: Color-blind friendly icons. Screen reader reads cost percentages.
 - **Animations**: Smooth progress bar transition.
-- **Responsive Behavior**: Sticky right-side panel on desktop; header drop-down card on mobile.
+- **Responsive Behavior**:
+  - *Mobile*: Renders as a top-screen pull-down header element. Tap expands details list.
+  - *Tablet*: Slides out from the top navigation bar.
+  - *Desktop*: Sticky right-side panel card, showing detailed price breakdown charts.
 - **API Dependency**: Calls `/api/chat` with updated budget values.

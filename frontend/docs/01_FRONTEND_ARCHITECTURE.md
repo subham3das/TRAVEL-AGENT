@@ -51,7 +51,25 @@ To minimize client-side bundle sizes and optimize Time-To-Interactive (TTI), com
 
 ---
 
-## 3. Streaming and Suspense Architecture
+## 3. Responsive Architectural Boundaries
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        RESPONSIVE WORKSPACE BEHAVIOR                   │
+├──────────────────┬──────────────────────┬──────────────────────────────┤
+│ Mobile (390px)   │ Tablet (768px)       │ Desktop (1280px+)            │
+├──────────────────┼──────────────────────┼──────────────────────────────┤
+│ Single column    │ Two columns          │ Three panels                 │
+│ layout. Swaps    │ layout. Navigation   │ layout. Pinned Nav sidebar,  │
+│ active views     │ collapses to         │ fluid chat, itinerary        │
+│ via bottom tab   │ icon list, chat      │ timeline, and Map            │
+│ switcher.        │ overlays timeline.   │ displayed concurrently.      │
+└──────────────────┴──────────────────────┴──────────────────────────────┘
+```
+
+---
+
+## 4. Streaming and Suspense Architecture
 Trip planning computations take time. The interface utilizes Next.js **Suspense** and server-sent events (SSE) to prevent blocking the UI:
 
 1. **Immediate Skeleton**: When a trip plan is requested, the page immediately swaps layout and renders skeleton cards.
@@ -60,7 +78,7 @@ Trip planning computations take time. The interface utilizes Next.js **Suspense*
 
 ---
 
-## 4. Workspaces and Multi-Tab Navigation
+## 5. Workspaces and Multi-Tab Navigation
 The application operates in three core workspace layouts:
 1. **`Onboarding Workspace`**: A cinematic, single-focus question sequence to populate the base User Profile (preferences, pace).
 2. **`Chat Workspace`**: A distraction-free dialogue center where the user talks to the travel engine.

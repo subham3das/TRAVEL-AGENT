@@ -37,3 +37,18 @@ This document outlines the icon families, stroke styling, maps rendering guides,
   - *Stays*: A circle marker with a small home icon in warm gold.
   - *Activities*: A small pin marker in teal.
   - *Route Lines*: Polylines connecting locations must use a dashed, semi-transparent warm gold line (`stroke-dasharray="4, 4"`).
+
+---
+
+## 5. Responsive Image and Map Behaviors
+
+### Mobile Layout (390px)
+- **Lazy Loading**: All images use next/image optimization with strict priority set to lazy to conserve bandwidth.
+- **Simplified Map Layer**: Hides 3D buildings or heavy terrain rendering overlays on mobile tile loads to reduce WebGL rendering crashes on low-end devices.
+
+### Tablet Layout (768px)
+- **Inline Map Snapping**: Centers active day coordinates smoothly.
+
+### Desktop Layout (1280px+)
+- **High-Density Assets**: Renders rich 3D building outlines and interactive routing polygons with higher antialiasing metrics.
+- **Hover Previews**: Hovering over Map pins displays in-line preview images.

@@ -11,51 +11,63 @@ All source code resides inside the `frontend/` folder, structured as follows:
 ```
 frontend/
 ├── app/                        # Next.js App Router root
-│   ├── layout.js               # Root HTML structure and global CSS imports
-│   ├── page.js                 # Landing / Redirect to workspaces
+│   ├── layout.tsx              # Root HTML structure and global CSS imports
+│   ├── page.tsx                # Landing / Redirect to workspaces
 │   ├── globals.css             # Tailwind & theme variables setup
-│   ├── providers.js            # Global store and theme providers
+│   ├── providers.tsx           # Global store and theme providers
 │   ├── api/                    # Serverless API routes
 │   │   ├── chat/
-│   │   │   └── route.js        # SSE stream and chat orchestrator handler
+│   │   │   └── route.ts        # SSE stream and chat orchestrator handler
 │   │   └── trips/
-│   │       └── route.js        # Trips saving/loading API endpoint
+│   │       └── route.ts        # Trips saving/loading API endpoint
 │   ├── onboarding/
-│   │   └── page.js             # Initial profile preferences gather
+│   │   └── page.tsx            # Initial profile preferences gather
 │   └── workspace/
-│       ├── layout.js           # Navigation layouts & core grid
-│       └── page.js             # Active interactive workspaces panel
+│       ├── layout.tsx          # Navigation layouts & core grid
+│       └── page.tsx            # Active interactive workspaces panel
 ├── components/                 # Reusable Presentational UI Elements
 │   ├── chat/
-│   │   ├── ChatInput.jsx       # Chat textbox component
-│   │   └── MessageList.jsx     # Messages feed renderer
+│   │   ├── ChatInput.tsx       # Chat textbox component
+│   │   └── MessageList.tsx     # Messages feed renderer
 │   ├── itinerary/
-│   │   ├── ItineraryTimeline.jsx # Daily chronological grid
-│   │   ├── SlotCard.jsx        # Activity/lunch/stay slot card
-│   │   └── BudgetSummary.jsx   # Budget progression sidebar card
+│   │   ├── ItineraryTimeline.tsx # Daily chronological grid
+│   │   ├── SlotCard.tsx        # Activity/lunch/stay slot card
+│   │   └── BudgetSummary.tsx   # Budget progression sidebar card
 │   ├── map/
-│   │   └── LeafletMap.jsx      # Mapbox / Leaflet interactive map renderer
+│   │   └── LeafletMap.tsx      # Mapbox / Leaflet interactive map renderer
 │   └── ui/                     # Primitives (shadcn style elements)
-│       ├── button.jsx
-│       ├── input.jsx
-│       ├── dialog.jsx
-│       └── dropdown.jsx
+│       ├── button.tsx
+│       ├── input.tsx
+│       ├── dialog.tsx
+│       └── dropdown.tsx
 ├── docs/                       # Specifications & architecture documentation
 ├── hooks/                      # Custom React Hooks
-│   ├── useSSE.js               # SSE connection hook
-│   └── useKeyboard.js          # Hotkeys setup helper
+│   ├── useSSE.ts               # SSE connection hook
+│   └── useKeyboard.ts          # Hotkeys setup helper
 ├── lib/                        # Common utilities
-│   ├── utils.js                # Tailwind CSS merger
-│   └── api.js                  # Axios client setup
+│   ├── utils.ts                # Tailwind CSS merger
+│   └── api.ts                  # Axios client setup
 └── store/                      # Zustand State Management Store files
-    ├── chatStore.js
-    ├── itineraryStore.js
-    └── uiStore.js
+    ├── chatStore.ts
+    ├── itineraryStore.ts
+    └── uiStore.ts
 ```
 
 ---
 
-## 2. Folder Convention Rules
+## 2. Responsive Folder Conventions
+
+To build a single codebase, we enforce responsive conventions inside file structures:
+
+### Mobile Component Adaptations
+- Component files (e.g. `SlotCard.tsx`) must contain internal mobile responsive layouts (e.g. check screen state or use Tailwind class properties like `md:hidden` / `hidden md:block`) rather than creating separate component files.
+
+### Layout File Splits
+- The main layouts in `workspace/layout.tsx` use CSS grid systems (`grid-cols-1 lg:grid-cols-[240px_1fr_400px]`) that automatically rearrange layouts based on screen viewports, ensuring the codebase is unified.
+
+---
+
+## 3. Folder Convention Rules
 - **Components Folder**: Do NOT import state modifiers inside presentational components under `components/`. State adjustments must occur via Zustand hooks or handlers passed down from workspaces page.
 - **API routes**: Keep routes stateless. API routes merely map parameters and delegate execution pipelines to the backend.
 - **Store Files**: Keep stores independent. State updates that span multiple stores must be orchestrated by custom workspace controllers.

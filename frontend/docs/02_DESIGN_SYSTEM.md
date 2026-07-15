@@ -34,11 +34,30 @@ Token       | Value  | Use Case
 
 ---
 
-## 3. Typography Hierarchy
+## 3. Responsive Styling Behaviors
+
+### Mobile Layout (390px)
+- **Grid Column**: Single column layout. Padding: `--space-2` (16px) globally.
+- **Touch Targets**: All interactive elements (buttons, inputs) scale to a minimum height of `48px` to support thumb accessibility.
+- **Card Padding**: Inner padding capped at `--space-2` (16px) to maximize content viewport.
+
+### Tablet Layout (768px)
+- **Grid Column**: Dual column grids for side-by-side elements. Padding: `--space-3` (24px).
+- **Touch Targets**: Normal sizes (`40px` height) since cursor or precise finger taps dominate.
+- **Card Padding**: `--space-3` (24px) padding.
+
+### Desktop Layout (1280px+)
+- **Grid Column**: Triple column panel layout. Spacing padding: `--space-4` (32px) margins.
+- **Card Padding**: `--space-3` (24px) to `--space-4` (32px).
+- **Desktop Enhancements**: Secondary details (e.g. coordinates description and metrics sidebar) are revealed.
+
+---
+
+## 4. Typography Hierarchy
 We pair **Outfit** (editorial, headers) with **Inter** (precision, UI control).
 
-- **Display**: Outfit, size `48px`, weight `500`, tracking `-0.03em`. Used for destination names and primary titles.
-- **Heading 1**: Outfit, size `32px`, weight `500`, tracking `-0.02em`. Used for Day numbers (`Day 1`).
+- **Display**: Outfit, size `48px` (desktop) / `32px` (mobile), weight `500`, tracking `-0.03em`. Used for destination names and primary titles.
+- **Heading 1**: Outfit, size `32px` (desktop) / `24px` (mobile), weight `500`, tracking `-0.02em`. Used for Day numbers (`Day 1`).
 - **Heading 2**: Outfit, size `20px`, weight `500`, tracking `-0.01em`. Used for slot card titles.
 - **Body Large**: Inter, size `16px`, weight `400`, line-height `1.6`. Used for chat bubbles.
 - **Body Small**: Inter, size `14px`, weight `400`, line-height `1.5`. Used for details and metrics.
@@ -46,7 +65,7 @@ We pair **Outfit** (editorial, headers) with **Inter** (precision, UI control).
 
 ---
 
-## 4. Cards & Buttons System
+## 5. Cards & Buttons System
 - **Cards**: All cards have a border radius of `12px`, border width of `1px` (`hsl(240, 5%, 12%)`), and background of `hsl(240, 6%, 7%)`. There are NO drop shadows; depth is achieved via solid contrast.
 - **Buttons Hierarchy**:
   - *Primary Button*: White text, background warm gold (`hsl(38, 92%, 50%)`), radius `6px`. Used for booking and finalizing plans.
@@ -55,7 +74,7 @@ We pair **Outfit** (editorial, headers) with **Inter** (precision, UI control).
 
 ---
 
-## 5. Input System & State Colors
+## 6. Input System & State Colors
 - **Inputs**: Radius `8px`, border `1px solid hsl(240, 5%, 12%)`, background `hsl(240, 6%, 7%)`, text color `hsl(0, 0%, 98%)`.
 - **Status Colors**:
   - *Success*: HSL Emerald (`hsl(142, 70%, 45%)`).
@@ -65,6 +84,6 @@ We pair **Outfit** (editorial, headers) with **Inter** (precision, UI control).
 
 ---
 
-## 6. Photography & Imagery Rules
+## 7. Photography & Imagery Rules
 - **Travel Photography**: Never use generic, bright tourism stock photos. All images must be desaturated by `15%`, featuring warm, cinematic color grades (golden hour feel) and high shadow details.
 - **Icon Sizes**: Standardized to `18px` for buttons, and `24px` for headers.

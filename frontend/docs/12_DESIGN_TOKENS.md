@@ -39,10 +39,18 @@ All values are HSL-coded for ease of opacity styling.
 
 ---
 
-## 3. Shapes & Borders
-- `radius-sm`: `4px` (Tags, badges, simple buttons)
+## 3. Responsive Shape & Interactive Sizes
+
+### Touch Target Scales (Mobile-First)
+- `target-mobile`: `48px` (Buttons, inputs, icons touch borders)
+- `target-desktop`: `40px` (Compact cursor targeting sizes)
+
+### Corner Radius System
+- `radius-sm`: `4px` (Badges, tags)
 - `radius-md`: `8px` (Dropdown selectors, inputs, textareas)
-- `radius-lg`: `12px` (Itinerary day blocks, chat bubbles, drawers)
+- `radius-lg`: `12px` (Itinerary cards, chat bubbles, drawers)
+
+### Border Sizes
 - `border-thin`: `1px` (Card borders, panel separators)
 - `border-medium`: `2px` (Focus rings, active selections)
 
@@ -54,10 +62,10 @@ All values are HSL-coded for ease of opacity styling.
 - `font-header`: `Outfit, sans-serif`
 - `font-body`: `Inter, sans-serif`
 
-### Size Scales
-- `size-display`: `48px`
-- `size-h1`: `32px`
-- `size-h2`: `20px`
+### Responsive Font Sizes
+- `size-display`: `48px` (desktop) / `32px` (mobile)
+- `size-h1`: `32px` (desktop) / `24px` (mobile)
+- `size-h2`: `20px` (desktop) / `18px` (mobile)
 - `size-body-large`: `16px`
 - `size-body-small`: `14px`
 - `size-caption`: `12px`

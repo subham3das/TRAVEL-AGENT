@@ -22,7 +22,21 @@ This document details the copywriting standards, voice tone definitions, microco
 
 ---
 
-## 3. System Messaging Scripts
+## 3. Responsive Content & Label Layouts
+
+### Mobile Layout (390px)
+- **Extreme Verbose Reduction**: All button labels are shortened to single words where possible to prevent wrapping (e.g. `Swap` instead of `Swap accommodation`, `Book` instead of `Confirm booking`).
+- **Short Summaries**: Hides nested text descriptions in chat bubbles, showing only high-level entities summaries until expanded.
+
+### Tablet Layout (768px)
+- **Standard UI text length**: Fits typical multi-word labels.
+
+### Desktop Layout (1280px+)
+- **Expanded Microcopy**: Reveals secondary details and context prompts (e.g. helper descriptions under inputs fields: `Type destination and press Enter to generate a detailed 5-day route map`).
+
+---
+
+## 4. System Messaging Scripts
 
 ### Loading State Messages
 During calculations, the loader cycles through descriptive, programmatic updates:
@@ -42,7 +56,7 @@ Proposals for missing entities must be explicit and direct:
 
 ---
 
-## 4. Confirmation & Success Cards
+## 5. Confirmation & Success Cards
 Upon successful action resolution, show concise status summaries:
 - `Itinerary saved to your workspace profile.`
 - `Booking complete. Tickets and vouchers are attached.`

@@ -1,6 +1,6 @@
 # API Integration Specification - Travel Intelligence OS
 
-This document specifies the network integration architecture, data payloads, streaming lifecycle, and API policies.
+This document specifies the network integration architecture, data payloads, streaming lifecycle, and responsive API synchronization policies.
 
 ---
 
@@ -39,7 +39,22 @@ When the traveler sends a message, the frontend initiates a **Server-Sent Events
 
 ---
 
-## 3. Optimistic Updates Implementation
+## 3. Responsive API Load & Sync Policies
+
+### Mobile Layout (390px)
+- **Low Payload Limits**: Mobile requests ask for lightweight payload structures (e.g. coordinates and titles only) to minimize data consumption. Expanded reviews or photo paths are queried only on slot selection.
+- **SSE Stream Throttling**: Renders token packets in larger batch groups (every 5-10 tokens) rather than single characters to reduce UI repaint load on mobile CPU.
+
+### Tablet Layout (768px)
+- **Standard Payload**: Background rehydration retrieves standard details.
+
+### Desktop Layout (1280px+)
+- **Full Payload Fetch**: Retrieves complete, comprehensive detail structures on first request (reviews, transport schedules, maps parameters).
+- **Parallel Query Execution**: Concurrent updates on multiple days are batch-saved in parallel to optimize processing time.
+
+---
+
+## 4. Optimistic Updates Implementation
 When the user swaps an attraction:
 1. **Apply changes locally**: Modify the local day plan in `useItineraryStore` immediately.
 2. **Send network request**: POST mutation details to `/api/trips/modify` in the background.
@@ -49,7 +64,7 @@ When the user swaps an attraction:
 
 ---
 
-## 4. API Versioning
+## 5. API Versioning
 All request payloads include a header:
 `X-TravelOS-Version: v1.0.0`
 This header guarantees that payload structures match the active backend release specifications, preventing parsing issues on service updates.

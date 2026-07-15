@@ -44,15 +44,17 @@ All color variables are declared in HSL values to allow dynamic alpha adjustment
 
 ---
 
-## 2. Utility Class Mapping
+## 2. Responsive Theme Adaptations
 
-We enforce strict visual mapping rules:
+### Mobile Layout (390px)
+- **High-contrast Boundaries**: Mobile screens lack spacing depth. Borders (`border-border`) must render as solid `#1e1e24` (dark mode) / `#e4e4e9` (light mode) to separate cards cleanly under outdoor lighting conditions.
+- **Backdrop Filters Override**: Backdrop blurs (`backdrop-filter`) are simplified to solid card background colors to reduce CPU overhead.
 
-- **Surface Base**: `bg-background` (obsidian/pearl).
-- **Surface Elevation 1**: `bg-card` (deep slate/pure white).
-- **Surface Elevation 2**: `bg-muted` or `hover:bg-muted` (dark slate highlights).
-- **Borders**: `border-border` (`1px` width).
-- **Accents**: `text-primary` for action triggers, and `text-accent` for destinations and navigation indicators.
+### Tablet Layout (768px)
+- **Overlay Opacity**: Sheet overlay overlays use a darker alpha (`0.6`) mask to isolate focus.
+
+### Desktop Layout (1280px+)
+- **Refined Gradients**: Permits subtle background glowing radial highlights under map panels to indicate focus.
 
 ---
 
