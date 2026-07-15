@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { AlertTriangle, TrendingUp, DollarSign } from "lucide-react";
+import { AlertTriangle, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface BudgetSummaryProps {
@@ -25,18 +25,22 @@ export function BudgetSummary({
   const isOverBudget = totalCost > budgetLimit;
 
   return (
-    <div className="border border-border rounded-lg p-5 bg-card space-y-4">
+    <div
+      className="border border-border rounded-lg p-5 bg-card space-y-4"
+      role="region"
+      aria-label="Budget summary details"
+    >
       <div className="flex items-center justify-between">
         <h4 className="text-sm font-heading font-semibold text-foreground">
           Budget Progression
         </h4>
         {isOverBudget ? (
-          <div className="flex items-center gap-1 text-xs font-mono font-semibold text-destructive animate-pulse">
+          <div className="flex items-center gap-1 text-xs font-mono font-semibold text-destructive animate-pulse" role="status">
             <AlertTriangle className="h-3.5 w-3.5" />
             <span>Over Budget</span>
           </div>
         ) : (
-          <div className="flex items-center gap-1 text-xs font-mono font-semibold text-emerald-500">
+          <div className="flex items-center gap-1 text-xs font-mono font-semibold text-emerald-500" role="status">
             <TrendingUp className="h-3.5 w-3.5" />
             <span>Optimal Allocations</span>
           </div>
@@ -49,7 +53,7 @@ export function BudgetSummary({
           <span className="text-muted">Total Cost: ₹{totalCost}</span>
           <span className="text-foreground font-semibold">Limit: ₹{budgetLimit}</span>
         </div>
-        <div className="h-2 w-full bg-muted/40 rounded-full overflow-hidden">
+        <div className="h-2.5 w-full bg-muted/40 rounded-full overflow-hidden" aria-hidden="true">
           <div
             className={cn(
               "h-full transition-all duration-500",
@@ -63,7 +67,7 @@ export function BudgetSummary({
       {/* Slider */}
       {onLimitChange && (
         <div className="space-y-1.5 pt-2">
-          <label className="text-[11px] text-muted font-mono" htmlFor="budget-limit-slider">
+          <label className="text-[11px] text-muted font-mono block" htmlFor="budget-limit-slider">
             Adjust Budget Cap:
           </label>
           <input
@@ -74,12 +78,12 @@ export function BudgetSummary({
             step={5000}
             value={budgetLimit}
             onChange={(e) => onLimitChange(Number(e.target.value))}
-            className="w-full h-1 bg-muted accent-primary rounded-lg cursor-pointer"
+            className="w-full h-2 bg-muted accent-primary rounded-lg cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           />
         </div>
       )}
 
-      {/* Breakdown breakdown */}
+      {/* Breakdown */}
       <div className="grid grid-cols-2 gap-3 pt-3 border-t border-border/80 text-xs font-mono">
         <div>
           <span className="text-muted block">Stays</span>

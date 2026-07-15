@@ -4,7 +4,8 @@ import * as React from "react";
 import { Message } from "@/store/chatStore";
 import { Terminal, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-// Let's define the local transitions since referencing markdown is not possible:
+import { SkeletonCard } from "@/components/ui/SkeletonCard";
+
 const smoothTransition = { type: "spring" as const, stiffness: 260, damping: 26 };
 
 interface MessageListProps {
@@ -29,7 +30,11 @@ export function MessageList({
   }, [messages, currentTokens, showClarification]);
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4 max-w-[720px] mx-auto w-full">
+    <div
+      className="flex-1 overflow-y-auto p-4 space-y-4 max-w-[720px] mx-auto w-full"
+      role="log"
+      aria-label="Conversation Feed"
+    >
       <AnimatePresence initial={false}>
         {messages.map((msg) => (
           <motion.div
@@ -48,7 +53,7 @@ export function MessageList({
                   ? "bg-card text-foreground border border-border"
                   : msg.role === "system"
                   ? "text-primary font-mono text-xs"
-                  : "text-foreground font-heading"
+                  : "text-foreground font-heading border border-border bg-card/50"
               }`}
             >
               {msg.text}
@@ -69,11 +74,25 @@ export function MessageList({
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-start"
           >
-            <div className="max-w-[85%] px-4 py-2.5 rounded-lg text-sm leading-relaxed text-foreground font-heading border-l-2 border-primary bg-card/30">
+            <div
+              className="max-w-[85%] px-4 py-2.5 rounded-lg text-sm leading-relaxed text-foreground font-heading border-l-2 border-primary bg-card/30"
+              aria-live="polite"
+            >
               {currentTokens}
               <span className="inline-block w-1.5 h-4 bg-primary animate-pulse ml-0.5" />
             </div>
           </motion.div>
+        )}
+
+        {/* Streaming Loading Skeletons */}
+        {isStreaming && !currentTokens && (
+          <div className="space-y-2 w-full max-w-[85%]">
+            <div className="text-[10px] font-mono text-muted uppercase animate-pulse">
+              Orchestrator calculating itinerary parameters...
+            </div>
+            <SkeletonCard variant="text" />
+            <SkeletonCard variant="slot" className="h-10" />
+          </div>
         )}
 
         {/* Collapsible System Logs */}
@@ -118,7 +137,7 @@ export function MessageList({
                 <button
                   key={opt}
                   onClick={() => onSelectOption(opt)}
-                  className="py-1.5 px-3 text-xs font-medium border border-border hover:border-primary hover:bg-muted/50 rounded-full transition-all"
+                  className="py-1.5 px-3 text-xs font-medium border border-border hover:border-primary hover:bg-muted/50 rounded-full transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                 >
                   {opt}
                 </button>

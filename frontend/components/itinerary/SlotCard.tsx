@@ -34,29 +34,32 @@ export function SlotCard({
     e.stopPropagation();
     if (onSwap) {
       setIsSwapping(true);
-      setTimeout(() => setIsSwapping(false), 800); // Simulate swap action animation duration
+      setTimeout(() => setIsSwapping(false), 800);
       onSwap(id);
     }
   };
 
   return (
     <motion.div
-      whileHover={{ y: -2 }}
+      whileHover={{ y: -1, borderColor: "var(--color-primary)" }}
+      transition={{ duration: 0.2 }}
       className={cn(
         "relative flex flex-col w-full border rounded-lg p-4 bg-card transition-all",
         type === "stay"
-          ? "border-primary/30 bg-primary/5"
-          : "border-border hover:border-primary/20",
+          ? "border-primary/20 bg-primary/[0.02]"
+          : "border-border/70",
       )}
+      role="listitem"
+      aria-label={`${type} event: ${title} at ${time}`}
     >
       {/* Transit line header */}
       {transitTimeMinutes > 0 && (
-        <div className="absolute -top-3.5 left-6 flex items-center gap-1.5 px-2 py-0.5 bg-muted/40 rounded-full border border-border text-[10px] text-muted font-mono">
+        <div className="absolute -top-3 left-6 flex items-center gap-1.5 px-2.5 py-0.5 bg-muted/40 rounded-full border border-border text-[9px] text-muted font-mono">
           <span>{transitTimeMinutes} min transit</span>
         </div>
       )}
 
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div
             className={cn(
@@ -77,7 +80,7 @@ export function SlotCard({
             )}
           </div>
           <div>
-            <span className="text-[10px] font-semibold text-muted tracking-wider uppercase">
+            <span className="text-[10px] font-semibold text-muted tracking-wider uppercase block">
               {time}
             </span>
             <h4 className="text-sm font-heading font-semibold text-foreground mt-0.5">
@@ -93,7 +96,7 @@ export function SlotCard({
 
         <div className="flex items-center gap-2.5">
           {rating && (
-            <div className="flex items-center gap-1 text-[11px] text-primary">
+            <div className="flex items-center gap-1 text-[11px] text-primary" aria-label={`Rating: ${rating} stars`}>
               <Star className="h-3 w-3 fill-current" />
               <span>{rating}</span>
             </div>
@@ -107,8 +110,8 @@ export function SlotCard({
             <button
               onClick={handleSwapClick}
               disabled={isSwapping}
-              className="p-1.5 rounded hover:bg-muted text-muted hover:text-foreground transition-colors disabled:opacity-50"
-              aria-label={`Swap ${title}`}
+              className="p-2 rounded hover:bg-muted text-muted hover:text-foreground transition-colors disabled:opacity-50 h-10 w-10 flex items-center justify-center focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              aria-label={`Swap ${title} option`}
             >
               <RefreshCw
                 className={cn("h-3.5 w-3.5", isSwapping && "animate-spin")}

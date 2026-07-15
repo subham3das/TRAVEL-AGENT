@@ -18,9 +18,11 @@ import {
   CloudSun,
   Briefcase,
   Play,
-  Share2,
   Trash2,
-  Check
+  Check,
+  AlertTriangle,
+  RefreshCw,
+  Info
 } from "lucide-react";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { MessageList } from "@/components/chat/MessageList";
@@ -28,6 +30,7 @@ import { ItineraryTimeline } from "@/components/itinerary/ItineraryTimeline";
 import { BudgetSummary } from "@/components/itinerary/BudgetSummary";
 import { LeafletMap } from "@/components/map/LeafletMap";
 import { MOCK_GOA_TRIP } from "@/lib/mockData";
+import { SkeletonCard } from "@/components/ui/SkeletonCard";
 
 type ScreenState = "splash" | "home" | "ai-plan" | "trip-edit";
 
@@ -56,6 +59,10 @@ export default function WorkspacePage() {
   const [weatherInfo, setWeatherInfo] = React.useState<any>(null);
   const [packingList, setPackingList] = React.useState<string[]>([]);
 
+  // Simulation flags for error testing
+  const [errorActive, setErrorActive] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState("");
+
   // 1. Splash Timeout
   React.useEffect(() => {
     if (currentScreen === "splash") {
@@ -68,13 +75,24 @@ export default function WorkspacePage() {
 
   // 2. Mock AI Request flow simulating progressive reveal
   const handleSendMessage = (text: string) => {
+    if (text.toLowerCase().includes("fail") || text.toLowerCase().includes("error")) {
+      addMessage(text, "user");
+      setStreaming(true);
+      setCurrentScreen("ai-plan");
+      setTimeout(() => {
+        setStreaming(false);
+        setErrorMsg("Gateway timeout: backend engine unavailable (Simulated Error).");
+        setErrorActive(true);
+      }, 1500);
+      return;
+    }
+
     addMessage(text, "user");
     setStreaming(true);
     setCurrentScreen("ai-plan");
 
     // Simulate system trace logs
     setTimeout(() => {
-      // Simulate token stream
       const tokens = MOCK_GOA_TRIP.data.composedText.split(" ");
       let tokenIdx = 0;
 
@@ -94,8 +112,15 @@ export default function WorkspacePage() {
             setCurrentScreen("trip-edit");
           }, 800);
         }
-      }, 100);
+      }, 85);
     }, 1500);
+  };
+
+  const handleRetry = () => {
+    setErrorActive(false);
+    setErrorMsg("");
+    clearChat();
+    handleSendMessage("Plan a 5 day Goa trip");
   };
 
   // Local card mutation swap
@@ -119,6 +144,8 @@ export default function WorkspacePage() {
   const handleStartPlanning = () => {
     clearChat();
     clearItinerary();
+    setErrorActive(false);
+    setErrorMsg("");
     setCurrentScreen("ai-plan");
   };
 
@@ -135,15 +162,15 @@ export default function WorkspacePage() {
             className="fixed inset-0 z-50 flex items-center justify-center bg-black"
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
+              initial={{ scale: 0.97, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
               className="text-center space-y-2"
             >
               <h1 className="text-3xl font-heading font-semibold tracking-wider text-primary uppercase">
                 Travel OS
               </h1>
-              <p className="text-xs font-mono text-muted tracking-widest uppercase opacity-60">
+              <p className="text-[10px] font-mono text-muted tracking-widest uppercase opacity-60">
                 Intelligence Engine
               </p>
             </motion.div>
@@ -226,11 +253,18 @@ export default function WorkspacePage() {
                 )}
               </div>
 
-              <div className="p-4 border-t border-border flex items-center justify-between">
-                <button className="flex items-center gap-2 text-xs font-mono text-muted hover:text-foreground">
-                  <Settings className="h-4 w-4" />
-                  <span>v1.0.0-rc1</span>
+              <div className="p-4 border-t border-border flex flex-col gap-2">
+                {/* Simulated Error triggers */}
+                <button
+                  onClick={() => {
+                    setErrorMsg("Connection Timeout (Simulated).");
+                    setErrorActive(true);
+                  }}
+                  className="w-full text-left text-[10px] font-mono text-muted/60 hover:text-primary transition-colors"
+                >
+                  [Simulate Timeout Alert]
                 </button>
+                <div className="text-[9px] font-mono text-muted/40">v1.0.0-rc1</div>
               </div>
             </aside>
 
@@ -269,6 +303,33 @@ export default function WorkspacePage() {
 
               {/* View Screen Switcher */}
               <main className="flex-1 overflow-y-auto p-6 bg-background relative">
+                {/* Active Error Panel */}
+                <AnimatePresence>
+                  {errorActive && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="max-w-md mx-auto mb-6 p-4 border border-destructive/30 bg-destructive/5 rounded-lg flex items-start gap-3"
+                    >
+                      <AlertTriangle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+                      <div className="flex-1 space-y-2">
+                        <h4 className="text-xs font-semibold text-destructive uppercase tracking-wider">
+                          Connection Interrupted
+                        </h4>
+                        <p className="text-xs text-muted leading-relaxed">{errorMsg}</p>
+                        <button
+                          onClick={handleRetry}
+                          className="py-1.5 px-3 bg-destructive/15 hover:bg-destructive/20 text-[11px] font-semibold text-destructive rounded flex items-center gap-1.5 transition-colors"
+                        >
+                          <RefreshCw className="h-3 w-3" />
+                          <span>Retry Query</span>
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
                 <AnimatePresence mode="wait">
                   {/* State 2: Home Discovery Screen */}
                   {currentScreen === "home" && (
@@ -290,29 +351,37 @@ export default function WorkspacePage() {
 
                       {dailyPlan ? (
                         <div className="border border-border bg-card rounded-lg p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                          <div>
-                            <span className="text-[10px] font-semibold text-primary uppercase tracking-wider">
+                          <div className="space-y-1">
+                            <span className="text-[10px] font-semibold text-primary uppercase tracking-wider block">
                               Continue Planning
                             </span>
-                            <h3 className="text-base font-semibold mt-1">Goa Expedition</h3>
-                            <p className="text-xs text-muted mt-0.5">
+                            <h3 className="text-base font-semibold">Goa Expedition</h3>
+                            <p className="text-xs text-muted">
                               5 days structured with optimized budget allotments.
                             </p>
                           </div>
                           <button
                             onClick={() => setCurrentScreen("trip-edit")}
-                            className="py-2 px-4 text-xs font-semibold bg-primary text-white hover:bg-primary/95 rounded-md flex items-center gap-1.5 self-stretch md:self-auto justify-center"
+                            className="py-2.5 px-4 text-xs font-semibold bg-primary text-white hover:bg-primary/95 rounded-md flex items-center gap-1.5 self-stretch md:self-auto justify-center"
                           >
                             <span>Open Journal</span>
                             <ArrowRight className="h-3.5 w-3.5" />
                           </button>
                         </div>
                       ) : (
-                        <div className="border border-dashed border-border rounded-lg p-8 text-center space-y-4">
-                          <p className="text-sm text-muted">No active itineraries in your profile workspace yet.</p>
+                        <div className="border border-dashed border-border rounded-lg p-10 text-center space-y-4">
+                          <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                            <Compass className="h-6 w-6" />
+                          </div>
+                          <div className="space-y-1 max-w-sm mx-auto">
+                            <h3 className="text-sm font-semibold">Create your first itinerary</h3>
+                            <p className="text-xs text-muted leading-relaxed">
+                              Use the conversational planner to generate detailed routes, stays, and budget matrices.
+                            </p>
+                          </div>
                           <button
                             onClick={handleStartPlanning}
-                            className="py-2.5 px-6 text-xs font-semibold bg-primary text-white hover:bg-primary/90 rounded-md inline-flex items-center gap-2"
+                            className="py-2.5 px-6 text-xs font-semibold bg-primary text-white hover:bg-primary/90 rounded-md inline-flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                           >
                             <span>Start Planning</span>
                             <ArrowRight className="h-3.5 w-3.5" />
@@ -327,13 +396,17 @@ export default function WorkspacePage() {
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {[
-                            { name: "Jaipur", desc: "Palaces and heritage sites in Rajasthan." },
-                            { name: "Munnar", desc: "Chilled hill stations and tea gardens." }
+                            { name: "Jaipur", desc: "Heritage discovery through historic palaces and temples." },
+                            { name: "Munnar", desc: "Tea gardens and forest trails in Kerala." }
                           ].map((dest) => (
                             <div
                               key={dest.name}
                               onClick={handleStartPlanning}
                               className="group border border-border hover:border-primary/20 bg-card rounded-lg p-5 cursor-pointer transition-all"
+                              role="button"
+                              tabIndex={0}
+                              onKeyDown={(e) => e.key === "Enter" && handleStartPlanning()}
+                              aria-label={`Explore ${dest.name}`}
                             >
                               <h4 className="text-sm font-semibold group-hover:text-primary transition-colors">
                                 {dest.name}
@@ -404,13 +477,13 @@ export default function WorkspacePage() {
                                 clearItinerary();
                                 setCurrentScreen("home");
                               }}
-                              className="p-2 border border-border hover:bg-muted rounded text-muted hover:text-foreground"
+                              className="p-2 border border-border hover:bg-muted rounded text-muted hover:text-foreground h-9 w-9 flex items-center justify-center transition-colors"
                               aria-label="Delete Trip"
                             >
                               <Trash2 className="h-4 w-4" />
                             </button>
                             <button
-                              className="py-1.5 px-3 bg-primary text-white text-xs font-semibold rounded hover:bg-primary/95 flex items-center gap-1.5"
+                              className="py-1.5 px-3 bg-primary text-white text-xs font-semibold rounded hover:bg-primary/95 flex items-center gap-1.5 h-9"
                               onClick={() => alert("Itinerary saved successfully!")}
                             >
                               <Check className="h-3.5 w-3.5" />
