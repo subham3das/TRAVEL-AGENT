@@ -42,7 +42,6 @@ export default function WorkspacePage() {
   const messages = useChatStore((s) => s.messages);
   const addMessage = useChatStore((s) => s.addMessage);
   const isStreaming = useChatStore((s) => s.isStreaming);
-  const currentTokens = useChatStore((s) => s.currentTokens);
   const clearChat = useChatStore((s) => s.clearChat);
 
   const dailyPlan = useItineraryStore((s) => s.dailyPlan);
@@ -393,7 +392,6 @@ export default function WorkspacePage() {
                         <MessageList
                           messages={messages}
                           isStreaming={isStreaming}
-                          currentTokens={currentTokens}
                           showClarification={showClarification}
                           onSelectOption={(opt) => {
                             setShowClarification(false);

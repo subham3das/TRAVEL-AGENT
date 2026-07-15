@@ -11,7 +11,6 @@ const smoothTransition = { type: "spring" as const, stiffness: 260, damping: 26 
 interface MessageListProps {
   messages: Message[];
   isStreaming: boolean;
-  currentTokens?: string;
   onSelectOption?: (option: string) => void;
   showClarification?: boolean;
 }
@@ -19,7 +18,6 @@ interface MessageListProps {
 export function MessageList({
   messages,
   isStreaming,
-  currentTokens = "",
   onSelectOption,
   showClarification = false,
 }: MessageListProps) {
@@ -27,7 +25,11 @@ export function MessageList({
 
   React.useEffect(() => {
     listEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, currentTokens, showClarification]);
+  }, [messages, showClarification]);
+
+  // Check if we have an active assistant message currently being populated
+  const activeMsg = messages.find((m) => m.id === "active-assistant");
+  const showSkeleton = isStreaming && activeMsg && !activeMsg.text;
 
   return (
     <div
@@ -36,68 +38,65 @@ export function MessageList({
       aria-label="Conversation Feed"
     >
       <AnimatePresence initial={false}>
-        {messages.map((msg) => (
-          <motion.div
-            key={msg.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={smoothTransition}
-            className={`flex flex-col ${
-              msg.role === "user" ? "items-end" : "items-start"
-            }`}
-          >
-            <div
-              className={`max-w-[85%] px-4 py-2.5 rounded-lg text-sm leading-relaxed ${
-                msg.role === "user"
-                  ? "bg-card text-foreground border border-border"
-                  : msg.role === "system"
-                  ? "text-primary font-mono text-xs"
-                  : "text-foreground font-heading border border-border bg-card/50"
+        {messages.map((msg) => {
+          // If the message is the active assistant message and it is empty, we show a custom placeholder skeleton instead of empty bubble
+          if (msg.id === "active-assistant" && !msg.text) {
+            return (
+              <motion.div
+                key="active-assistant-loading"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="space-y-2 w-full max-w-[85%]"
+              >
+                <div className="text-[10px] font-mono text-muted uppercase animate-pulse">
+                  Orchestrator calculating itinerary parameters...
+                </div>
+                <SkeletonCard variant="text" />
+                <SkeletonCard variant="slot" className="h-10" />
+              </motion.div>
+            );
+          }
+
+          return (
+            <motion.div
+              key={msg.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={smoothTransition}
+              className={`flex flex-col ${
+                msg.role === "user" ? "items-end" : "items-start"
               }`}
             >
-              {msg.text}
-            </div>
-            <span className="text-[10px] text-muted opacity-40 mt-1 px-1">
-              {new Date(msg.timestamp).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </span>
-          </motion.div>
-        ))}
-
-        {/* Streaming tokens panel */}
-        {isStreaming && currentTokens && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col items-start"
-          >
-            <div
-              className="max-w-[85%] px-4 py-2.5 rounded-lg text-sm leading-relaxed text-foreground font-heading border-l-2 border-primary bg-card/30"
-              aria-live="polite"
-            >
-              {currentTokens}
-              <span className="inline-block w-1.5 h-4 bg-primary animate-pulse ml-0.5" />
-            </div>
-          </motion.div>
-        )}
-
-        {/* Streaming Loading Skeletons */}
-        {isStreaming && !currentTokens && (
-          <div className="space-y-2 w-full max-w-[85%]">
-            <div className="text-[10px] font-mono text-muted uppercase animate-pulse">
-              Orchestrator calculating itinerary parameters...
-            </div>
-            <SkeletonCard variant="text" />
-            <SkeletonCard variant="slot" className="h-10" />
-          </div>
-        )}
+              <div
+                className={`max-w-[85%] px-4 py-2.5 rounded-lg text-sm leading-relaxed ${
+                  msg.role === "user"
+                    ? "bg-card text-foreground border border-border"
+                    : msg.role === "system"
+                    ? "text-primary font-mono text-xs"
+                    : "text-foreground font-heading border border-border bg-card/50"
+                }`}
+              >
+                {msg.text}
+                {msg.id === "active-assistant" && (
+                  <span className="inline-block w-1.5 h-4 bg-primary animate-pulse ml-0.5" />
+                )}
+              </div>
+              <span className="text-[10px] text-muted opacity-40 mt-1 px-1">
+                {new Date(msg.timestamp).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
+            </motion.div>
+          );
+        })}
 
         {/* Collapsible System Logs */}
         {isStreaming && (
           <motion.div
+            key="system-intercept-logs"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             className="w-full bg-card/40 border border-border rounded-lg p-3 font-mono text-xs text-muted/80 space-y-1.5"
@@ -122,6 +121,7 @@ export function MessageList({
         {/* Inline Clarification Pills */}
         {showClarification && onSelectOption && (
           <motion.div
+            key="clarification-required-pills"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="w-full border border-border bg-card p-4 rounded-lg space-y-3"

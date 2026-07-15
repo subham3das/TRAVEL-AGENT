@@ -4,9 +4,12 @@ import { useItineraryStore } from "@/store/itineraryStore";
 
 export function useSSE() {
   const [error, setError] = useState<string | null>(null);
-  const appendTokens = useChatStore((s) => s.appendTokens);
-  const setStreaming = useChatStore((s) => s.setStreaming);
   const addMessage = useChatStore((s) => s.addMessage);
+  const setStreaming = useChatStore((s) => s.setStreaming);
+  const startAssistantMessage = useChatStore((s) => s.startAssistantMessage);
+  const updateActiveAssistantMessage = useChatStore((s) => s.updateActiveAssistantMessage);
+  const finalizeAssistantMessage = useChatStore((s) => s.finalizeAssistantMessage);
+
   const setItinerary = useItineraryStore((s) => s.setItinerary);
 
   const startStream = useCallback(
@@ -15,6 +18,7 @@ export function useSSE() {
       setStreaming(true);
       
       addMessage(query, "user");
+      startAssistantMessage();
 
       const contextParam = context ? `&context=${encodeURIComponent(JSON.stringify(context))}` : "";
       const eventSource = new EventSource(
@@ -26,27 +30,23 @@ export function useSSE() {
           const payload = JSON.parse(event.data);
 
           if (payload.type === "token") {
-            appendTokens(payload.data.token);
+            updateActiveAssistantMessage(payload.data.token);
           }
 
           if (payload.type === "result") {
             const res = payload.data.response;
             if (res.success) {
-              if (res.data.dailyPlan) {
-                setItinerary(
-                  res.data.dailyPlan,
-                  res.data.budgetSummary,
-                  res.data.activeContext,
-                  res.data.weather,
-                  res.data.packing
-                );
-              } else if (res.data.activeContext) {
-                useItineraryStore.setState({ activeContext: res.data.activeContext });
-              }
-              addMessage(res.data.composedText || "Trip structured successfully.", "assistant");
+              setItinerary(
+                res.data.dailyPlan,
+                res.data.budgetSummary,
+                res.data.activeContext,
+                res.data.weather,
+                res.data.packing
+              );
+              finalizeAssistantMessage(res.data.composedText || "Trip structured successfully.");
             } else {
               setError(res.errors.join(", "));
-              addMessage(`Failed to process plan: ${res.errors.join(", ")}`, "assistant");
+              finalizeAssistantMessage(`Failed to process plan: ${res.errors.join(", ")}`);
             }
             eventSource.close();
             setStreaming(false);
@@ -54,6 +54,7 @@ export function useSSE() {
         } catch (err) {
           console.error("Failed to parse SSE payload:", err);
           setError("Malformed stream data received");
+          finalizeAssistantMessage("Error occurred during response generation.");
           eventSource.close();
           setStreaming(false);
         }
@@ -62,6 +63,7 @@ export function useSSE() {
       eventSource.onerror = (err) => {
         console.error("SSE stream error:", err);
         setError("Connection to stream failed");
+        finalizeAssistantMessage("Connection to travel assistant was lost.");
         eventSource.close();
         setStreaming(false);
       };
@@ -71,7 +73,14 @@ export function useSSE() {
         setStreaming(false);
       };
     },
-    [addMessage, appendTokens, setStreaming, setItinerary]
+    [
+      addMessage,
+      setStreaming,
+      startAssistantMessage,
+      updateActiveAssistantMessage,
+      finalizeAssistantMessage,
+      setItinerary,
+    ]
   );
 
   return { startStream, error };
