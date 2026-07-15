@@ -27,10 +27,6 @@ export function MessageList({
     listEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, showClarification]);
 
-  // Check if we have an active assistant message currently being populated
-  const activeMsg = messages.find((m) => m.id === "active-assistant");
-  const showSkeleton = isStreaming && activeMsg && !activeMsg.text;
-
   return (
     <div
       className="flex-1 overflow-y-auto p-4 space-y-4 max-w-[720px] mx-auto w-full"
@@ -39,11 +35,11 @@ export function MessageList({
     >
       <AnimatePresence initial={false}>
         {messages.map((msg) => {
-          // If the message is the active assistant message and it is empty, we show a custom placeholder skeleton instead of empty bubble
-          if (msg.id === "active-assistant" && !msg.text) {
+          // If the message is currently streaming but carries empty text, render a placeholder skeleton card
+          if (msg.status === "streaming" && !msg.text) {
             return (
               <motion.div
-                key="active-assistant-loading"
+                key={msg.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
@@ -79,7 +75,7 @@ export function MessageList({
                 }`}
               >
                 {msg.text}
-                {msg.id === "active-assistant" && (
+                {msg.status === "streaming" && (
                   <span className="inline-block w-1.5 h-4 bg-primary animate-pulse ml-0.5" />
                 )}
               </div>

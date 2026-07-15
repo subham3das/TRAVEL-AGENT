@@ -7,7 +7,7 @@ export function useSSE() {
   const addMessage = useChatStore((s) => s.addMessage);
   const setStreaming = useChatStore((s) => s.setStreaming);
   const startAssistantMessage = useChatStore((s) => s.startAssistantMessage);
-  const updateActiveAssistantMessage = useChatStore((s) => s.updateActiveAssistantMessage);
+  const updateAssistantMessage = useChatStore((s) => s.updateAssistantMessage);
   const finalizeAssistantMessage = useChatStore((s) => s.finalizeAssistantMessage);
 
   const setItinerary = useItineraryStore((s) => s.setItinerary);
@@ -18,7 +18,7 @@ export function useSSE() {
       setStreaming(true);
       
       addMessage(query, "user");
-      startAssistantMessage();
+      const activeId = startAssistantMessage();
 
       const contextParam = context ? `&context=${encodeURIComponent(JSON.stringify(context))}` : "";
       const eventSource = new EventSource(
@@ -30,7 +30,7 @@ export function useSSE() {
           const payload = JSON.parse(event.data);
 
           if (payload.type === "token") {
-            updateActiveAssistantMessage(payload.data.token);
+            updateAssistantMessage(activeId, payload.data.token);
           }
 
           if (payload.type === "result") {
@@ -43,10 +43,10 @@ export function useSSE() {
                 res.data.weather,
                 res.data.packing
               );
-              finalizeAssistantMessage(res.data.composedText || "Trip structured successfully.");
+              finalizeAssistantMessage(activeId, "complete", res.data.composedText || "Trip planned.");
             } else {
               setError(res.errors.join(", "));
-              finalizeAssistantMessage(`Failed to process plan: ${res.errors.join(", ")}`);
+              finalizeAssistantMessage(activeId, "error", `Failed to process plan: ${res.errors.join(", ")}`);
             }
             eventSource.close();
             setStreaming(false);
@@ -54,7 +54,7 @@ export function useSSE() {
         } catch (err) {
           console.error("Failed to parse SSE payload:", err);
           setError("Malformed stream data received");
-          finalizeAssistantMessage("Error occurred during response generation.");
+          finalizeAssistantMessage(activeId, "error", "Error occurred during response generation.");
           eventSource.close();
           setStreaming(false);
         }
@@ -63,7 +63,7 @@ export function useSSE() {
       eventSource.onerror = (err) => {
         console.error("SSE stream error:", err);
         setError("Connection to stream failed");
-        finalizeAssistantMessage("Connection to travel assistant was lost.");
+        finalizeAssistantMessage(activeId, "error", "Connection to travel assistant was lost.");
         eventSource.close();
         setStreaming(false);
       };
@@ -77,7 +77,7 @@ export function useSSE() {
       addMessage,
       setStreaming,
       startAssistantMessage,
-      updateActiveAssistantMessage,
+      updateAssistantMessage,
       finalizeAssistantMessage,
       setItinerary,
     ]
