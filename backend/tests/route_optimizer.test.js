@@ -8,6 +8,27 @@ const loadRes = knowledgeService.loadKnowledge();
 assert.ok(loadRes.success, "Failed to load Knowledge Graph");
 console.log(`Loaded ${loadRes.loadedCount} nodes successfully.\n`);
 
+// Programmatically seed mock hotel nodes into knowledge cache for testing
+const cache = require("../knowledge/cache/knowledge_cache");
+cache.set("goa_hotel_taj", {
+  id: "goa_hotel_taj",
+  type: "stay",
+  destinationId: "goa",
+  location: { latitude: 15.2638, longitude: 73.9348 }
+});
+cache.set("goa_hotel_budget", {
+  id: "goa_hotel_budget",
+  type: "stay",
+  destinationId: "goa",
+  location: { latitude: 15.280, longitude: 74.105 }
+});
+cache.set("goa_attraction_bom_jesus", {
+  id: "goa_attraction_bom_jesus",
+  type: "attraction",
+  destinationId: "goa",
+  coordinates: { latitude: 27.175, longitude: 78.042 }
+});
+
 function createMockImprovedItinerary(slots = [], spend = 5000) {
   return {
     destination: "Goa",

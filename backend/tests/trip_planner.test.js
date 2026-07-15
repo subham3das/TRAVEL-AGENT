@@ -8,6 +8,13 @@ const loadRes = knowledgeService.loadKnowledge();
 assert.ok(loadRes.success, "Failed to load Knowledge Graph");
 console.log(`Loaded ${loadRes.loadedCount} nodes successfully.\n`);
 
+// Programmatically adjust Baga Beach rain suitability for testing
+const cache = require("../knowledge/cache/knowledge_cache");
+const bagaNode = cache.get("goa_attraction_baga_beach");
+if (bagaNode) {
+  bagaNode.weatherProfile = { ...bagaNode.weatherProfile, rain: 15 };
+}
+
 async function testSoloTrip() {
   console.log("Running Test: Solo Trip...");
   const context = {

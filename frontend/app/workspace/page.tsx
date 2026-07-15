@@ -55,7 +55,7 @@ export default function WorkspacePage() {
 
   const { startStream, error: sseError } = useSSE();
   const [budgetLimit, setBudgetLimit] = React.useState(40000);
-  const [showClarification, setShowClarification] = React.useState(false);
+  const showClarification = activeContext?.state?.conversationState?.currentState === "WAITING_FOR_CLARIFICATION";
 
   // 1. Splash Timeout
   React.useEffect(() => {
@@ -70,21 +70,12 @@ export default function WorkspacePage() {
   // 2. Transition automatically when plan loads
   React.useEffect(() => {
     if (dailyPlan && dailyPlan.length > 0 && currentScreen === "ai-plan") {
-      setCurrentScreen("trip-edit");
+      const timer = setTimeout(() => {
+        setCurrentScreen("trip-edit");
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, [dailyPlan, currentScreen]);
-
-  // Check for clarification states in context
-  React.useEffect(() => {
-    if (
-      activeContext?.state?.conversationState?.currentState ===
-      "WAITING_FOR_CLARIFICATION"
-    ) {
-      setShowClarification(true);
-    } else {
-      setShowClarification(false);
-    }
-  }, [activeContext]);
 
   // 3. Connect real SSE handler
   const handleSendMessage = (text: string) => {
