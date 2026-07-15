@@ -5,93 +5,59 @@ import pineconeConfig from "../config/pinecone.config.js";
 async function run() {
   console.log("=== STARTING PINECONE INTEGRATION VALIDATION ===");
 
-  // 1. Verify environment loaded & API key detected
-  console.log("Step 1: Verifying environment configuration...");
+  // 1. Environment & Config
   assert.ok(pineconeConfig, "Centralized configuration loader must be loaded.");
-  assert.ok(pineconeConfig.apiKey, "Pinecone API Key (PINECONE_API_KEY) must be detected in configuration.");
-  assert.ok(pineconeConfig.indexName, "Pinecone Index Name (PINECONE_INDEX) must be detected in configuration.");
-  console.log("  => Configuration loaded successfully.");
-  console.log(`     API Key: Detected (${pineconeConfig.apiKey.substring(0, 10)}...)`);
-  console.log(`     Index: ${pineconeConfig.indexName}`);
+  assert.ok(pineconeConfig.apiKey, "Pinecone API Key (PINECONE_API_KEY) must be detected.");
+  assert.ok(pineconeConfig.indexName, "Pinecone Index Name (PINECONE_INDEX) must be detected.");
+  console.log("Environment ✓");
 
-  // 2. Verify Pinecone client initialized
-  console.log("Step 2: Initializing Pinecone client...");
+  // 2. Pinecone client initialization
   let pc;
   try {
     pc = new Pinecone({
       apiKey: pineconeConfig.apiKey
     });
     assert.ok(pc, "Pinecone client instance must be successfully constructed.");
-    console.log("  => Pinecone client initialized successfully.");
   } catch (err) {
     throw new Error(`Failed to initialize Pinecone client: ${err.message}`);
   }
 
-  // 3. Verify connection successful (listing indexes)
-  console.log("Step 3: Verifying connection to Pinecone console...");
+  // 3. Connection verification
   let indexes;
   try {
     indexes = await pc.listIndexes();
     assert.ok(indexes, "listIndexes() must return a valid response.");
-    console.log("  => Connection successful. Indexes listed:");
-    console.log(JSON.stringify(indexes, null, 2));
+    console.log("Connection ✓");
   } catch (err) {
-    throw new Error(`Failed to connect to Pinecone or list indexes: ${err.message}`);
+    throw new Error(`Failed to connect to Pinecone: ${err.message}`);
   }
 
-  // 4. Verify Index exists (Create if missing)
-  console.log(`Step 4: Verifying target index '${pineconeConfig.indexName}' exists...`);
+  // 4. Configured index exists
   const targetIndex = pineconeConfig.indexName;
   const indexList = Array.isArray(indexes.indexes) ? indexes.indexes : indexes;
-  let exists = indexList.some(idx => idx.name === targetIndex);
+  const exists = indexList.some(idx => idx.name === targetIndex);
 
   if (!exists) {
-    console.log(`  => Index '${targetIndex}' does not exist. Creating index...`);
-    try {
-      await pc.createIndex({
-        name: targetIndex,
-        dimension: 1536,
-        metric: "cosine",
-        spec: {
-          serverless: {
-            cloud: "aws",
-            region: "us-east-1"
-          }
-        }
-      });
-      console.log(`  => Index creation initiated successfully.`);
-      
-      let ready = false;
-      let checkCount = 0;
-      while (!ready && checkCount < 30) {
-        console.log("     Waiting for index to become ready...");
-        await new Promise(r => setTimeout(r, 5000));
-        const desc = await pc.describeIndex(targetIndex);
-        ready = desc.status.ready;
-        checkCount++;
-      }
-      assert.ok(ready, "Index must become ready for operations.");
-      exists = true;
-      console.log(`  => Index '${targetIndex}' created and ready.`);
-    } catch (err) {
-      throw new Error(`Failed to create index: ${err.message}`);
-    }
-  } else {
-    console.log(`  => Index '${targetIndex}' exists.`);
+    throw new Error(`Index not found. Run backend/scripts/setup_pinecone.js`);
   }
+  console.log("Index ✓");
 
-  // 5. Verify Ready for vector operations
-  console.log("Step 5: Describing index status & verifying operational readiness...");
+  // 5. Index READY and Dimension compatibility verification
   try {
     const indexDesc = await pc.describeIndex(targetIndex);
     assert.ok(indexDesc, "describeIndex() must return description metadata.");
-    assert.strictEqual(indexDesc.status.ready, true, "Index status must be ready.");
-    console.log("  => Index is ready for vector operations. Details:");
-    console.log(`     Dimension: ${indexDesc.dimension}`);
-    console.log(`     Metric: ${indexDesc.metric}`);
-    console.log(`     Host: ${indexDesc.host}`);
+    
+    if (!indexDesc.status.ready) {
+      throw new Error(`Index '${targetIndex}' is not ready for operations.`);
+    }
+    console.log("Ready ✓");
+
+    if (indexDesc.dimension !== pineconeConfig.dimension) {
+      throw new Error(`Dimension mismatch! Intended embedding model '${pineconeConfig.embeddingModel}' outputs ${pineconeConfig.dimension} dimensions, but configured Pinecone index '${targetIndex}' has ${indexDesc.dimension} dimensions.`);
+    }
+    console.log("Dimension ✓");
   } catch (err) {
-    throw new Error(`Failed describing index or index is not ready: ${err.message}`);
+    throw new Error(`Operational validation failed: ${err.message}`);
   }
 
   console.log("\n=== PINECONE INTEGRATION VALIDATION PASSED ===");

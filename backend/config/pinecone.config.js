@@ -15,9 +15,18 @@ if (!process.env.PINECONE_API_KEY) {
 }
 
 const apiKey = process.env.PINECONE_API_KEY;
-const indexName = process.env.PINECONE_INDEX;
+const indexName = process.env.PINECONE_INDEX || "travel-facts";
 
 module.exports = {
   apiKey: apiKey || null,
-  indexName: indexName || null
+  indexName: indexName,
+  
+  // Embedding model and dimension config
+  embeddingModel: "text-embedding-004",
+  dimension: 768, // text-embedding-004 produces 768-dimensional vectors
+  
+  // Pinecone provision spec constants
+  metric: "cosine",
+  cloud: "aws",
+  region: "us-east-1"
 };
