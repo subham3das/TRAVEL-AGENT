@@ -11,6 +11,7 @@ export interface Message {
 interface ChatState {
   messages: Message[];
   isStreaming: boolean;
+  activeAssistantId: string | null;
   addMessage: (text: string, role: "user" | "assistant" | "system") => void;
   setStreaming: (active: boolean) => void;
   startAssistantMessage: () => string;
@@ -37,6 +38,7 @@ export const useChatStore = create<ChatState>((set) => ({
     }
   ],
   isStreaming: false,
+  activeAssistantId: null,
 
   addMessage: (text, role) =>
     set((state) => {
@@ -57,9 +59,8 @@ export const useChatStore = create<ChatState>((set) => ({
   startAssistantMessage: () => {
     let activeId = "";
     set((state) => {
-      const existing = state.messages.find((m) => m.role === "assistant" && m.status === "streaming");
-      if (existing) {
-        activeId = existing.id;
+      if (state.activeAssistantId) {
+        activeId = state.activeAssistantId;
         return {};
       }
       activeId = `msg-assistant-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -72,7 +73,10 @@ export const useChatStore = create<ChatState>((set) => ({
       };
       const updated = [...state.messages, activeMsg];
       assertSingleStreaming(updated);
-      return { messages: updated };
+      return {
+        messages: updated,
+        activeAssistantId: activeId,
+      };
     });
     return activeId;
   },
@@ -101,12 +105,16 @@ export const useChatStore = create<ChatState>((set) => ({
         return m;
       });
       assertSingleStreaming(updated);
-      return { messages: updated };
+      return {
+        messages: updated,
+        activeAssistantId: null,
+      };
     }),
 
   clearChat: () =>
     set({
       messages: [],
       isStreaming: false,
+      activeAssistantId: null,
     }),
 }));
