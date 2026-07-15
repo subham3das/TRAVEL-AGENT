@@ -1,0 +1,82 @@
+{
+  "id": "shimla_attraction_palace_4",
+  "type": "attraction",
+  "destinationId": "shimla",
+  "name": "Shimla Attraction PALACE 4",
+  "category": "palace",
+  "coordinates": {
+    "latitude": 31.0998,
+    "longitude": 77.1684
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "medium",
+  "budgetCategory": "mid",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": false,
+  "photographyScore": 69,
+  "adventureScore": 77,
+  "historicalScore": 70,
+  "edges": [
+    {
+      "type": "route",
+      "target": "shimla_attraction_market_5",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 4,
+    "avoidWeekend": false,
+    "visitBefore": "evening",
+    "combineWith": [
+      "shimla_attraction_market_5"
+    ]
+  },
+  "plannerScore": {
+    "budget": 58,
+    "luxury": 76,
+    "family": 70,
+    "solo": 67,
+    "photography": 69
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 50,
+    "mid": 250,
+    "luxury": 1000
+  },
+  "insights": [
+    "Great view in the afternoon",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "palace",
+    "popular",
+    "shimla"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}

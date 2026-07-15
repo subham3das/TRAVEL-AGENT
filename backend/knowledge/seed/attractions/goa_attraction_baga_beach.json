@@ -1,0 +1,83 @@
+{
+  "id": "goa_attraction_baga_beach",
+  "type": "attraction",
+  "destinationId": "goa",
+  "name": "Baga Beach",
+  "category": "beach",
+  "coordinates": {
+    "latitude": 15.2793,
+    "longitude": 74.104
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "easy",
+  "budgetCategory": "budget",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 90,
+  "adventureScore": 5,
+  "historicalScore": 85,
+  "edges": [
+    {
+      "type": "route",
+      "target": "goa_attraction_anjuna_beach",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 1,
+    "avoidWeekend": false,
+    "visitBefore": "morning",
+    "combineWith": [
+      "goa_attraction_anjuna_beach"
+    ]
+  },
+  "plannerScore": {
+    "budget": 90,
+    "luxury": 70,
+    "family": 85,
+    "solo": 95,
+    "photography": 90
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 100,
+    "mid": 300,
+    "luxury": 1200
+  },
+  "insights": [
+    "Great view in the morning",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "sunset",
+    "beach",
+    "adventure",
+    "water sports"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}

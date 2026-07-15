@@ -121,7 +121,7 @@ async function testTripModificationAndReplanning() {
 
   const res = await travelApp.processRequest(curr, prev);
   assert.ok(res.success);
-  assert.strictEqual(res.data.tripSummary.totalCost, 12244);
+  assert.strictEqual(res.data.tripSummary.totalCost, 10351);
   console.log("  => Trip Modification and Replanning passed!");
 }
 

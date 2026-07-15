@@ -1,0 +1,82 @@
+{
+  "id": "rishikesh_attraction_historical_5",
+  "type": "attraction",
+  "destinationId": "rishikesh",
+  "name": "Rishikesh Attraction HISTORICAL 5",
+  "category": "historical",
+  "coordinates": {
+    "latitude": 30.0869,
+    "longitude": 78.2676
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "easy",
+  "budgetCategory": "budget",
+  "familyFriendly": false,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 75,
+  "adventureScore": 85,
+  "historicalScore": 75,
+  "edges": [
+    {
+      "type": "route",
+      "target": "rishikesh_attraction_nature_6",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 5,
+    "avoidWeekend": false,
+    "visitBefore": "morning",
+    "combineWith": [
+      "rishikesh_attraction_nature_6"
+    ]
+  },
+  "plannerScore": {
+    "budget": 65,
+    "luxury": 85,
+    "family": 75,
+    "solo": 75,
+    "photography": 75
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 100,
+    "mid": 300,
+    "luxury": 1200
+  },
+  "insights": [
+    "Great view in the morning",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "historical",
+    "popular",
+    "rishikesh"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}

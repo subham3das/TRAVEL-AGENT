@@ -1,0 +1,82 @@
+{
+  "id": "munnar_attraction_temple_3",
+  "type": "attraction",
+  "destinationId": "munnar",
+  "name": "Munnar Attraction TEMPLE 3",
+  "category": "temple",
+  "coordinates": {
+    "latitude": 10.0789,
+    "longitude": 77.0495
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "hard",
+  "budgetCategory": "luxury",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 63,
+  "adventureScore": 69,
+  "historicalScore": 65,
+  "edges": [
+    {
+      "type": "route",
+      "target": "munnar_attraction_palace_4",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 3,
+    "avoidWeekend": true,
+    "visitBefore": "morning",
+    "combineWith": [
+      "munnar_attraction_palace_4"
+    ]
+  },
+  "plannerScore": {
+    "budget": 51,
+    "luxury": 67,
+    "family": 65,
+    "solo": 59,
+    "photography": 63
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 100,
+    "mid": 300,
+    "luxury": 1200
+  },
+  "insights": [
+    "Great view in the morning",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "temple",
+    "popular",
+    "munnar"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}

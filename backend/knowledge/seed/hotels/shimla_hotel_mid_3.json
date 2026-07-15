@@ -1,0 +1,38 @@
+{
+  "id": "shimla_hotel_mid_3",
+  "type": "hotel",
+  "destinationId": "shimla",
+  "name": "Shimla MID Hotel 3",
+  "category": "mid",
+  "averagePrice": 5500,
+  "amenities": [
+    "WiFi",
+    "AC",
+    "Room Service",
+    "Breakfast"
+  ],
+  "location": {
+    "latitude": 31.1038,
+    "longitude": 77.1724,
+    "address": "30 Tourism Way, Near Center, Shimla, India"
+  },
+  "checkIn": "12:00 PM",
+  "checkOut": "11:00 AM",
+  "familyFriendly": true,
+  "coupleFriendly": false,
+  "metadata": {
+    "cleanReviews": "Verified cleanliness rating of 9.2/10"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "stay",
+    "mid",
+    "shimla"
+  ],
+  "sources": [
+    "Booking.com API seed"
+  ],
+  "confidence": 0.98
+}

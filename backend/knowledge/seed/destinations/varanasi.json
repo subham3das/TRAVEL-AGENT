@@ -1,0 +1,44 @@
+{
+  "id": "varanasi",
+  "type": "destination",
+  "name": "Varanasi",
+  "state": "Uttar Pradesh",
+  "country": "India",
+  "coordinates": {
+    "latitude": 25.3176,
+    "longitude": 82.9739
+  },
+  "timezone": "Asia/Kolkata",
+  "currency": "INR",
+  "languages": [
+    "Hindi",
+    "English"
+  ],
+  "bestMonths": [
+    "October",
+    "November",
+    "December",
+    "January",
+    "February",
+    "March"
+  ],
+  "averageBudget": {
+    "budget": 2000,
+    "mid": 5000,
+    "luxury": 15000
+  },
+  "metadata": {
+    "description": "Production seed destination for Varanasi"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "popular",
+    "varanasi"
+  ],
+  "sources": [
+    "Official Tourism Board"
+  ],
+  "confidence": 0.99
+}

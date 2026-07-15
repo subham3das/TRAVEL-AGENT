@@ -1,0 +1,82 @@
+{
+  "id": "goa_attraction_cultural_10",
+  "type": "attraction",
+  "destinationId": "goa",
+  "name": "Goa Attraction CULTURAL 10",
+  "category": "cultural",
+  "coordinates": {
+    "latitude": 15.3243,
+    "longitude": 74.149
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "medium",
+  "budgetCategory": "mid",
+  "familyFriendly": false,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 5,
+  "adventureScore": 25,
+  "historicalScore": 0,
+  "edges": [
+    {
+      "type": "route",
+      "target": "goa_attraction_baga_beach",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 10,
+    "avoidWeekend": false,
+    "visitBefore": "evening",
+    "combineWith": [
+      "goa_attraction_baga_beach"
+    ]
+  },
+  "plannerScore": {
+    "budget": 0,
+    "luxury": 30,
+    "family": 0,
+    "solo": 15,
+    "photography": 5
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 50,
+    "mid": 250,
+    "luxury": 1000
+  },
+  "insights": [
+    "Great view in the afternoon",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "cultural",
+    "popular",
+    "goa"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}

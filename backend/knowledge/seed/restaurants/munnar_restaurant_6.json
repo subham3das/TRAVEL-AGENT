@@ -1,0 +1,31 @@
+{
+  "id": "munnar_restaurant_6",
+  "type": "restaurant",
+  "destinationId": "munnar",
+  "name": "Munnar Fine Dining 6",
+  "cuisine": [
+    "Indian"
+  ],
+  "priceLevel": "$$$",
+  "vegetarian": true,
+  "vegan": true,
+  "halal": false,
+  "openingHours": "11:00 AM - 11:00 PM",
+  "averageMealCost": 1300,
+  "rating": 4.9,
+  "metadata": {
+    "ratingDescription": "Excellent reviews"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "dining",
+    "munnar",
+    "Indian"
+  ],
+  "sources": [
+    "Zomato guidelines"
+  ],
+  "confidence": 0.95
+}

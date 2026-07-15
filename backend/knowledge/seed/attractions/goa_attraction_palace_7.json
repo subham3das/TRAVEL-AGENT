@@ -1,0 +1,82 @@
+{
+  "id": "goa_attraction_palace_7",
+  "type": "attraction",
+  "destinationId": "goa",
+  "name": "Goa Attraction PALACE 7",
+  "category": "palace",
+  "coordinates": {
+    "latitude": 15.3093,
+    "longitude": 74.134
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "easy",
+  "budgetCategory": "budget",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 87,
+  "adventureScore": 1,
+  "historicalScore": 85,
+  "edges": [
+    {
+      "type": "route",
+      "target": "goa_attraction_market_8",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 7,
+    "avoidWeekend": false,
+    "visitBefore": "morning",
+    "combineWith": [
+      "goa_attraction_market_8"
+    ]
+  },
+  "plannerScore": {
+    "budget": 79,
+    "luxury": 3,
+    "family": 85,
+    "solo": 91,
+    "photography": 87
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 100,
+    "mid": 300,
+    "luxury": 1200
+  },
+  "insights": [
+    "Great view in the morning",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "palace",
+    "popular",
+    "goa"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}

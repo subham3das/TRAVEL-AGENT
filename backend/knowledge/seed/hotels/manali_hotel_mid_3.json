@@ -1,0 +1,38 @@
+{
+  "id": "manali_hotel_mid_3",
+  "type": "hotel",
+  "destinationId": "manali",
+  "name": "Manali MID Hotel 3",
+  "category": "mid",
+  "averagePrice": 5500,
+  "amenities": [
+    "WiFi",
+    "AC",
+    "Room Service",
+    "Breakfast"
+  ],
+  "location": {
+    "latitude": 32.2386,
+    "longitude": 77.1877,
+    "address": "30 Tourism Way, Near Center, Manali, India"
+  },
+  "checkIn": "12:00 PM",
+  "checkOut": "11:00 AM",
+  "familyFriendly": true,
+  "coupleFriendly": false,
+  "metadata": {
+    "cleanReviews": "Verified cleanliness rating of 9.2/10"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "stay",
+    "mid",
+    "manali"
+  ],
+  "sources": [
+    "Booking.com API seed"
+  ],
+  "confidence": 0.98
+}

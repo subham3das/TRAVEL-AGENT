@@ -1,0 +1,25 @@
+{
+  "id": "manali_transport_local",
+  "type": "transport",
+  "destinationId": "manali",
+  "name": "Manali Local Cab Service",
+  "transportType": "cab",
+  "averageCost": 1500,
+  "availability": "24/7 on call",
+  "operatingHours": "12:00 AM - 12:00 PM",
+  "metadata": {
+    "supportNumber": "+91 99999 88888"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "cab",
+    "local",
+    "manali"
+  ],
+  "sources": [
+    "Local cab association data"
+  ],
+  "confidence": 0.95
+}

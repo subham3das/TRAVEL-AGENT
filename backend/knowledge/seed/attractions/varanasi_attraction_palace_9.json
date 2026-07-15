@@ -1,0 +1,82 @@
+{
+  "id": "varanasi_attraction_palace_9",
+  "type": "attraction",
+  "destinationId": "varanasi",
+  "name": "Varanasi Attraction PALACE 9",
+  "category": "palace",
+  "coordinates": {
+    "latitude": 25.3376,
+    "longitude": 82.9939
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "hard",
+  "budgetCategory": "luxury",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 99,
+  "adventureScore": 17,
+  "historicalScore": 95,
+  "edges": [
+    {
+      "type": "route",
+      "target": "varanasi_attraction_market_10",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 9,
+    "avoidWeekend": true,
+    "visitBefore": "morning",
+    "combineWith": [
+      "varanasi_attraction_market_10"
+    ]
+  },
+  "plannerScore": {
+    "budget": 93,
+    "luxury": 21,
+    "family": 95,
+    "solo": 7,
+    "photography": 99
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 100,
+    "mid": 300,
+    "luxury": 1200
+  },
+  "insights": [
+    "Great view in the morning",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "palace",
+    "popular",
+    "varanasi"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}

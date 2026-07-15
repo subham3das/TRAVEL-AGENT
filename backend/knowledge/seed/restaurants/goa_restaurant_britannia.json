@@ -1,0 +1,35 @@
+{
+  "id": "goa_restaurant_britannia",
+  "type": "restaurant",
+  "destinationId": "goa",
+  "name": "Britannia Beach Shack",
+  "cuisine": [
+    "seafood",
+    "goan",
+    "local"
+  ],
+  "priceLevel": "$$",
+  "vegetarian": false,
+  "vegan": false,
+  "halal": false,
+  "openingHours": "11:00 AM - 11:00 PM",
+  "averageMealCost": 450,
+  "rating": 4.2,
+  "metadata": {
+    "ratingDescription": "Excellent reviews"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "dining",
+    "goa",
+    "seafood",
+    "goan",
+    "local"
+  ],
+  "sources": [
+    "Zomato guidelines"
+  ],
+  "confidence": 0.95
+}

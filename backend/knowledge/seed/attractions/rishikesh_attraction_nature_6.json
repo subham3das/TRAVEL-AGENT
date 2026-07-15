@@ -1,0 +1,82 @@
+{
+  "id": "rishikesh_attraction_nature_6",
+  "type": "attraction",
+  "destinationId": "rishikesh",
+  "name": "Rishikesh Attraction NATURE 6",
+  "category": "nature",
+  "coordinates": {
+    "latitude": 30.0919,
+    "longitude": 78.2726
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "hard",
+  "budgetCategory": "luxury",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 81,
+  "adventureScore": 93,
+  "historicalScore": 80,
+  "edges": [
+    {
+      "type": "route",
+      "target": "rishikesh_attraction_temple_7",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 6,
+    "avoidWeekend": true,
+    "visitBefore": "evening",
+    "combineWith": [
+      "rishikesh_attraction_temple_7"
+    ]
+  },
+  "plannerScore": {
+    "budget": 72,
+    "luxury": 94,
+    "family": 80,
+    "solo": 83,
+    "photography": 81
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 50,
+    "mid": 250,
+    "luxury": 1000
+  },
+  "insights": [
+    "Great view in the afternoon",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "nature",
+    "popular",
+    "rishikesh"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}

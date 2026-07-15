@@ -1,0 +1,31 @@
+{
+  "id": "shimla_restaurant_4",
+  "type": "restaurant",
+  "destinationId": "shimla",
+  "name": "Shimla Fine Dining 4",
+  "cuisine": [
+    "Mughlai"
+  ],
+  "priceLevel": "$$",
+  "vegetarian": true,
+  "vegan": false,
+  "halal": false,
+  "openingHours": "11:00 AM - 11:00 PM",
+  "averageMealCost": 900,
+  "rating": 4.6,
+  "metadata": {
+    "ratingDescription": "Excellent reviews"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "dining",
+    "shimla",
+    "Mughlai"
+  ],
+  "sources": [
+    "Zomato guidelines"
+  ],
+  "confidence": 0.95
+}

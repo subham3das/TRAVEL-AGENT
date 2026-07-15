@@ -1,0 +1,38 @@
+{
+  "id": "jaipur_hotel_budget_1",
+  "type": "hotel",
+  "destinationId": "jaipur",
+  "name": "Jaipur BUDGET Hotel 1",
+  "category": "budget",
+  "averagePrice": 1700,
+  "amenities": [
+    "WiFi",
+    "AC",
+    "Room Service",
+    "Breakfast"
+  ],
+  "location": {
+    "latitude": 26.9054,
+    "longitude": 75.7803,
+    "address": "10 Tourism Way, Near Center, Jaipur, India"
+  },
+  "checkIn": "12:00 PM",
+  "checkOut": "11:00 AM",
+  "familyFriendly": true,
+  "coupleFriendly": false,
+  "metadata": {
+    "cleanReviews": "Verified cleanliness rating of 9.2/10"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "stay",
+    "budget",
+    "jaipur"
+  ],
+  "sources": [
+    "Booking.com API seed"
+  ],
+  "confidence": 0.98
+}

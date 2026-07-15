@@ -1,0 +1,38 @@
+{
+  "id": "rishikesh_hotel_luxury_5",
+  "type": "hotel",
+  "destinationId": "rishikesh",
+  "name": "Rishikesh LUXURY Hotel 5",
+  "category": "luxury",
+  "averagePrice": 19500,
+  "amenities": [
+    "WiFi",
+    "AC",
+    "Room Service",
+    "Pool"
+  ],
+  "location": {
+    "latitude": 30.0919,
+    "longitude": 78.2726,
+    "address": "50 Tourism Way, Near Center, Rishikesh, India"
+  },
+  "checkIn": "12:00 PM",
+  "checkOut": "11:00 AM",
+  "familyFriendly": true,
+  "coupleFriendly": false,
+  "metadata": {
+    "cleanReviews": "Verified cleanliness rating of 9.2/10"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "stay",
+    "luxury",
+    "rishikesh"
+  ],
+  "sources": [
+    "Booking.com API seed"
+  ],
+  "confidence": 0.98
+}

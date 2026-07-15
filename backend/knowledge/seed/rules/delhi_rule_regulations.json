@@ -1,0 +1,33 @@
+{
+  "id": "delhi_rule_regulations",
+  "type": "rule",
+  "destinationId": "delhi",
+  "name": "Delhi Tourist Guidelines",
+  "category": "Local Regulations",
+  "cashCard": "Cash widely preferred in local markets, cards accepted at main establishments",
+  "dressCodes": [
+    "Modest attire in religious temples/places"
+  ],
+  "permits": [],
+  "photographyRestrictions": "Allowed in general tourist zones, strictly restricted inside temple shrines",
+  "alcoholRules": "Prohibited near temples and holy zones",
+  "localCustoms": [
+    "Remove shoes before entering temples",
+    "Dress modestly"
+  ],
+  "metadata": {
+    "officialGovLink": "https://tourism.gov.in"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "regulations",
+    "customs",
+    "delhi"
+  ],
+  "sources": [
+    "State Government Tourism Portal"
+  ],
+  "confidence": 0.99
+}

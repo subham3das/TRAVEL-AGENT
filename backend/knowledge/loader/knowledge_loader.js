@@ -8,6 +8,7 @@ class KnowledgeLoader {
   constructor() {
     this.schemas = {};
     this.baseDir = path.resolve(__dirname, "..");
+    this.dataDir = path.join(this.baseDir, "seed");
   }
 
   loadSchemas() {
@@ -57,7 +58,7 @@ class KnowledgeLoader {
 
     const filePaths = [];
     for (const subDir of subDirs) {
-      const dirPath = path.join(this.baseDir, subDir);
+      const dirPath = path.join(this.dataDir, subDir);
       filePaths.push(...this.readJsonFilesRecursively(dirPath));
     }
 

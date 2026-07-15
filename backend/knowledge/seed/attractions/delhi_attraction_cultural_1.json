@@ -1,0 +1,82 @@
+{
+  "id": "delhi_attraction_cultural_1",
+  "type": "attraction",
+  "destinationId": "delhi",
+  "name": "Delhi Attraction CULTURAL 1",
+  "category": "cultural",
+  "coordinates": {
+    "latitude": 28.5939,
+    "longitude": 77.189
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "easy",
+  "budgetCategory": "budget",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 51,
+  "adventureScore": 53,
+  "historicalScore": 55,
+  "edges": [
+    {
+      "type": "route",
+      "target": "delhi_attraction_historical_2",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 1,
+    "avoidWeekend": false,
+    "visitBefore": "morning",
+    "combineWith": [
+      "delhi_attraction_historical_2"
+    ]
+  },
+  "plannerScore": {
+    "budget": 37,
+    "luxury": 49,
+    "family": 55,
+    "solo": 43,
+    "photography": 51
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 100,
+    "mid": 300,
+    "luxury": 1200
+  },
+  "insights": [
+    "Great view in the morning",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "cultural",
+    "popular",
+    "delhi"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}

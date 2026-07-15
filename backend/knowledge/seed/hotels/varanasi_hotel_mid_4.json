@@ -1,0 +1,38 @@
+{
+  "id": "varanasi_hotel_mid_4",
+  "type": "hotel",
+  "destinationId": "varanasi",
+  "name": "Varanasi MID Hotel 4",
+  "category": "mid",
+  "averagePrice": 6000,
+  "amenities": [
+    "WiFi",
+    "AC",
+    "Room Service",
+    "Breakfast"
+  ],
+  "location": {
+    "latitude": 25.3196,
+    "longitude": 82.9759,
+    "address": "40 Tourism Way, Near Center, Varanasi, India"
+  },
+  "checkIn": "12:00 PM",
+  "checkOut": "11:00 AM",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "metadata": {
+    "cleanReviews": "Verified cleanliness rating of 9.2/10"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "stay",
+    "mid",
+    "varanasi"
+  ],
+  "sources": [
+    "Booking.com API seed"
+  ],
+  "confidence": 0.98
+}

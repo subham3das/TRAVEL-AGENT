@@ -1,0 +1,82 @@
+{
+  "id": "rishikesh_attraction_palace_8",
+  "type": "attraction",
+  "destinationId": "rishikesh",
+  "name": "Rishikesh Attraction PALACE 8",
+  "category": "palace",
+  "coordinates": {
+    "latitude": 30.1019,
+    "longitude": 78.2826
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "medium",
+  "budgetCategory": "mid",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": false,
+  "photographyScore": 93,
+  "adventureScore": 9,
+  "historicalScore": 90,
+  "edges": [
+    {
+      "type": "route",
+      "target": "rishikesh_attraction_market_9",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 8,
+    "avoidWeekend": false,
+    "visitBefore": "evening",
+    "combineWith": [
+      "rishikesh_attraction_market_9"
+    ]
+  },
+  "plannerScore": {
+    "budget": 86,
+    "luxury": 12,
+    "family": 90,
+    "solo": 99,
+    "photography": 93
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 50,
+    "mid": 250,
+    "luxury": 1000
+  },
+  "insights": [
+    "Great view in the afternoon",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "palace",
+    "popular",
+    "rishikesh"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}

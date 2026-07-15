@@ -1,0 +1,38 @@
+{
+  "id": "gangtok_hotel_luxury_5",
+  "type": "hotel",
+  "destinationId": "gangtok",
+  "name": "Gangtok LUXURY Hotel 5",
+  "category": "luxury",
+  "averagePrice": 19500,
+  "amenities": [
+    "WiFi",
+    "AC",
+    "Room Service",
+    "Pool"
+  ],
+  "location": {
+    "latitude": 27.3364,
+    "longitude": 88.6188,
+    "address": "50 Tourism Way, Near Center, Gangtok, India"
+  },
+  "checkIn": "12:00 PM",
+  "checkOut": "11:00 AM",
+  "familyFriendly": true,
+  "coupleFriendly": false,
+  "metadata": {
+    "cleanReviews": "Verified cleanliness rating of 9.2/10"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "stay",
+    "luxury",
+    "gangtok"
+  ],
+  "sources": [
+    "Booking.com API seed"
+  ],
+  "confidence": 0.98
+}

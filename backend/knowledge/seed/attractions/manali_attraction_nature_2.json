@@ -1,0 +1,82 @@
+{
+  "id": "manali_attraction_nature_2",
+  "type": "attraction",
+  "destinationId": "manali",
+  "name": "Manali Attraction NATURE 2",
+  "category": "nature",
+  "coordinates": {
+    "latitude": 32.2246,
+    "longitude": 77.1737
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "medium",
+  "budgetCategory": "mid",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 57,
+  "adventureScore": 61,
+  "historicalScore": 60,
+  "edges": [
+    {
+      "type": "route",
+      "target": "manali_attraction_temple_3",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 2,
+    "avoidWeekend": false,
+    "visitBefore": "evening",
+    "combineWith": [
+      "manali_attraction_temple_3"
+    ]
+  },
+  "plannerScore": {
+    "budget": 44,
+    "luxury": 58,
+    "family": 60,
+    "solo": 51,
+    "photography": 57
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 50,
+    "mid": 250,
+    "luxury": 1000
+  },
+  "insights": [
+    "Great view in the afternoon",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "nature",
+    "popular",
+    "manali"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}

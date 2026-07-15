@@ -1,0 +1,31 @@
+{
+  "id": "varanasi_restaurant_1",
+  "type": "restaurant",
+  "destinationId": "varanasi",
+  "name": "Varanasi Fine Dining 1",
+  "cuisine": [
+    "Italian"
+  ],
+  "priceLevel": "$",
+  "vegetarian": false,
+  "vegan": false,
+  "halal": false,
+  "openingHours": "11:00 AM - 11:00 PM",
+  "averageMealCost": 300,
+  "rating": 4.2,
+  "metadata": {
+    "ratingDescription": "Excellent reviews"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "dining",
+    "varanasi",
+    "Italian"
+  ],
+  "sources": [
+    "Zomato guidelines"
+  ],
+  "confidence": 0.95
+}

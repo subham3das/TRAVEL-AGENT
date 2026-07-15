@@ -68,8 +68,9 @@ async function run() {
     budgetCategory: "mid"
   });
   validateResponseContract(q4, "restaurant budget query");
-  assert.strictEqual(q4.data.length, 1, "Should find Britannia Beach Shack");
-  assert.strictEqual(q4.data[0].id, "goa_restaurant_britannia");
+  assert.ok(q4.data.length >= 1, "Should find Britannia Beach Shack");
+  const hasBritannia = q4.data.some(r => r.id === "goa_restaurant_britannia");
+  assert.ok(hasBritannia, "Should contain Britannia Beach Shack in mid budget restaurants");
 
   console.log("\nRunning Query: Rule by category");
   const q5 = service.query({

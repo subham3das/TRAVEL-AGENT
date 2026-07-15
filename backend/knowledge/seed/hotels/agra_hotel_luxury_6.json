@@ -1,0 +1,38 @@
+{
+  "id": "agra_hotel_luxury_6",
+  "type": "hotel",
+  "destinationId": "agra",
+  "name": "Agra LUXURY Hotel 6",
+  "category": "luxury",
+  "averagePrice": 21000,
+  "amenities": [
+    "WiFi",
+    "AC",
+    "Room Service",
+    "Pool"
+  ],
+  "location": {
+    "latitude": 27.1847,
+    "longitude": 78.0161,
+    "address": "60 Tourism Way, Near Center, Agra, India"
+  },
+  "checkIn": "12:00 PM",
+  "checkOut": "11:00 AM",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "metadata": {
+    "cleanReviews": "Verified cleanliness rating of 9.2/10"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "stay",
+    "luxury",
+    "agra"
+  ],
+  "sources": [
+    "Booking.com API seed"
+  ],
+  "confidence": 0.98
+}

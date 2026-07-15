@@ -1,0 +1,82 @@
+{
+  "id": "gangtok_attraction_nature_1",
+  "type": "attraction",
+  "destinationId": "gangtok",
+  "name": "Gangtok Attraction NATURE 1",
+  "category": "nature",
+  "coordinates": {
+    "latitude": 27.3114,
+    "longitude": 88.5938
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "easy",
+  "budgetCategory": "budget",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 51,
+  "adventureScore": 53,
+  "historicalScore": 55,
+  "edges": [
+    {
+      "type": "route",
+      "target": "gangtok_attraction_temple_2",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 1,
+    "avoidWeekend": false,
+    "visitBefore": "morning",
+    "combineWith": [
+      "gangtok_attraction_temple_2"
+    ]
+  },
+  "plannerScore": {
+    "budget": 37,
+    "luxury": 49,
+    "family": 55,
+    "solo": 43,
+    "photography": 51
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 100,
+    "mid": 300,
+    "luxury": 1200
+  },
+  "insights": [
+    "Great view in the morning",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "nature",
+    "popular",
+    "gangtok"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}

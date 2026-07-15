@@ -1,0 +1,82 @@
+{
+  "id": "goa_attraction_bom_jesus",
+  "type": "attraction",
+  "destinationId": "goa",
+  "name": "Basilica of Bom Jesus",
+  "category": "historical",
+  "coordinates": {
+    "latitude": 15.2893,
+    "longitude": 74.114
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "hard",
+  "budgetCategory": "luxury",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 90,
+  "adventureScore": 90,
+  "historicalScore": 90,
+  "edges": [
+    {
+      "type": "route",
+      "target": "goa_attraction_historical_4",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 3,
+    "avoidWeekend": true,
+    "visitBefore": "morning",
+    "combineWith": [
+      "goa_attraction_historical_4"
+    ]
+  },
+  "plannerScore": {
+    "budget": 95,
+    "luxury": 80,
+    "family": 90,
+    "solo": 80,
+    "photography": 90
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 100,
+    "mid": 300,
+    "luxury": 1200
+  },
+  "insights": [
+    "Great view in the morning",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "church",
+    "historical",
+    "unesco"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}

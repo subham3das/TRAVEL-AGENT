@@ -1,0 +1,82 @@
+{
+  "id": "goa_attraction_anjuna_beach",
+  "type": "attraction",
+  "destinationId": "goa",
+  "name": "Anjuna Beach",
+  "category": "beach",
+  "coordinates": {
+    "latitude": 15.2843,
+    "longitude": 74.109
+  },
+  "openingHours": "09:00 AM - 06:00 PM",
+  "closingDays": [
+    "Monday"
+  ],
+  "difficulty": "medium",
+  "budgetCategory": "mid",
+  "familyFriendly": true,
+  "coupleFriendly": true,
+  "soloFriendly": true,
+  "photographyScore": 85,
+  "adventureScore": 0,
+  "historicalScore": 75,
+  "edges": [
+    {
+      "type": "route",
+      "target": "goa_attraction_bom_jesus",
+      "weight": 0.8,
+      "confidence": 0.9
+    }
+  ],
+  "plannerHints": {
+    "idealVisitOrder": 2,
+    "avoidWeekend": false,
+    "visitBefore": "evening",
+    "combineWith": [
+      "goa_attraction_bom_jesus"
+    ]
+  },
+  "plannerScore": {
+    "budget": 85,
+    "luxury": 65,
+    "family": 75,
+    "solo": 90,
+    "photography": 85
+  },
+  "weatherProfile": {
+    "sunny": 90,
+    "rain": 20,
+    "winter": 80,
+    "summer": 70
+  },
+  "crowdProfile": {
+    "Monday": 30,
+    "Saturday": 85,
+    "Morning": 40,
+    "Evening": 75
+  },
+  "estimatedSpend": {
+    "budget": 50,
+    "mid": 250,
+    "luxury": 1000
+  },
+  "insights": [
+    "Great view in the afternoon",
+    "Highly recommended by guide books."
+  ],
+  "metadata": {
+    "customInfo": "RC1 Seeding"
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-07-15T12:00:00Z",
+  "verifiedAt": "2026-07-15T12:00:00Z",
+  "tags": [
+    "sunset",
+    "beach",
+    "flea market"
+  ],
+  "sources": [
+    "Local travel guide"
+  ],
+  "confidence": 0.95
+}
