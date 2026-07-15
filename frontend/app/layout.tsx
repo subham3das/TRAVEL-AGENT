@@ -1,21 +1,6 @@
 import type { Metadata } from "next";
-import { Outfit, Inter } from "next/font/google";
 import { Providers } from "./providers";
 import "./globals.css";
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-heading",
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Travel Intelligence OS",
@@ -37,7 +22,12 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${outfit.variable} ${inter.variable} h-full`}
+      className="h-full"
+      style={{
+        // Fallback font variables bypass offline google font download limits during build
+        ["--font-heading" as any]: "Outfit, system-ui, sans-serif",
+        ["--font-sans" as any]: "Inter, system-ui, sans-serif",
+      }}
     >
       <body className="h-full bg-background text-foreground font-sans antialiased">
         <Providers>{children}</Providers>
