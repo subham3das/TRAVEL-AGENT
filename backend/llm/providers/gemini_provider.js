@@ -83,7 +83,7 @@ class GeminiProvider extends BaseLLMProvider {
 
       const generationConfig = {
         temperature: localConfig.temperature !== undefined ? localConfig.temperature : config.temperature,
-        maxOutputTokens: localConfig.maxTokens || config.maxOutputTokens,
+        maxOutputTokens: Math.max(localConfig.maxTokens || config.maxOutputTokens, 1024),
         topP: localConfig.topP || config.topP
       };
 
@@ -120,7 +120,21 @@ class GeminiProvider extends BaseLLMProvider {
       const response = await this.client.models.generateContent(payload, requestOptions);
       if (timeoutId) clearTimeout(timeoutId);
 
-      const text = response.text;
+      // Extract text from raw candidates — the SDK's response.text getter
+      // returns undefined when the response contains only thought/reasoning
+      // parts or when safety filters produce an empty data section.
+      // Gemini 2.5+ models use thinking: filter out thought parts.
+      let text = null;
+      if (response.candidates?.[0]?.content?.parts) {
+        const dataParts = response.candidates[0].content.parts
+          .filter(p => p.text && !p.thought)
+          .map(p => p.text);
+        text = dataParts.join("").trim() || null;
+      }
+      // Fallback to SDK getter
+      if (!text && typeof response.text === "string") {
+        text = response.text;
+      }
       if (!text) {
         throw new Error("Empty response returned from Gemini API.");
       }

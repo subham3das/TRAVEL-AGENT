@@ -17,13 +17,15 @@ const classifier     = require("../conversation/conversation_classifier");
 const updater        = require("../conversation/context_updater");
 const candidateFlow  = require("../conversation/candidate_flow");
 const replan         = require("../planner/replanning_engine");
-const planner        = require("../planner/trip_planner");
+const planner        = require("../planner/trip_planner_v2");
 const decision       = require("../decision/decision_engine");
 const optimizer      = require("../optimizer/route_optimizer");
 const budget         = require("../budget/budget_engine");
-const recommendation = require("../recommendation/recommendation_engine");
-const booking        = require("../booking/booking_engine");
-const { JourneyManager } = require("../journey/journey_manager");
+const recommendation = require("../recommendation/recommendation_engine_v2");
+const bookingLayer   = require("../booking/booking_layer");
+const { BookingIntent, HotelRequest, FlightRequest, TaxiRequest, ActivityRequest } = require("../booking/domain/booking_intent");
+const journeyManager = require("../journey/journey_manager");
+const tripManager    = require("../trip/trip_manager");
 const validationEngine   = require("../engines/validation_engine");
 const plannerLock        = require("../engines/planner_lock");
 const confidence         = require("../confidence/confidence_engine");
@@ -48,7 +50,8 @@ const STAGE_TIMEOUTS = {
   planner:        8000,   // most complex stage
   decision:       3000,
   optimizer:      3000,
-  booking:        5000
+  booking:        5000,
+  tripManager:    2000
 };
 
 // EventBus event emitted when each stage starts
@@ -66,10 +69,9 @@ const STAGE_START_EVENTS = {
   planner:        EVENTS.PLANNER_RUNNING,
   decision:       null,
   optimizer:      null,
-  booking:        null
+  booking:        null,
+  tripManager:    null
 };
-
-// EventBus event emitted when each stage completes successfully
 const STAGE_DONE_EVENTS = {
   classifier:     null,
   updater:        null,
@@ -84,10 +86,9 @@ const STAGE_DONE_EVENTS = {
   planner:        EVENTS.PLAN_READY,
   decision:       null,
   optimizer:      null,
-  booking:        null
+  booking:        null,
+  tripManager:    null
 };
-
-const journeyManagerInstance = new JourneyManager(eventBus);
 
 class ExecutionEngine {
   constructor() {
@@ -124,9 +125,9 @@ class ExecutionEngine {
         label: "CONTEXT_UPDATED"
       },
       journeyManager: {
-        run: (ctx) => this._runJourneyManager(ctx),
+        run: (ctx) => journeyManager.run(ctx),
         critical: false,
-        label: "JOURNEY_UPDATED"
+        label: "JOURNEY_DERIVED"
       },
       validation: {
         run: (ctx) => validationEngine.validate(ctx),
@@ -179,9 +180,14 @@ class ExecutionEngine {
         label: "ROUTE_OPTIMIZED"
       },
       booking: {
-        run: (ctx) => booking.recommendBookings(ctx),
+        run: (ctx) => this._runBooking(ctx),
         critical: false,
         label: "BOOKING_EVALUATED"
+      },
+      tripManager: {
+        run: (ctx) => tripManager.run(ctx),
+        critical: false,
+        label: "TRIP_MANAGED"
       }
     };
 
@@ -200,7 +206,8 @@ class ExecutionEngine {
       "planner",
       "decision",
       "optimizer",
-      "booking"
+      "booking",
+      "tripManager"
     ];
   }
 
@@ -209,79 +216,115 @@ class ExecutionEngine {
     if (!this.sequence.includes(name)) this.sequence.push(name);
   }
 
-  /**
-   * Bridge: JourneyManager.evaluate() expects a tripAggregate shape.
-   * Maps execution context → tripAggregate → result.
-   */
-  _runJourneyManager(ctx) {
-    try {
-      const entities = ctx.state?.normalizedEntities || {};
-      const tripAggregate = {
-        journeyState: ctx.state?.conversationState?.journeyState || "START",
-        intent: {
-          destination:       entities.destination,
-          selectedPlaces:    entities.selectedPlaces,
-          budgetConstraint:  entities.budget,
-          daysConstraint:    entities.durationDays,
-          selectedHotel:     entities.selectedHotel,
-          selectedFlight:    entities.selectedFlight
-        },
-        budgetSummary: ctx.recommendations?.budgetSummary || null
-      };
-
-      const clarification = journeyManagerInstance.evaluate(tripAggregate);
-
-      // Persist journeyState back into context
-      if (ctx.state?.conversationState) {
-        ctx.state.conversationState.journeyState = tripAggregate.journeyState;
-      }
-
-      return {
-        success: true,
-        data: {
-          journeyState:   tripAggregate.journeyState,
-          clarification,
-          requiresAction: clarification !== null
-        },
-        errors: [],
-        warnings: [],
-        confidence: 1.0,
-        processingTime: 0,
-        metadata: {}
-      };
-    } catch (err) {
-      return {
-        success: false,
-        data: { journeyState: "ERROR", clarification: null, requiresAction: false },
-        errors: [err.message],
-        warnings: [],
-        confidence: 0,
-        processingTime: 0,
-        metadata: {}
-      };
-    }
+  getStageMessage(stage, phase) {
+    const messages = {
+      classifier:     { start: "Classifying intent...", done: "Intent classified" },
+      updater:        { start: "Processing your input...", done: "Input processed" },
+      journeyManager: { start: "Analyzing trip requirements...", done: "Trip requirements analyzed" },
+      memory:         { start: "Loading your preferences...", done: "Preferences loaded" },
+      validation:     { start: "Validating trip data...", done: "Data validated" },
+      recommendation: { start: "Finding best options...", done: "Options scored and ranked" },
+      confidence:     { start: "Verifying recommendations...", done: "Confidence scores calculated" },
+      budget:         { start: "Estimating budget...", done: "Budget estimated" },
+      candidateFlow:  { start: "Preparing selections...", done: "Selections ready" },
+      replan:         { start: "Checking if replanning needed...", done: "Replan评估完成" },
+      planner:        { start: "Generating your itinerary...", done: "Itinerary generated" },
+      decision:       { start: "Optimizing your plan...", done: "Plan optimized" },
+      optimizer:      { start: "Optimizing routes...", done: "Routes optimized" },
+      booking:        { start: "Checking availability...", done: "Booking options ready" },
+      tripManager:    { start: "Finalizing your trip...", done: "Trip saved and learning applied" }
+    };
+    return messages[stage]?.[phase] || `${stage} ${phase}`;
   }
 
   /**
    * Bridge: trip_planner.plan() — handles both old (raw ctx) and new (PlannerInput) shapes.
    */
   _runPlanner(ctx) {
-    // new planner/trip_planner.js expects PlannerInput contract
+    // trip_planner_v2.js expects PlannerInput contract
     const entities = ctx.state?.normalizedEntities || {};
     const plannerInput = {
       destination:       entities.destination,
-      durationDays:      entities.durationDays || 3,
+      days:              entities.durationDays || 3,
       travelStyle:       entities.travelStyle || "mid",
       travelersType:     entities.travelersType || "solo",
       budget:            entities.budget,
-      selectedPlaces:    entities.selectedPlaces || [],
-      selectedHotel:     entities.selectedHotel || null,
-      selectedFlight:    entities.selectedFlight || null,
-      recommendations:   ctx.recommendations || {},
-      budgetSummary:     ctx.recommendations?.budgetSummary || null
+      places:            entities.selectedPlaces || [],
+      hotel:             entities.selectedHotel || null,
+      flight:            entities.selectedFlight || null,
+      season:            ctx.season || "unknown",
+      constraints:       {},
     };
 
     return planner.plan(plannerInput);
+  }
+
+  /**
+   * Bridge: Build BookingIntent from context and process through BookingLayer.
+   * The Planner never knows about booking APIs.
+   */
+  _runBooking(ctx) {
+    const entities = ctx.state?.normalizedEntities || {};
+    const itinerary = ctx.recommendations?.optimizedItinerary
+      || ctx.recommendations?.improvedItinerary
+      || ctx.recommendations?.draftItinerary;
+
+    const hotel = ctx.recommendations?.selectedHotel || entities.selectedHotel;
+    const flight = ctx.recommendations?.selectedFlight || entities.selectedFlight;
+
+    const intent = BookingIntent({
+      tripId: ctx.tripId || null,
+      userId: ctx.userId || ctx.state?.userId || "anonymous",
+      destination: entities.destination || "",
+      startDate: entities.startDate || null,
+      endDate: entities.endDate || null,
+      durationDays: entities.durationDays || 3,
+      travelStyle: entities.travelStyle || "mid",
+      travelersType: entities.travelersType || "solo",
+      budget: entities.budget || 0,
+      hotel: hotel ? HotelRequest({
+        destinationId: entities.destination,
+        checkIn: entities.startDate,
+        checkOut: entities.endDate,
+        style: entities.travelStyle,
+        area: hotel.location || null
+      }) : null,
+      flight: flight ? FlightRequest({
+        origin: flight.origin || entities.origin || "DEL",
+        destination: entities.destination || flight.destination,
+        departureDate: entities.startDate,
+        passengers: 1,
+        cabinClass: entities.travelStyle === "luxury" ? "business" : "economy"
+      }) : null,
+      activities: [],
+      metadata: {
+        sessionId: ctx.sessionId,
+        itineraryDays: itinerary?.dailyPlans?.length || 0
+      }
+    });
+
+    // Use BookingLayer (independent from Planner)
+    return bookingLayer.process(intent, {
+      name: entities.userName || "",
+      email: entities.userEmail || "",
+      phone: entities.userPhone || ""
+    }).then(reservationSet => ({
+      success: true,
+      data: { bookingSuggestions: reservationSet },
+      errors: [],
+      warnings: [],
+      confidence: reservationSet.overallStatus === "CONFIRMED" ? 0.95 : 0.7,
+      processingTime: 0,
+      metadata: { stage: "BOOKING" }
+    })).catch(err => ({
+      success: false,
+      data: null,
+      errors: [err.message],
+      warnings: [],
+      confidence: 0,
+      processingTime: 0,
+      metadata: { stage: "BOOKING" }
+    }));
   }
 
   async execute(context, previousContext = null, sessionId = null) {
@@ -312,6 +355,11 @@ class ExecutionEngine {
       }
 
       if (!context.recommendations) context.recommendations = {};
+
+      // Clear stale recommendations when starting fresh (no previous context)
+      if (!previousContext) {
+        context.recommendations = {};
+      }
 
       executionStatus = "RUNNING";
       const csEntry = context.state?.conversationState;
@@ -351,15 +399,19 @@ class ExecutionEngine {
           shouldSkip = true;
         }
 
-        // skip planner if PlannerLock rejects (hard gate — replaces weak _validationResult check)
+        // PlannerLock is a first-class workflow state, not an error.
+        // When locked, HALT the pipeline immediately — no downstream stages run.
         if (stage === "planner") {
           const lock = plannerLock.evaluate(context);
           if (lock.locked) {
             skippedStages.push(stage);
             tracer.record("PLANNER_LOCKED", "⚠ locked", 0, [lock.reason]);
             warnings.push(lock.reason);
-            currentStageIndex++;
-            continue;
+            // Clear stale recommendations — no cards should render during clarification
+            context.recommendations = {};
+            executionStatus = "WAITING_CLARIFICATION";
+            tracer.record("PIPELINE_HALTED", "⚠ planner_locked", 0);
+            break;
           }
         }
 
@@ -375,7 +427,9 @@ class ExecutionEngine {
           eventBus.emitEvent(sessionId, STAGE_START_EVENTS[stage], { stage });
         }
         if (sessionId) {
-          eventBus.emitProgress(sessionId, stage, "start");
+          eventBus.emitProgress(sessionId, stage, "start", {
+            message: this.getStageMessage(stage, "start")
+          });
         }
 
         // ── Execute with timeout ─────────────────────────────────
@@ -439,7 +493,8 @@ class ExecutionEngine {
         if (sessionId) {
           eventBus.emitProgress(sessionId, stage, stageOk ? "done" : "error", {
             durationMs: stageDurationMs,
-            errors: response?.errors || []
+            errors: response?.errors || [],
+            message: this.getStageMessage(stage, stageOk ? "done" : "error")
           });
           if (stageOk && STAGE_DONE_EVENTS[stage]) {
             eventBus.emitEvent(sessionId, STAGE_DONE_EVENTS[stage], {
@@ -461,6 +516,8 @@ class ExecutionEngine {
 
           } else if (stage === "candidateFlow") {
             if (response.data.requiresClarification) {
+              // Clear stale recommendations — no cards should render during clarification
+              context.recommendations = {};
               executionStatus = "WAITING_CLARIFICATION";
               tracer.record("PIPELINE_HALTED", "⚠ clarification", 0);
               break;
@@ -493,6 +550,9 @@ class ExecutionEngine {
 
           } else if (stage === "booking") {
             context.recommendations.bookingSuggestions = response.data;
+
+          } else if (stage === "tripManager") {
+            context.tripResult = response.data;
           }
 
           currentStageIndex++;
@@ -512,6 +572,13 @@ class ExecutionEngine {
       }
 
       if (executionStatus === "RUNNING") executionStatus = "COMPLETED";
+
+      // Finalize memory — persist any corrections back to permanent storage
+      try {
+        memoryStage.finalize(context);
+      } catch (memErr) {
+        warnings.push(`Memory finalize failed: ${memErr.message}`);
+      }
 
     } catch (err) {
       errors.push(err.message);

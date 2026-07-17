@@ -33,15 +33,19 @@ function validateRecommendationResponse(res) {
     candidates: Array.isArray(res.candidates) ? res.candidates.map(c => ({
       id: String(c.id),
       name: String(c.name),
-      category: String(c.category || "attraction"),
-      image: String(c.image || ""),
+      category: String(c.category || c.type || "attraction"),
+      image: String(c.image || (Array.isArray(c.images) ? c.images[0] : "") || ""),
       description: String(c.description || ""),
       rating: Number(c.rating || 4.0),
       price: Number(c.price || 0),
       duration: String(c.duration || "2-3 hours"),
       distance: String(c.distance || "Nearby"),
-      confidence: Number(c.confidence || 0.9),
-      whyRecommended: String(c.whyRecommended || ""),
+      confidence: c.confidence || Number(c.confidence || 0.9),
+      whyRecommended: String(c.whyRecommended || c.reason || ""),
+      reasons: Array.isArray(c.reasons) ? c.reasons : [],
+      tradeoffs: Array.isArray(c.tradeoffs) ? c.tradeoffs : [],
+      alternatives: Array.isArray(c.alternatives) ? c.alternatives : [],
+      scoreBreakdown: c.scoreBreakdown || null,
       source: String(c.source || "knowledge_graph")
     })) : [],
     metadata: res.metadata || {}
@@ -62,6 +66,7 @@ function validateBudgetEstimate(estimate) {
       transit: Number(estimate.breakdown?.transit || 0)
     },
     confidence: Number(estimate.confidence || 0.9),
+    explanation: String(estimate.explanation || ""),
     generatedAt: estimate.generatedAt || new Date().toISOString()
   };
 }

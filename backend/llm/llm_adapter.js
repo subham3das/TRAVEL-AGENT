@@ -595,7 +595,7 @@ class LLMAdapter {
             });
           }
         } else {
-          summaryText = `Failed to process plan: ${composed.errors.join(", ")}`;
+          summaryText = "I'm still preparing your itinerary. Please answer a few more questions so I can plan the perfect trip.";
         }
 
         return {
@@ -621,14 +621,15 @@ class LLMAdapter {
       }); // end deduplicator.execute
 
     } catch (err) {
+      console.error("[LLMAdapter] Fatal error:", err.message);
       return {
         success: false,
-        data: null,
+        data: { text: "Something went wrong while processing your request. Please try again." },
         errors: [err.message],
         warnings: [],
         confidence: 0.0,
         processingTime: Date.now() - startTime,
-        metadata: { provider: "gemini" }
+        metadata: { provider: "deterministic" }
       };
     }
   }

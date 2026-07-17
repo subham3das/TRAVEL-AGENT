@@ -11,7 +11,16 @@ class BookingEngine {
     try {
       const optimizedItinerary = context.recommendations?.optimizedItinerary ?? context.optimizedItinerary ?? context.improvedItinerary ?? context.draftItinerary ?? null;
       if (!optimizedItinerary) {
-        throw new Error("No itinerary found in TravelContext for booking recommendations");
+        warnings.push("No itinerary found — skipping booking recommendations");
+        return {
+          success: true,
+          data: null,
+          errors,
+          warnings,
+          confidence: 1.0,
+          processingTime: Date.now() - startTime,
+          metadata: { skipped: true, reason: "no_itinerary" }
+        };
       }
 
       const userPrefs = context.user?.preferences || {};

@@ -1,74 +1,57 @@
 /**
  * Travel OS — Confidence Engine
  *
- * Enrichment component. Evaluates merged search results and attaches a structured
- * confidence object containing score, reason, verifiedAt, and source.
- * Does not transform any other fields.
+ * Pipeline stage that enriches every recommendation with dynamic confidence.
+ * Uses ConfidenceScorer for multi-factor scoring and ConfidenceAlerts for
+ * low-confidence verification messages.
+ *
+ * Enriched shape:
+ *   result.confidence = {
+ *     score,        // 0-1
+ *     level,        // "HIGH" | "MEDIUM" | "LOW"
+ *     reason,       // human-readable explanation
+ *     verifiedAt,   // ISO timestamp
+ *     source,       // data origin
+ *     factors: {    // individual scoring components
+ *       sourceDiversity,
+ *       dataCompleteness,
+ *       freshness,
+ *       ratingQuality,
+ *       providerReliability
+ *     }
+ *   }
  */
 
 "use strict";
 
+const ConfidenceScorer = require("./confidence_scorer");
+const ConfidenceAlerts = require("./confidence_alerts");
+
 class ConfidenceEngine {
+  constructor(opts = {}) {
+    this.scorer = new ConfidenceScorer(opts.scorer);
+    this.alerts = new ConfidenceAlerts(opts.alerts);
+  }
+
   /**
-   * Enrich a merged search result with confidence metadata.
+   * Enrich a single merged search result with confidence metadata.
    * @param {object} result - the merged search result object
    * @param {object} [diagnostics] - MergeDiagnostics mapping fields to sources
+   * @param {object} [opts] - { now, cacheAgeMs }
    * @returns {object} enriched search result
    */
-  enrich(result, diagnostics = null) {
+  enrich(result, diagnostics = null, opts = {}) {
     if (!result) return result;
 
-    const source = result.source || "unknown";
-    let score = 0.85; // default baseline
-    let reason = "Standard provider results.";
+    const { score, level, reason, factors } = this.scorer.score(result, diagnostics, opts);
 
-    // 1. Calculate confidence score & reason
-    if (source === "knowledge_graph") {
-      score = 0.98;
-      reason = "Verified against canonical Knowledge Graph facts.";
-    } else if (diagnostics?.sources) {
-      const srcMap = diagnostics.sources;
-      const count = Object.keys(srcMap).length;
-      
-      // Calculate how many different sources verified this entity
-      const uniqueSources = new Set(Object.values(srcMap));
-      
-      if (uniqueSources.has("knowledge_graph") && uniqueSources.has("booking_provider")) {
-        score = 0.96;
-        reason = "Verified statically in Knowledge Graph and matched with live provider rates.";
-      } else if (uniqueSources.has("knowledge_graph") && uniqueSources.has("internet_search")) {
-        score = 0.93;
-        reason = "Matched Knowledge Graph facts with live public ratings and reviews.";
-      } else if (uniqueSources.has("booking_provider")) {
-        score = 0.88;
-        reason = "Sourced directly from live booking inventory.";
-      } else if (uniqueSources.has("internet_search")) {
-        score = 0.75;
-        reason = "Sourced from public internet searches. Rates not verified.";
-      }
-    } else {
-      // Fallback logic if no diagnostics are passed
-      if (result.type === "hotel" && result.pricing?.price > 0) {
-        score = 0.88;
-        reason = "Dynamic provider pricing available.";
-      } else if (result.type === "flight") {
-        score = 0.90;
-        reason = "Live flight schedule from Skyscanner.";
-      }
-    }
-
-    // Ensure rating affects confidence slightly
-    if (result.rating && result.rating < 3.0) {
-      score = Math.max(0.5, score - 0.1);
-      reason += " Warning: Low user rating.";
-    }
-
-    // Attach confidence property (enrichment, not transformation)
     result.confidence = {
-      score: Number(score.toFixed(2)),
+      score,
+      level,
       reason,
       verifiedAt: new Date().toISOString(),
-      source
+      source: result.source || "unknown",
+      factors
     };
 
     return result;
@@ -76,7 +59,7 @@ class ConfidenceEngine {
 
   /**
    * Pipeline run method.
-   * Conforms to the standard engine response contract.
+   * Enriches all candidates, runs alert detection, attaches verification prompts.
    * @param {object} context - TravelContext
    * @returns {object} response envelope
    */
@@ -87,13 +70,15 @@ class ConfidenceEngine {
 
     try {
       const candidates = context?.recommendations?.candidates || [];
-      const enrichedCandidates = candidates.map(c => this.enrich(c));
+      const cacheAgeMs = context?.metadata?.cacheAgeMs || 0;
+      const now = Date.now();
+
+      const enrichedCandidates = candidates.map(c => this.enrich(c, null, { now, cacheAgeMs }));
 
       if (context?.recommendations) {
         context.recommendations.candidates = enrichedCandidates;
       }
 
-      // Calculate aggregate confidence
       const avgScore = enrichedCandidates.length > 0
         ? enrichedCandidates.reduce((acc, c) => acc + (c.confidence?.score || 0.9), 0) / enrichedCandidates.length
         : 1.0;
@@ -102,17 +87,40 @@ class ConfidenceEngine {
         context.recommendations.confidenceScore = Number(avgScore.toFixed(2));
       }
 
+      const { alerts, summary } = this.alerts.evaluateAll(enrichedCandidates);
+
+      if (context?.recommendations) {
+        context.recommendations.confidenceAlerts = alerts;
+        context.recommendations.confidenceSummary = summary;
+      }
+
+      const weakestPrompt = this.alerts.getWeakestVerification(enrichedCandidates);
+
+      if (summary.needsVerification) {
+        warnings.push(summary.verificationMessage);
+      }
+
+      if (weakestPrompt) {
+        warnings.push(weakestPrompt);
+      }
+
       return {
         success: true,
         data: {
           candidates: enrichedCandidates,
-          confidenceScore: Number(avgScore.toFixed(2))
+          confidenceScore: Number(avgScore.toFixed(2)),
+          alerts,
+          summary
         },
         errors,
         warnings,
         confidence: Number(avgScore.toFixed(2)),
         processingTime: Date.now() - startTime,
-        metadata: { stage: "CONFIDENCE" }
+        metadata: {
+          stage: "CONFIDENCE",
+          lowConfidenceItems: alerts.filter(a => a.level === "LOW").length,
+          needsVerification: summary.needsVerification
+        }
       };
 
     } catch (err) {

@@ -63,20 +63,38 @@ class CandidateFlowEngine {
             normalized.travelStyle || "mid"
           );
 
-          const candidates = attractions.slice(0, 6).map(a => Candidate({
-            id:          a.id,
-            name:        a.name,
-            type:        a.type,
-            images:      a.images,
-            description: a.description || "A recommended place to visit.",
-            priceLabel:  a.priceLabel,
-            rating:      a.rating,
-            location:    a.location,
-            confidence:  a.confidence,
-            source:      "knowledge_graph",
-            reason:      `Top attraction in ${normalized.destination}.`,
-            raw:         a
-          }));
+          const candidates = attractions.slice(0, 6).map(a => {
+            const reasons = [];
+            const tradeoffs = [];
+
+            reasons.push(`Top attraction in ${normalized.destination}.`);
+            if (a.rating && a.rating >= 4.5) reasons.push(`Rated ${a.rating.toFixed(1)}★ by travelers`);
+            if (a.rating && a.rating >= 4.0 && a.rating < 4.5) reasons.push(`Well reviewed at ${a.rating.toFixed(1)}★`);
+            if (a.priceLabel) {
+              const price = parseInt(String(a.priceLabel).replace(/\D/g, ""), 10);
+              if (price <= 500) reasons.push("Budget-friendly entry");
+              else if (price > 2000) tradeoffs.push("Premium-priced experience");
+            }
+            if (a.duration) reasons.push(`Takes about ${a.duration}`);
+            if (a.closingDays && a.closingDays.length > 0) tradeoffs.push(`Closed on ${a.closingDays.join(", ")}`);
+
+            return Candidate({
+              id:          a.id,
+              name:        a.name,
+              type:        a.type,
+              images:      a.images,
+              description: a.description || "A recommended place to visit.",
+              priceLabel:  a.priceLabel,
+              rating:      a.rating,
+              location:    a.location,
+              confidence:  a.confidence,
+              source:      "knowledge_graph",
+              reason:      reasons[0],
+              reasons,
+              tradeoffs,
+              raw:         a
+            });
+          });
 
           activeState.clarificationConfig = {
             type:             "selection",
@@ -238,20 +256,49 @@ class CandidateFlowEngine {
           const searchResults = searchResponse.results || [];
 
           // Map SearchResult domain objects → Candidate domain objects
-          const candidates = searchResults.map(s => Candidate({
-            id:          s.id,
-            name:        s.title,
-            type:        "hotel",
-            images:      s.images,
-            description: s.description || "Hotel option.",
-            priceLabel:  s.pricing?.label || "Rates on request",
-            rating:      s.metadata?.rating,
-            location:    s.location,
-            confidence:  s.confidence?.score,
-            source:      s.source,
-            reason:      s.confidence?.reason || "Recommended.",
-            raw:         s
-          }));
+          const candidates = searchResults.map(s => {
+            const reasons = [];
+            const tradeoffs = [];
+
+            if (s.confidence?.reason) reasons.push(s.confidence.reason);
+            if (s.rating && s.rating >= 4.5) reasons.push(`Top-rated at ${s.rating.toFixed(1)}★`);
+            if (s.rating && s.rating >= 4.0 && s.rating < 4.5) reasons.push(`Well reviewed at ${s.rating.toFixed(1)}★`);
+            if (s.pricing?.price > 0) {
+              if (normalized.budget && s.pricing.price <= normalized.budget * 0.4) {
+                reasons.push("Fits your budget");
+              } else if (normalized.budget && s.pricing.price > normalized.budget * 0.6) {
+                tradeoffs.push("Pricier than your budget range");
+              }
+            }
+            if (s.location) reasons.push(`Located in ${s.location}`);
+            if (s.metadata?.amenities) {
+              const amenities = s.metadata.amenities;
+              if (amenities.includes("pool")) reasons.push("Has pool");
+              if (amenities.includes("wifi") || amenities.includes("Free WiFi")) reasons.push("Free WiFi");
+              if (amenities.includes("breakfast") || amenities.includes("Free breakfast")) reasons.push("Includes breakfast");
+              if (amenities.includes("parking")) reasons.push("Free parking available");
+            }
+            if (!s.availability || s.availability.status === "limited") {
+              tradeoffs.push("Limited availability — book soon");
+            }
+
+            return Candidate({
+              id:          s.id,
+              name:        s.title,
+              type:        "hotel",
+              images:      s.images,
+              description: s.description || "Hotel option.",
+              priceLabel:  s.pricing?.label || "Rates on request",
+              rating:      s.metadata?.rating,
+              location:    s.location,
+              confidence:  s.confidence?.score,
+              source:      s.source,
+              reason:      reasons[0] || "Recommended.",
+              reasons,
+              tradeoffs,
+              raw:         s
+            });
+          });
 
           activeState.clarificationConfig = {
             type:             "selection",
@@ -288,17 +335,40 @@ class CandidateFlowEngine {
           const searchResults = searchResponse.results || [];
 
           // Map SearchResult domain objects → Candidate domain objects
-          const candidates = searchResults.map(s => Candidate({
-            id:          s.id,
-            name:        s.title,
-            type:        "flight",
-            description: s.subtitle || "Flight option",
-            priceLabel:  s.pricing?.label || "Rates on request",
-            confidence:  s.confidence?.score,
-            source:      s.source,
-            reason:      s.confidence?.reason || "Available flight.",
-            raw:         s
-          }));
+          const candidates = searchResults.map(s => {
+            const reasons = [];
+            const tradeoffs = [];
+
+            if (s.confidence?.reason) reasons.push(s.confidence.reason);
+            if (s.pricing?.price > 0 && normalized.budget) {
+              if (s.pricing.price <= normalized.budget * 0.3) {
+                reasons.push("Fits your budget");
+              } else if (s.pricing.price > normalized.budget * 0.5) {
+                tradeoffs.push("Takes a significant portion of your budget");
+              }
+            }
+            if (s.metadata?.stops !== undefined) {
+              if (s.metadata.stops === 0) reasons.push("Direct flight");
+              else if (s.metadata.stops === 1) reasons.push("One stop");
+              else tradeoffs.push(`${s.metadata.stops} stops — longer travel time`);
+            }
+            if (s.metadata?.duration) reasons.push(`Duration: ${s.metadata.duration}`);
+            if (s.subtitle) reasons.push(s.subtitle);
+
+            return Candidate({
+              id:          s.id,
+              name:        s.title,
+              type:        "flight",
+              description: s.subtitle || "Flight option",
+              priceLabel:  s.pricing?.label || "Rates on request",
+              confidence:  s.confidence?.score,
+              source:      s.source,
+              reason:      reasons[0] || "Available flight.",
+              reasons,
+              tradeoffs,
+              raw:         s
+            });
+          });
 
           activeState.clarificationConfig = {
             type:             "selection",

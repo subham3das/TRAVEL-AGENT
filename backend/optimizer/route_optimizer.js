@@ -60,7 +60,16 @@ class RouteOptimizer {
     try {
       const inputItinerary = context.recommendations?.improvedItinerary ?? context.improvedItinerary ?? context.draftItinerary ?? null;
       if (!inputItinerary) {
-        throw new Error("No improved itinerary found in TravelContext to route optimize");
+        warnings.push("No itinerary found — skipping route optimization");
+        return {
+          success: true,
+          data: { optimizedItinerary: null },
+          errors,
+          warnings,
+          confidence: 1.0,
+          processingTime: Date.now() - startTime,
+          metadata: { skipped: true, reason: "no_input_itinerary" }
+        };
       }
 
       const userPrefs = context.user?.preferences || {};

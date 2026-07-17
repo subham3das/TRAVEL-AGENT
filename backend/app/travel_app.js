@@ -4,7 +4,7 @@ const contextUpdater = require("../conversation/context_updater");
 const clarification = require("../conversation/clarification_engine");
 const executionEngine = require("../execution/execution_engine");
 const responseComposer = require("../response/response_composer");
-const memoryEngine = require("../memory/memory_engine");
+const memoryManager = require("../memory/memory_manager");
 
 /**
  * Travel Intelligence OS - Application Entry Point.
@@ -63,20 +63,10 @@ class TravelApp {
         appLogs.push("Context Updater -> WARNING");
       }
 
-      // 4. Memory Engine (Load user profile & preferences)
-      appLogs.push("Memory Engine (load) -> RUNNING");
-      const memRes = memoryEngine.listMemory(userId);
-      if (memRes.success) {
-        if (!context.user) context.user = { preferences: {} };
-        if (!context.user.preferences) context.user.preferences = {};
-        
-        memRes.data.forEach(m => {
-          context.user.preferences[m.category] = m.value;
-        });
-        appLogs.push("Memory Engine (load) -> OK");
-      } else {
-        appLogs.push("Memory Engine (load) -> WARNING");
-      }
+      // 4. Memory Manager (Load all three memory layers)
+      appLogs.push("Memory Manager (load) -> RUNNING");
+      memoryManager.loadContext(context);
+      appLogs.push("Memory Manager (load) -> OK");
 
       // 5. Clarification Engine (Stop execution if inputs missing)
       appLogs.push("Clarification Engine -> RUNNING");
@@ -108,19 +98,12 @@ class TravelApp {
         throw new Error(pipelineRes.errors[0] || "Pipeline execution failed");
       }
 
-      // 16. Memory Engine (Save new memories / preferences updates)
-      appLogs.push("Memory Engine (save) -> RUNNING");
+      // 16. Memory Manager (Save preferences to permanent memory)
+      appLogs.push("Memory Manager (save) -> RUNNING");
       if (context.state?.normalizedEntities?.travelStyle) {
-        memoryEngine.storeMemory({
-          userId,
-          category: "Travel Style",
-          type: "LongTerm",
-          value: context.state.normalizedEntities.travelStyle,
-          confidence: 1.0,
-          importance: 4
-        });
+        memoryManager.permanent.updatePreference(userId, "hotelStyle", context.state.normalizedEntities.travelStyle);
       }
-      appLogs.push("Memory Engine (save) -> OK");
+      appLogs.push("Memory Manager (save) -> OK");
 
       // 17. Response Composer
       appLogs.push("Response Composer -> RUNNING");

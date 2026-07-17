@@ -36,6 +36,50 @@ class BudgetEngine {
     this.priceProvider = new PriceProvider();
   }
 
+  buildExplanation({ destinationId, travelStyle, travelersType, days, hotelPricePerNight, baseStays, baseFood, baseActivities, baseTransport, seasonMultiplier, multiplier, hotelRoomsCount, selectedHotel, selectedPlaces }) {
+    const parts = [];
+
+    // Hotel reasoning
+    if (selectedHotel) {
+      parts.push(`Based on your selected hotel at ₹${hotelPricePerNight.toLocaleString("en-IN")}/night`);
+    } else {
+      const styleLabel = travelStyle === "budget" ? "budget" : travelStyle === "premium" || travelStyle === "luxury" ? "premium" : "comfortable";
+      parts.push(`Hotel estimated at ₹${hotelPricePerNight.toLocaleString("en-IN")}/night for ${styleLabel} tier`);
+    }
+    if (hotelRoomsCount > 1) parts.push(`${hotelRoomsCount} rooms for ${travelersType} travel`);
+    parts.push(`₹${baseStays.toLocaleString("en-IN")} for ${days} nights`);
+
+    // Activity reasoning
+    if (selectedPlaces > 0) {
+      parts.push(`Activity costs based on ${selectedPlaces} selected attractions (₹${baseActivities.toLocaleString("en-IN")} total)`);
+    } else {
+      parts.push(`Activity estimate uses average ticket prices for the destination`);
+    }
+
+    // Food reasoning
+    const foodPerDay = Math.round(baseFood / days);
+    parts.push(`Dining at ₹${foodPerDay.toLocaleString("en-IN")}/day for ${travelersType} travelers`);
+
+    // Transport reasoning
+    const transportPerDay = Math.round(baseTransport / days);
+    parts.push(`Local transport at ₹${transportPerDay.toLocaleString("en-IN")}/day`);
+
+    // Season reasoning
+    if (seasonMultiplier > 1.0) {
+      parts.push(`Peak season surcharge of ${Math.round((seasonMultiplier - 1) * 100)}% applied`);
+    } else if (seasonMultiplier < 1.0) {
+      parts.push(`Off-season discount of ${Math.round((1 - seasonMultiplier) * 100)}% applied`);
+    }
+
+    // Traveler multiplier
+    if (multiplier > 1.0) {
+      const extra = travelersType === "couple" ? "couple" : travelersType === "family" ? "family of 3-4" : travelersType;
+      parts.push(`Costs scaled ${multiplier}× for ${extra} travel`);
+    }
+
+    return parts.join(". ") + ".";
+  }
+
   async calculate(intent) {
     const startTime = Date.now();
     const errors = [];
@@ -177,7 +221,23 @@ class BudgetEngine {
           dining: baseFood,
           transit: baseTransport
         },
-        confidence: 0.88
+        confidence: 0.88,
+        explanation: this.buildExplanation({
+          destinationId,
+          travelStyle,
+          travelersType,
+          days,
+          hotelPricePerNight,
+          baseStays,
+          baseFood,
+          baseActivities,
+          baseTransport,
+          seasonMultiplier,
+          multiplier,
+          hotelRoomsCount,
+          selectedHotel: !!intent.selectedHotel,
+          selectedPlaces: intent.selectedPlaces?.length || 0
+        })
       });
 
       return {
@@ -185,7 +245,9 @@ class BudgetEngine {
         data: estimate,
         errors,
         warnings,
-        processingTime: Date.now() - startTime
+        confidence: estimate.confidence || 0.88,
+        processingTime: Date.now() - startTime,
+        metadata: { stage: "BUDGET" }
       };
     } catch (err) {
       errors.push(err.message);
@@ -194,7 +256,9 @@ class BudgetEngine {
         data: null,
         errors,
         warnings,
-        processingTime: Date.now() - startTime
+        confidence: 0,
+        processingTime: Date.now() - startTime,
+        metadata: { stage: "BUDGET" }
       };
     }
   }

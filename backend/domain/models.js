@@ -192,7 +192,7 @@ function BudgetEstimate(partial = {}) {
  * @property {string}  [priceLabel] display string
  * @property {number}  [rating]
  * @property {string}  [location]
- * @property {number}  confidence   0-1
+ * @property {number|object}  confidence   0-1 or { score, level, reason, factors }
  * @property {string}  source       "knowledge_graph" | "search_layer" | "user_history"
  * @property {string}  reason       Why recommended
  * @property {object}  [raw]        Original domain object (Hotel, Flight, Activity)
@@ -210,6 +210,10 @@ function Candidate(partial = {}) {
     confidence:  partial.confidence  || 0,
     source:      partial.source      || "unknown",
     reason:      partial.reason      || partial.explanation || partial.whyRecommended || "",
+    reasons:     partial.reasons     || [],
+    tradeoffs:   partial.tradeoffs   || [],
+    alternatives: partial.alternatives || [],
+    scoreBreakdown: partial.scoreBreakdown || null,
     raw:         partial.raw         || null
   };
 }

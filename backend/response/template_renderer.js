@@ -171,6 +171,10 @@ class TemplateRenderer {
       default: return "\u2022";
     }
   }
+
+  renderGreeting() {
+    return "Hi! I'm your travel assistant. Tell me where you'd like to go and I'll help plan your trip. You can say things like:\n\n• \"Plan a 3 day trip to Manali\"\n• \"Best time to visit Goa\"\n• \"Help\"";
+  }
 }
 
 module.exports = new TemplateRenderer();

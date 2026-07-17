@@ -1,140 +1,200 @@
 /**
- * Travel OS Journey Manager
- * 
- * Central State Machine for the Travel Operating System.
- * Replaces the legacy candidate_flow.js.
+ * Travel OS — Journey Manager (v2)
+ *
+ * The biggest differentiator.
+ * Derives a complete TripSpec from minimal user input.
+ *
+ * "I have four days in Japan" →
+ *   - tripType: international
+ *   - needs: flight, hotel, visa, JR pass, currency, weather, attractions, transport
+ *   - each need has search criteria and status
+ *
+ * No rigid flowcharts. Adaptive inference.
+ *
+ * Integration:
+ *   - Runs as pipeline stage "journeyManager"
+ *   - Produces context.journeySpec (TripSpec)
+ *   - Other stages read journeySpec to know what to do
+ *   - CandidateFlow uses journeySpec.needs to determine clarification steps
  */
-const { validateTrip, validateIntent } = require("../contracts/EngineContracts");
 
-const STAGES = {
-  START: "START",
-  DESTINATION: "DESTINATION",
-  INTERESTS: "INTERESTS",
-  PLACE_SELECTION: "PLACE_SELECTION",
-  BUDGET_ESTIMATION: "BUDGET_ESTIMATION",
-  USER_BUDGET: "USER_BUDGET",
-  DAY_ESTIMATION: "DAY_ESTIMATION",
-  USER_DAYS: "USER_DAYS",
-  HOTEL_SELECTION: "HOTEL_SELECTION",
-  TRANSPORT_SELECTION: "TRANSPORT_SELECTION",
-  REVIEW: "REVIEW",
-  GENERATING: "GENERATING",
-  READY: "READY",
-  DRAFT: "DRAFT",
-  FINALIZED: "FINALIZED",
-  BOOKED: "BOOKED",
-  COMPLETED: "COMPLETED"
-};
+"use strict";
+
+const inferenceEngine = require("./inference_engine");
+const eventBus = require("../events/event_bus");
 
 class JourneyManager {
-  constructor(eventBus = null) {
-    this.eventBus = eventBus; // Decoupled event bus
+  /**
+   * Pipeline stage: Derive TripSpec from context.
+   *
+   * @param {object} context - TravelContext
+   * @returns {object} Standard engine response
+   */
+  run(context) {
+    const startTime = Date.now();
+    const errors = [];
+    const warnings = [];
+
+    try {
+      const userId = context.userId || context.state?.userId || "anonymous";
+      const sessionId = context.sessionId || "default-session";
+      const entities = context.state?.normalizedEntities || {};
+
+      // Build input for inference engine
+      const input = {
+        destination:    entities.destination,
+        durationDays:   entities.durationDays,
+        startDate:      entities.startDate,
+        budget:         entities.budget,
+        travelersType:  entities.travelersType,
+        travelStyle:    entities.travelStyle,
+        origin:         entities.origin,
+        existing: {
+          selectedHotel:   entities.selectedHotel,
+          selectedFlight:  entities.selectedFlight,
+          selectedPlaces:  entities.selectedPlaces
+        },
+        userProfile: context.travelProfile || null,
+        permanentMemory: context.permanentMemory || null,
+        inferredFrom: "pipeline_context"
+      };
+
+      // If no destination, skip — let CandidateFlow handle it
+      if (!input.destination) {
+        return {
+          success: true,
+          data: { tripSpec: null, reason: "No destination yet — CandidateFlow will ask" },
+          errors,
+          warnings,
+          confidence: 1.0,
+          processingTime: Date.now() - startTime,
+          metadata: { stage: "JOURNEY_MANAGER" }
+        };
+      }
+
+      // Derive TripSpec
+      const tripSpec = inferenceEngine.derive(input);
+
+      // Mark existing items as ready
+      for (const need of tripSpec.needs) {
+        if (need.id === "hotel" && entities.selectedHotel) {
+          need.status = "ready";
+          need.data = entities.selectedHotel;
+        }
+        if (need.id === "flight" && entities.selectedFlight) {
+          need.status = "ready";
+          need.data = entities.selectedFlight;
+        }
+        if (need.id === "attractions" && entities.selectedPlaces?.length > 0) {
+          need.status = "ready";
+          need.data = entities.selectedPlaces;
+        }
+      }
+
+      // Store in context
+      context.journeySpec = tripSpec;
+
+      // Also update conversationState for backward compat
+      if (context.state?.conversationState) {
+        context.state.conversationState.journeyState = tripSpec.needs.every(n => n.status === "ready" || !n.required)
+          ? "READY"
+          : "DERIVING";
+      }
+
+      eventBus.emitEvent(sessionId, "JOURNEY_DERIVED", {
+        destination: tripSpec.destination,
+        tripType: tripSpec.tripType,
+        durationDays: tripSpec.durationDays,
+        totalNeeds: tripSpec.needs.length,
+        requiredNeeds: tripSpec.needs.filter(n => n.required).length,
+        pendingNeeds: tripSpec.needs.filter(n => n.status === "pending").length
+      });
+
+      return {
+        success: true,
+        data: { tripSpec },
+        errors,
+        warnings,
+        confidence: 1.0,
+        processingTime: Date.now() - startTime,
+        metadata: { stage: "JOURNEY_MANAGER" }
+      };
+
+    } catch (err) {
+      errors.push(err.message);
+      return {
+        success: false,
+        data: null,
+        errors,
+        warnings,
+        confidence: 0,
+        processingTime: Date.now() - startTime,
+        metadata: { stage: "JOURNEY_MANAGER" }
+      };
+    }
   }
 
   /**
-   * Initializes a new journey or loads an existing one.
-   * Returns a valid Trip Aggregate.
+   * Get the next unfulfilled need from the TripSpec.
+   * Used by CandidateFlow to determine what to ask next.
+   *
+   * @param {object} context
+   * @returns {Need | null}
    */
-  initializeJourney(existingTrip = null) {
-    if (existingTrip) {
-      return validateTrip(existingTrip);
-    }
-    return validateTrip({
-      journeyState: STAGES.START
-    });
+  getNextNeed(context) {
+    const spec = context.journeySpec;
+    if (!spec) return null;
+
+    return spec.needs.find(n => n.status === "pending" && n.required) || null;
   }
 
   /**
-   * Advances the state machine based on the current context and user intent.
-   * Returns a ClarificationConfig if input is needed, or null if the pipeline can continue.
+   * Mark a need as fulfilled.
+   *
+   * @param {object} context
+   * @param {string} needId
+   * @param {object} data - the resolved data
    */
-  evaluate(tripAggregate) {
-    let currentState = tripAggregate.journeyState;
-    const intent = tripAggregate.intent || {};
-    
-    // We determine the next stage deterministically based on missing data
-    if (currentState === STAGES.START || currentState === STAGES.DESTINATION) {
-      if (!intent.destination) {
-        tripAggregate.journeyState = STAGES.DESTINATION;
-        return this._buildClarification("destination", "Where would you like to travel?");
-      }
-      currentState = STAGES.INTERESTS;
-      tripAggregate.journeyState = STAGES.INTERESTS;
+  fulfillNeed(context, needId, data) {
+    const spec = context.journeySpec;
+    if (!spec) return;
+
+    const need = spec.needs.find(n => n.id === needId);
+    if (need) {
+      need.status = "ready";
+      need.data = data;
     }
 
-    if (currentState === STAGES.INTERESTS) {
-      if (!intent.selectedPlaces || intent.selectedPlaces.length === 0) {
-        tripAggregate.journeyState = STAGES.PLACE_SELECTION;
-        return null; // Signals the orchestrator to run RecommendationEngine
-      }
-      currentState = STAGES.BUDGET_ESTIMATION;
-      tripAggregate.journeyState = STAGES.BUDGET_ESTIMATION;
+    // Check if all required needs are ready
+    const allReady = spec.needs.filter(n => n.required).every(n => n.status === "ready");
+    if (allReady && context.state?.conversationState) {
+      context.state.conversationState.journeyState = "READY";
     }
-
-    if (currentState === STAGES.BUDGET_ESTIMATION) {
-      if (!tripAggregate.budgetSummary) {
-        return null; // Signals the orchestrator to run BudgetEstimator
-      }
-      currentState = STAGES.USER_BUDGET;
-      tripAggregate.journeyState = STAGES.USER_BUDGET;
-    }
-
-    if (currentState === STAGES.USER_BUDGET) {
-      if (!intent.budgetConstraint) {
-        return this._buildClarification("budgetConstraint", "What is your budget?");
-      }
-      currentState = STAGES.DAY_ESTIMATION;
-      tripAggregate.journeyState = STAGES.DAY_ESTIMATION;
-    }
-
-    if (currentState === STAGES.DAY_ESTIMATION) {
-      if (!intent.daysConstraint) {
-        return this._buildClarification("daysConstraint", "How many days are you planning for?");
-      }
-      currentState = STAGES.HOTEL_SELECTION;
-      tripAggregate.journeyState = STAGES.HOTEL_SELECTION;
-    }
-
-    if (currentState === STAGES.HOTEL_SELECTION) {
-      if (!intent.selectedHotel) {
-        return null; // Signals the orchestrator to run Provider (Hotels)
-      }
-      currentState = STAGES.TRANSPORT_SELECTION;
-      tripAggregate.journeyState = STAGES.TRANSPORT_SELECTION;
-    }
-
-    if (currentState === STAGES.TRANSPORT_SELECTION) {
-      if (!intent.selectedFlight) {
-        return null; // Signals the orchestrator to run Provider (Flights)
-      }
-      currentState = STAGES.REVIEW;
-      tripAggregate.journeyState = STAGES.REVIEW;
-    }
-
-    if (currentState === STAGES.REVIEW) {
-      // Could show a final review screen, or jump straight to generation
-      tripAggregate.journeyState = STAGES.GENERATING;
-      currentState = STAGES.GENERATING;
-    }
-    
-    if (currentState === STAGES.GENERATING) {
-      return null; // Signals the orchestrator to run Planner
-    }
-
-    return null; // No clarification needed
   }
 
-  _buildClarification(target, prompt) {
+  /**
+   * Get summary of derived needs for response composition.
+   */
+  getSummary(context) {
+    const spec = context.journeySpec;
+    if (!spec) return null;
+
     return {
-      type: "text",
-      target: target,
-      prompt: prompt,
-      options: []
+      destination: spec.destination,
+      tripType: spec.tripType,
+      duration: spec.durationDays,
+      startDate: spec.startDate,
+      endDate: spec.endDate,
+      needs: spec.needs.map(n => ({
+        id: n.id,
+        type: n.type,
+        required: n.required,
+        status: n.status,
+        reason: n.reason
+      })),
+      ready: spec.needs.filter(n => n.required).every(n => n.status === "ready")
     };
   }
 }
 
-module.exports = {
-  STAGES,
-  JourneyManager
-};
+module.exports = new JourneyManager();

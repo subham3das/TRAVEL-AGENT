@@ -36,6 +36,9 @@ console.log(`Loaded ${kgStatus.loadedCount} nodes successfully.`);
 // Load Usage Service
 const usageService = require("./services/usage_service.js");
 
+// Load Search Providers
+require("./search/search_bootstrap.js");
+
 // Load Telemetry + Circuit Breaker
 const telemetry = require("./services/llm_telemetry.js");
 const circuitBreaker = require("./services/circuit_breaker.js");

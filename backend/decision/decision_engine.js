@@ -1,4 +1,5 @@
 const knowledgeService = require("../knowledge/knowledge_service");
+const learningEngine = require("../learning/learning_engine");
 
 // Travel Intelligence OS - Decision Engine
 class DecisionEngine {
@@ -12,7 +13,16 @@ class DecisionEngine {
       // 1. Parse Context Inputs
       const originalItinerary = context.recommendations?.draftItinerary ?? context.draftItinerary ?? null;
       if (!originalItinerary) {
-        throw new Error("No draft itinerary found in TravelContext to optimize");
+        warnings.push("No draft itinerary found — skipping decision optimization");
+        return {
+          success: true,
+          data: { improvedItinerary: null, decisionLog: [], recommendations: [] },
+          errors,
+          warnings,
+          confidence: 1.0,
+          processingTime: Date.now() - startTime,
+          metadata: { skipped: true, reason: "no_draft_itinerary" }
+        };
       }
 
       const userPrefs = context.user?.preferences || {};
@@ -45,6 +55,7 @@ class DecisionEngine {
       this.optimizeDiversity(dailyPlans, attractions, decisionLog);
       this.optimizeFatigue(dailyPlans, decisionLog);
       this.optimizeBudget(dailyPlans, budgetLimit, hotels, restaurants, decisionLog);
+      this.optimizeLearning(dailyPlans, context, attractions, restaurants, decisionLog);
 
       // 3. Compute Metrics & Comparison
       const originalMetrics = this.calculateMetrics(originalItinerary, budgetLimit, userPrefs);
@@ -267,6 +278,49 @@ class DecisionEngine {
               totalSpend -= savings;
 
               if (totalSpend <= budgetLimit) return; // budget optimized!
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Learning-based optimization: swap rejected places with alternatives
+  optimizeLearning(dailyPlans, context, attractions, restaurants, decisionLog) {
+    const profile = context.user?.preferences || context.travelProfile;
+    if (!profile?.rankingWeights) return;
+
+    const allNodes = [...attractions, ...restaurants];
+
+    for (const day of dailyPlans) {
+      for (const slot of (day.slots || [])) {
+        if (slot.type !== "attraction" && slot.type !== "restaurant") continue;
+
+        const boost = learningEngine.getBoost(profile, { id: slot.nodeId, name: slot.name, type: slot.type });
+
+        // If strongly rejected (boost <= -25), try to find a better alternative
+        if (boost <= -25) {
+          const alternatives = allNodes.filter(n =>
+            n.type === slot.type &&
+            n.id !== slot.nodeId &&
+            (n.rating || 0) >= 4.0
+          );
+
+          if (alternatives.length > 0) {
+            const best = alternatives.sort((a, b) => (b.rating || 0) - (a.rating || 0))[0];
+            const altBoost = learningEngine.getBoost(profile, best);
+
+            // Only swap if the alternative isn't also rejected
+            if (altBoost >= -10) {
+              decisionLog.push({
+                action: "REPLACE",
+                target: slot.name,
+                replacement: best.name,
+                reason: `Based on your past feedback, you may prefer ${best.name} over ${slot.name}.`,
+                confidence: 0.85
+              });
+              slot.nodeId = best.id;
+              slot.name = best.name;
             }
           }
         }

@@ -2,82 +2,43 @@
  * Travel OS — Learning Engine
  *
  * Deterministically learns from user behaviors (accepts, rejections, additions)
- * and updates personal ranking weights inside the TravelProfile.
+ * and updates permanent memory learnings.
  *
  * Rules:
  * - NEVER trains LLMs.
  * - NEVER writes to or alters the Knowledge Graph.
- * - Adjusts weight tokens in TravelProfile.rankingWeights.
+ * - Writes to PermanentMemory.learnings.rankingWeights.
  */
 
 "use strict";
 
-const travelProfileManager = require("../memory/travel_profile_manager");
+const memoryManager = require("../memory/memory_manager");
 
 class LearningEngine {
   /**
-   * Processes a user interaction event and updates ranking weights in the profile.
+   * Processes a user interaction event and updates ranking weights.
    *
    * @param {string} userId
-   * @param {object} event - { type: "REJECT_AIRLINE"|"ACCEPT_HOTEL_CHAIN"|"ACCEPT_PLACE"|"REJECT_PLACE", value: string }
-   * @param {object} profile - the user's TravelProfile
+   * @param {object} event - { type: "REJECT_AIRLINE"|"ACCEPT_HOTEL_CHAIN"|"ACCEPT_PLACE"|..., value: string }
+   * @param {object} profile - the user's TravelProfile (for backward compat)
    * @returns {object} updated rankingWeights
    */
   learn(userId, event, profile) {
     if (!profile) return {};
 
-    profile.rankingWeights = profile.rankingWeights || {};
-    const weights = profile.rankingWeights;
-
     const type = event?.type;
     const value = String(event?.value || "").toLowerCase();
 
-    if (!type || !value) return weights;
+    if (!type || !value) return profile.rankingWeights || {};
 
-    switch (type) {
-      case "REJECT_AIRLINE":
-        // Penalty for airline
-        weights[`airline:${value}`] = (weights[`airline:${value}`] || 0) - 30;
-        break;
+    // Delegate to MemoryManager which writes to PermanentMemory
+    memoryManager.learn(userId, type, value);
 
-      case "ACCEPT_AIRLINE":
-        // Boost for airline
-        weights[`airline:${value}`] = (weights[`airline:${value}`] || 0) + 15;
-        break;
+    // Sync back to profile for backward compat with RankingEngine
+    const permanent = memoryManager.permanent.load(userId);
+    profile.rankingWeights = permanent.learnings.rankingWeights || {};
 
-      case "REJECT_HOTEL_CHAIN":
-        // Penalty for hotel chain
-        weights[`chain:${value}`] = (weights[`chain:${value}`] || 0) - 25;
-        break;
-
-      case "ACCEPT_HOTEL_CHAIN":
-        // Boost for hotel chain
-        weights[`chain:${value}`] = (weights[`chain:${value}`] || 0) + 20;
-        break;
-
-      case "REJECT_PLACE":
-        // Penalty for specific category or place ID
-        weights[`place:${value}`] = (weights[`place:${value}`] || 0) - 30;
-        break;
-
-      case "ACCEPT_PLACE":
-        // Boost for specific place ID
-        weights[`place:${value}`] = (weights[`place:${value}`] || 0) + 25;
-        break;
-
-      case "ADD_PLACE_CATEGORY":
-        // Boost category (e.g. museum, beach)
-        weights[`category:${value}`] = (weights[`category:${value}`] || 0) + 10;
-        break;
-
-      default:
-        console.warn(`[LearningEngine] Unrecognized event type: ${type}`);
-    }
-
-    // Save changes persistently
-    travelProfileManager.save(profile);
-
-    return weights;
+    return profile.rankingWeights;
   }
 
   /**
@@ -104,7 +65,6 @@ class LearningEngine {
     // 2. Hotel Chain check
     if (type === "hotel") {
       const name = String(item.name || "").toLowerCase();
-      // Taj, Marriott, Hyatt, Marriott, Sheraton etc.
       const chains = ["taj", "marriott", "hyatt", "hilton", "sheraton", "novotel", "ibis", "radisson"];
       for (const chain of chains) {
         if (name.includes(chain) && weights[`chain:${chain}`]) {
@@ -121,7 +81,7 @@ class LearningEngine {
       }
     }
 
-    // 4. Category check (for attractions/restaurants)
+    // 4. Category check
     const category = String(item.category || item.type || "").toLowerCase();
     if (weights[`category:${category}`]) {
       boost += weights[`category:${category}`];

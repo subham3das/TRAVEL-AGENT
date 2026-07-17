@@ -62,7 +62,8 @@ class ResponseComposer {
       // 4. Compute Travel Score
       const travelScore = this.computeTravelScore(itinerary, budget);
 
-      // 5. Compile Recommendations
+      // 5. Compile Recommendations with explainability
+      const candidates = recs.candidates || [];
       const recommendations = {
         recommendedPlaces: recs.recommendedPlaces || [],
         recommendedRestaurants: recs.recommendedRestaurants || [],
@@ -70,8 +71,23 @@ class ResponseComposer {
         foodRecommendations: recs.foodRecommendations || [],
         shoppingRecommendations: recs.shoppingRecommendations || [],
         alternatives: recs.alternatives || {},
-        recommendationScores: recs.recommendationScores || {}
+        recommendationScores: recs.recommendationScores || {},
+        candidates: candidates.map(c => ({
+          id: c.id,
+          name: c.name,
+          type: c.type,
+          reason: c.reason || c.whyRecommended || "",
+          reasons: c.reasons || [],
+          tradeoffs: c.tradeoffs || [],
+          scoreBreakdown: c.scoreBreakdown || null,
+          confidence: c.confidence || null,
+          alternatives: c.alternatives || []
+        }))
       };
+
+      // 5b. Extract decision engine explainability
+      const decisionLog = recs.improvedItinerary?.decisionLog || [];
+      const plannerComparison = recs.improvedItinerary?.plannerComparison || null;
 
       // 6. Gather warnings and de-duplicate
       const collectedWarnings = new Set();
@@ -86,8 +102,10 @@ class ResponseComposer {
       if (executionResult?.errors) executionResult.errors.forEach(e => errors.push(e));
       if (context.errors) context.errors.forEach(e => errors.push(e));
 
-      // 8. Calculate Global Confidence
+      // 8. Calculate Global Confidence + Alerts
       const globalConfidence = this.calculateConfidence(context, executionResult);
+      const confidenceAlerts = recs.confidenceAlerts || null;
+      const confidenceSummary = recs.confidenceSummary || null;
 
       // 9. Next Actions decisioning
       const nextActions = [];
@@ -104,6 +122,17 @@ class ResponseComposer {
 
       const executionSummary = execData.executionSummary || (errors.length > 0 ? "Execution failed." : "Execution completed successfully.");
 
+      // 10. Compile Explainability — human-readable reasoning for the entire response
+      const explainability = this.buildExplainability({
+        candidates,
+        decisionLog,
+        plannerComparison,
+        budget,
+        booking,
+        confidenceAlerts,
+        confidenceSummary
+      });
+
       const data = {
         tripSummary,
         dailyPlan: itinerary ? (itinerary.dailyPlans || []) : [],
@@ -111,6 +140,7 @@ class ResponseComposer {
         stayPlan,
         travelScore,
         budgetSummary: budget,
+        budgetExplanation: budget?.explanation || null,
         categoryBreakdown: recs.categoryBreakdown || null,
         bookingSummary: booking,
         recommendations,
@@ -121,7 +151,12 @@ class ResponseComposer {
         importantWarnings,
         conversationState: currentConvState,
         executionSummary,
-        nextActions
+        nextActions,
+        confidenceAlerts,
+        confidenceSummary,
+        explainability,
+        decisionLog: decisionLog.length > 0 ? decisionLog : undefined,
+        plannerComparison: plannerComparison || undefined
       };
 
       return {
@@ -139,8 +174,11 @@ class ResponseComposer {
           completedStages: execData.executedStages || [],
           confidenceBreakdown: {
             planner: itinerary ? 0.95 : 0,
+            decision: recs.improvedItinerary ? 0.96 : 0,
             budget: budget ? 0.98 : 0,
-            booking: booking ? 0.95 : 0
+            booking: booking ? 0.95 : 0,
+            recommendations: recs.confidenceScore || 0,
+            alerts: confidenceAlerts?.length || 0
           }
         }
       };
@@ -204,6 +242,91 @@ class ResponseComposer {
     );
 
     return Number(globalScore.toFixed(2));
+  }
+
+  /**
+   * Build a consolidated explainability object for the entire response.
+   * Surfaces per-candidate reasoning, decision engine log, and confidence alerts.
+   */
+  buildExplainability({ candidates, decisionLog, plannerComparison, budget, booking, confidenceAlerts, confidenceSummary }) {
+    const sections = [];
+
+    // Per-candidate explainability
+    if (candidates.length > 0) {
+      const items = candidates.map(c => {
+        const entry = {
+          id: c.id,
+          name: c.name,
+          type: c.type,
+          reasons: c.reasons || (c.reason ? [c.reason] : []),
+          tradeoffs: c.tradeoffs || []
+        };
+        if (c.scoreBreakdown) {
+          entry.scoreBreakdown = c.scoreBreakdown;
+        }
+        if (c.confidence && typeof c.confidence === "object") {
+          entry.confidence = { score: c.confidence.score, level: c.confidence.level };
+        }
+        if (c.alternatives && c.alternatives.length > 0) {
+          entry.alternatives = c.alternatives.map(a => ({
+            name: a.name,
+            reason: a.reason || "",
+            confidence: a.confidence || null
+          }));
+        }
+        return entry;
+      });
+
+      sections.push({
+        type: "recommendations",
+        title: "Why these were picked",
+        items
+      });
+    }
+
+    // Decision engine explainability
+    if (decisionLog.length > 0) {
+      sections.push({
+        type: "optimizations",
+        title: "How we improved the plan",
+        items: decisionLog.map(d => ({
+          action: d.action,
+          target: d.target,
+          replacement: d.replacement,
+          reason: d.reason,
+          confidence: d.confidence
+        }))
+      });
+    }
+
+    // Budget explainability
+    if (budget?.explanation) {
+      sections.push({
+        type: "budget",
+        title: "How we estimated your budget",
+        items: [{ explanation: budget.explanation }]
+      });
+    }
+
+    // Confidence alerts
+    if (confidenceAlerts && confidenceAlerts.length > 0) {
+      sections.push({
+        type: "confidence_alerts",
+        title: "Items needing verification",
+        items: confidenceAlerts.map(a => ({
+          name: a.candidateName,
+          level: a.level,
+          message: a.message,
+          score: a.score
+        }))
+      });
+    }
+
+    return {
+      sections,
+      summary: confidenceSummary?.verificationMessage || "All recommendations are well-verified.",
+      hasLowConfidence: confidenceSummary?.needsVerification || false
+    };
   }
 
   computeTravelScore(itinerary, budgetSummary) {

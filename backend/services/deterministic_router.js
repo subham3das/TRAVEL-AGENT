@@ -82,7 +82,7 @@ function route(message, conversationState = null) {
   }
 
   // 4. Help
-  if (/^(help|what\s+can\s+you\s+do|commands|features)\s*[?!.]*$/i.test(clean)) {
+  if (/^\/?(help|what\s+can\s+you\s+do|commands|features)\s*[?!.]*$/i.test(clean)) {
     return {
       route: ROUTES.HELP,
       response: "I can help you:\n\u2022 Plan trips (\"Plan a 5 day Goa trip\")\n\u2022 Calculate budgets\n\u2022 Recommend places\n\u2022 Book hotels\n\u2022 Answer travel questions\n\nJust tell me your destination!"
