@@ -126,7 +126,7 @@ class GeminiProvider extends BaseLLMProvider {
       }
 
       const latency = Date.now() - startTime;
-      console.log(`[LLM LOG] provider: gemini, model: ${modelName}, latency: ${latency}ms, retry: 0, error: none`);
+      console.log(JSON.stringify({ level: "INFO", timestamp: new Date().toISOString(), message: "LLM Generate Success", provider: "gemini", model: modelName, latencyMs: latency }));
 
       return {
         success: true,
@@ -150,7 +150,7 @@ class GeminiProvider extends BaseLLMProvider {
     } catch (err) {
       const latency = Date.now() - startTime;
       const mappedMsg = this.mapError(err);
-      console.log(`[LLM LOG] provider: gemini, model: ${modelName}, latency: ${latency}ms, retry: 0, error: ${mappedMsg}`);
+      console.log(JSON.stringify({ level: "ERROR", timestamp: new Date().toISOString(), message: "LLM Generate Error", provider: "gemini", model: modelName, latencyMs: latency, error: mappedMsg }));
 
       return {
         success: false,
@@ -212,12 +212,12 @@ class GeminiProvider extends BaseLLMProvider {
       callback({ text: "", done: true });
 
       const latency = Date.now() - startTime;
-      console.log(`[LLM LOG] provider: gemini, model: ${modelName}, latency: ${latency}ms, retry: 0, error: none`);
+      console.log(JSON.stringify({ level: "INFO", timestamp: new Date().toISOString(), message: "LLM Stream Success", provider: "gemini", model: modelName, latencyMs: latency }));
 
     } catch (err) {
       const latency = Date.now() - startTime;
       const mappedMsg = this.mapError(err);
-      console.log(`[LLM LOG] provider: gemini, model: ${modelName}, latency: ${latency}ms, retry: 0, error: ${mappedMsg}`);
+      console.log(JSON.stringify({ level: "ERROR", timestamp: new Date().toISOString(), message: "LLM Stream Error", provider: "gemini", model: modelName, latencyMs: latency, error: mappedMsg }));
       callback({ text: "", done: true, error: mappedMsg });
     }
   }

@@ -8,7 +8,6 @@
     "destinationId",
     "name",
     "category",
-    "averagePrice",
     "amenities",
     "location",
     "checkIn",
@@ -29,7 +28,6 @@
     "destinationId": { "type": "string" },
     "name": { "type": "string" },
     "category": { "type": "string" },
-    "averagePrice": { "type": "number" },
     "amenities": {
       "type": "array",
       "items": { "type": "string" }

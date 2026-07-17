@@ -1,0 +1,320 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "frontend/app/api/chat/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "frontend_app_api_chat_route_get",
+      "community": 0,
+      "norm_label": "get"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "frontend/app/api/system/status/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "frontend_app_api_system_status_route_get",
+      "community": 1,
+      "norm_label": "get"
+    },
+    {
+      "label": "POST",
+      "file_type": "code",
+      "source_file": "frontend/app/api/trips/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "frontend_app_api_trips_route_post",
+      "community": 3,
+      "norm_label": "post"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "frontend/app/api/trips/route.ts",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "frontend_app_api_trips_route_get",
+      "community": 2,
+      "norm_label": "get"
+    },
+    {
+      "label": "RootLayout",
+      "file_type": "code",
+      "source_file": "frontend/app/layout.tsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "frontend_app_layout_rootlayout",
+      "community": 4,
+      "norm_label": "rootlayout"
+    },
+    {
+      "label": "Home",
+      "file_type": "code",
+      "source_file": "frontend/app/page.tsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "frontend_app_page_home",
+      "community": 5,
+      "norm_label": "home"
+    },
+    {
+      "label": "Providers",
+      "file_type": "code",
+      "source_file": "frontend/app/providers.tsx",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "frontend_app_providers_providers",
+      "community": 6,
+      "norm_label": "providers"
+    },
+    {
+      "label": "WorkspaceLayout",
+      "file_type": "code",
+      "source_file": "frontend/app/workspace/layout.tsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "frontend_app_workspace_layout_workspacelayout",
+      "community": 7,
+      "norm_label": "workspacelayout"
+    },
+    {
+      "label": "SlotCard",
+      "file_type": "code",
+      "source_file": "frontend/components/itinerary/SlotCard.tsx",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "frontend_components_itinerary_slotcard_slotcard",
+      "community": 8,
+      "norm_label": "slotcard"
+    },
+    {
+      "label": "StatusDetailsPanel",
+      "file_type": "code",
+      "source_file": "frontend/components/status/StatusDetailsPanel.tsx",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "frontend_components_status_statusdetailspanel_statusdetailspanel",
+      "community": 9,
+      "norm_label": "statusdetailspanel"
+    },
+    {
+      "label": "SkeletonCard",
+      "file_type": "code",
+      "source_file": "frontend/components/ui/SkeletonCard.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "frontend_components_ui_skeletoncard_skeletoncard",
+      "community": 11,
+      "norm_label": "skeletoncard"
+    },
+    {
+      "label": "ButtonProps",
+      "file_type": "code",
+      "source_file": "frontend/components/ui/button.tsx",
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "frontend_components_ui_button_buttonprops",
+      "community": 10,
+      "norm_label": "buttonprops"
+    },
+    {
+      "label": "ExpeditionLog",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/ExpeditionLog.tsx",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "frontend_components_workspace_expeditionlog_expeditionlog",
+      "community": 16,
+      "norm_label": "expeditionlog"
+    },
+    {
+      "label": "GenerationSceneProps",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/GenerationScene.tsx",
+      "source_location": "L86",
+      "_origin": "ast",
+      "id": "frontend_components_workspace_generationscene_generationsceneprops",
+      "community": 17,
+      "norm_label": "generationsceneprops"
+    },
+    {
+      "label": "JourneyCard",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/JourneyCard.tsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "frontend_components_workspace_journeycard_journeycard",
+      "community": 18,
+      "norm_label": "journeycard"
+    },
+    {
+      "label": "Candidate",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/SelectionCard.tsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "frontend_components_workspace_selectioncard_candidate",
+      "community": 19,
+      "norm_label": "candidate"
+    },
+    {
+      "label": "SelectionCard",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/SelectionCard.tsx",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "frontend_components_workspace_selectioncard_selectioncard",
+      "community": 20,
+      "norm_label": "selectioncard"
+    },
+    {
+      "label": "SplashScreen",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/SplashScreen.tsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "frontend_components_workspace_splashscreen_splashscreen",
+      "community": 21,
+      "norm_label": "splashscreen"
+    },
+    {
+      "label": "SlotKind",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/design.tsx",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "frontend_components_workspace_design_slotkind",
+      "community": 14,
+      "norm_label": "slotkind"
+    },
+    {
+      "label": "categoryMeta",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/design.tsx",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "frontend_components_workspace_design_categorymeta",
+      "community": 12,
+      "norm_label": "categorymeta"
+    },
+    {
+      "label": "deriveAiReason",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/design.tsx",
+      "source_location": "L66",
+      "_origin": "ast",
+      "id": "frontend_components_workspace_design_deriveaireason",
+      "community": 13,
+      "norm_label": "deriveaireason"
+    },
+    {
+      "label": "TravelScore",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/design.tsx",
+      "source_location": "L82",
+      "_origin": "ast",
+      "id": "frontend_components_workspace_design_travelscore",
+      "community": 15,
+      "norm_label": "travelscore"
+    },
+    {
+      "label": "useKeyboard",
+      "file_type": "code",
+      "source_file": "frontend/hooks/useKeyboard.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "frontend_hooks_usekeyboard_usekeyboard",
+      "community": 22,
+      "norm_label": "usekeyboard"
+    },
+    {
+      "label": "useSSE",
+      "file_type": "code",
+      "source_file": "frontend/hooks/useSSE.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "frontend_hooks_usesse_usesse",
+      "community": 23,
+      "norm_label": "usesse"
+    },
+    {
+      "label": "SystemStatus",
+      "file_type": "code",
+      "source_file": "frontend/hooks/useSystemStatus.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "frontend_hooks_usesystemstatus_systemstatus",
+      "community": 24,
+      "norm_label": "systemstatus"
+    },
+    {
+      "label": "useSystemStatus",
+      "file_type": "code",
+      "source_file": "frontend/hooks/useSystemStatus.ts",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "frontend_hooks_usesystemstatus_usesystemstatus",
+      "community": 25,
+      "norm_label": "usesystemstatus"
+    },
+    {
+      "label": "PlanTripRequest",
+      "file_type": "code",
+      "source_file": "frontend/lib/api.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "frontend_lib_api_plantriprequest",
+      "community": 27,
+      "norm_label": "plantriprequest"
+    },
+    {
+      "label": "ApiResponse",
+      "file_type": "code",
+      "source_file": "frontend/lib/api.ts",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "frontend_lib_api_apiresponse",
+      "community": 26,
+      "norm_label": "apiresponse"
+    },
+    {
+      "label": "request",
+      "file_type": "code",
+      "source_file": "frontend/lib/api.ts",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "frontend_lib_api_request",
+      "community": 28,
+      "norm_label": "request"
+    },
+    {
+      "label": "cn",
+      "file_type": "code",
+      "source_file": "frontend/lib/utils.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "frontend_lib_utils_cn",
+      "community": 29,
+      "norm_label": "cn"
+    },
+    {
+      "label": "Message",
+      "file_type": "code",
+      "source_file": "frontend/store/chatStore.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "frontend_store_chatstore_message",
+      "community": 30,
+      "norm_label": "message"
+    }
+  ],
+  "links": [],
+  "hyperedges": [],
+  "built_at_commit": "b3d4fb48fc05ff09506d988dc57af1433421ac55"
+}

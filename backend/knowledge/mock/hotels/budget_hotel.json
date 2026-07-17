@@ -4,8 +4,11 @@
   "destinationId": "goa",
   "name": "Goa Beach Inn",
   "category": "budget",
-  "averagePrice": 2500,
-  "amenities": ["WiFi", "AC", "Pool"],
+  "amenities": [
+    "WiFi",
+    "AC",
+    "Pool"
+  ],
   "location": {
     "latitude": 15.5566,
     "longitude": 73.7533,
@@ -19,7 +22,13 @@
   "version": "1.0.0",
   "updatedAt": "2026-07-13T22:00:00Z",
   "verifiedAt": "2026-07-13T22:00:00Z",
-  "tags": ["hotel", "budget", "near-beach"],
-  "sources": ["Booking.com"],
-  "confidence": 0.90
+  "tags": [
+    "hotel",
+    "budget",
+    "near-beach"
+  ],
+  "sources": [
+    "Booking.com"
+  ],
+  "confidence": 0.9
 }

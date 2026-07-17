@@ -14,11 +14,7 @@ class ClaudeProvider extends BaseLLMProvider {
   }
 
   async generate(prompt, config = {}) {
-    return {
-      success: true,
-      text: "Claude mock response",
-      raw: { model: "claude-3-5-sonnet" }
-    };
+    throw new Error("Claude provider is not configured. Falling back to circuit breaker.");
   }
 
   async stream(prompt, config = {}, callback) {

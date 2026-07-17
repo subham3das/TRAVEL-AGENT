@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { useQueryClient } from "@tanstack/react-query";
 import { SystemStatus } from "@/hooks/useSystemStatus";
 import { Activity, Server, Clock, RefreshCw } from "lucide-react";
 
@@ -27,9 +28,13 @@ const itemVariants = {
 export function StatusDetailsPanel({ status }: StatusDetailsPanelProps) {
   const { capacity, system, performance, provider } = status;
 
+  // Capacity is always calculated from remaining / limit (never a default).
+  const percentage =
+    capacity.limit > 0 ? Math.round((capacity.remaining / capacity.limit) * 100) : 0;
+
   // Calculate dynamic progress bar segments (10 blocks)
   const totalBlocks = 10;
-  const filledBlocks = Math.round((capacity.percentage / 100) * totalBlocks);
+  const filledBlocks = Math.round((percentage / 100) * totalBlocks);
   const barBlocks = Array.from({ length: totalBlocks }).map((_, i) =>
     i < filledBlocks ? "█" : "░"
   ).join("");
@@ -45,14 +50,23 @@ export function StatusDetailsPanel({ status }: StatusDetailsPanelProps) {
 
   // Calculate relative time remaining until reset
   const [timeRemaining, setTimeRemaining] = React.useState("");
+  const queryClient = useQueryClient();
+  const resetFiredRef = React.useRef(false);
 
   React.useEffect(() => {
     const updateCountdown = () => {
       const diff = new Date(capacity.resetAt).getTime() - Date.now();
       if (diff <= 0) {
         setTimeRemaining("00:00:00");
+        // Window just rolled over on the backend: refetch so the capacity
+        // resets in lockstep with the timer instead of showing stale values.
+        if (!resetFiredRef.current) {
+          resetFiredRef.current = true;
+          queryClient.invalidateQueries({ queryKey: ["systemStatus"] });
+        }
         return;
       }
+      resetFiredRef.current = false;
       const hrs = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, "0");
       const mins = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, "0");
       const secs = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
@@ -62,7 +76,7 @@ export function StatusDetailsPanel({ status }: StatusDetailsPanelProps) {
     updateCountdown();
     const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
-  }, [capacity.resetAt]);
+  }, [capacity.resetAt, queryClient]);
 
   return (
     <motion.div
@@ -96,7 +110,7 @@ export function StatusDetailsPanel({ status }: StatusDetailsPanelProps) {
         <div className="flex flex-col gap-1">
           <div className="flex justify-between font-mono text-sm leading-none font-semibold">
             <span className="text-muted/60">{barBlocks}</span>
-            <span>{capacity.percentage}%</span>
+            <span>{percentage}%</span>
           </div>
           <span className="text-[10px] text-muted tracking-wide">
             Remaining credit: {capacity.remaining} / {capacity.limit} compute units

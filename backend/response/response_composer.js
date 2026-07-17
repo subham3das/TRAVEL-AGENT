@@ -59,7 +59,10 @@ class ResponseComposer {
         }
       }
 
-      // 4. Compile Recommendations
+      // 4. Compute Travel Score
+      const travelScore = this.computeTravelScore(itinerary, budget);
+
+      // 5. Compile Recommendations
       const recommendations = {
         recommendedPlaces: recs.recommendedPlaces || [],
         recommendedRestaurants: recs.recommendedRestaurants || [],
@@ -70,7 +73,7 @@ class ResponseComposer {
         recommendationScores: recs.recommendationScores || {}
       };
 
-      // 5. Gather warnings and de-duplicate
+      // 6. Gather warnings and de-duplicate
       const collectedWarnings = new Set();
       if (executionResult?.warnings) executionResult.warnings.forEach(w => collectedWarnings.add(w));
       if (budget?.validation?.warnings) budget.validation.warnings.forEach(w => collectedWarnings.add(w));
@@ -79,14 +82,14 @@ class ResponseComposer {
       // Sort warnings deterministically by length (proxy for detail/severity)
       const importantWarnings = Array.from(collectedWarnings).sort((a, b) => b.length - a.length);
 
-      // 6. Gather errors
+      // 7. Gather errors
       if (executionResult?.errors) executionResult.errors.forEach(e => errors.push(e));
       if (context.errors) context.errors.forEach(e => errors.push(e));
 
-      // 7. Calculate Global Confidence
+      // 8. Calculate Global Confidence
       const globalConfidence = this.calculateConfidence(context, executionResult);
 
-      // 8. Next Actions decisioning
+      // 9. Next Actions decisioning
       const nextActions = [];
       const currentConvState = activeState.currentState || "IDLE";
       if (currentConvState === "WAITING_FOR_CLARIFICATION") {
@@ -106,7 +109,9 @@ class ResponseComposer {
         dailyPlan: itinerary ? (itinerary.dailyPlans || []) : [],
         transportPlan,
         stayPlan,
+        travelScore,
         budgetSummary: budget,
+        categoryBreakdown: recs.categoryBreakdown || null,
         bookingSummary: booking,
         recommendations,
         packingChecklist: recs.packingSuggestions || [],
@@ -199,6 +204,47 @@ class ResponseComposer {
     );
 
     return Number(globalScore.toFixed(2));
+  }
+
+  computeTravelScore(itinerary, budgetSummary) {
+    let score = 72;
+    if (itinerary?.dailyPlans?.length > 0) {
+      let totalTransit = 0;
+      let count = 0;
+      let ratingSum = 0;
+      let ratingCount = 0;
+      for (const day of itinerary.dailyPlans) {
+        totalTransit += day?.metrics?.travelTimeMinutes || 0;
+        count++;
+        for (const s of day?.slots || []) {
+          if (typeof s?.rating === "number") {
+            ratingSum += s.rating;
+            ratingCount++;
+          }
+        }
+      }
+      const avgTransit = count ? totalTransit / count : 0;
+      if (avgTransit < 90) score += 8;
+      if (ratingCount && ratingSum / ratingCount >= 4.3) score += 10;
+    }
+    if (budgetSummary?.totalCost && budgetSummary?.breakdown) {
+      score += 4;
+    }
+    score = Math.max(40, Math.min(98, Math.round(score)));
+    let label = "Well Balanced";
+    let tone = "emerald";
+    if (score >= 90) {
+      label = "Exceptional";
+    } else if (score >= 78) {
+      label = "Strong";
+    } else if (score >= 60) {
+      label = "Solid";
+      tone = "gold";
+    } else {
+      label = "Needs Tuning";
+      tone = "amber";
+    }
+    return { score, label, tone };
   }
 }
 

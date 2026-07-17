@@ -1,0 +1,609 @@
+{
+  "nodes": [
+    {
+      "id": "frontend_app_api_chat_route_get",
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "frontend/app/api/chat/route.ts",
+      "source_location": "L5",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_app_api_system_status_route_get",
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "frontend/app/api/system/status/route.ts",
+      "source_location": "L5",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_app_api_trips_route_post",
+      "label": "POST",
+      "file_type": "code",
+      "source_file": "frontend/app/api/trips/route.ts",
+      "source_location": "L5",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_app_api_trips_route_get",
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "frontend/app/api/trips/route.ts",
+      "source_location": "L29",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_app_layout_rootlayout",
+      "label": "RootLayout",
+      "file_type": "code",
+      "source_file": "frontend/app/layout.tsx",
+      "source_location": "L16",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_app_page_home",
+      "label": "Home",
+      "file_type": "code",
+      "source_file": "frontend/app/page.tsx",
+      "source_location": "L3",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_app_providers_providers",
+      "label": "Providers",
+      "file_type": "code",
+      "source_file": "frontend/app/providers.tsx",
+      "source_location": "L17",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_app_workspace_layout_workspacelayout",
+      "label": "WorkspaceLayout",
+      "file_type": "code",
+      "source_file": "frontend/app/workspace/layout.tsx",
+      "source_location": "L3",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_itinerary_slotcard_slotcard",
+      "label": "SlotCard",
+      "file_type": "code",
+      "source_file": "frontend/components/itinerary/SlotCard.tsx",
+      "source_location": "L20",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_status_statusdetailspanel_statusdetailspanel",
+      "label": "StatusDetailsPanel",
+      "file_type": "code",
+      "source_file": "frontend/components/status/StatusDetailsPanel.tsx",
+      "source_location": "L28",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_ui_skeletoncard_skeletoncard",
+      "label": "SkeletonCard",
+      "file_type": "code",
+      "source_file": "frontend/components/ui/SkeletonCard.tsx",
+      "source_location": "L11",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_ui_button_buttonprops",
+      "label": "ButtonProps",
+      "file_type": "code",
+      "source_file": "frontend/components/ui/button.tsx",
+      "source_location": "L44",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_workspace_expeditionlog_expeditionlog",
+      "label": "ExpeditionLog",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/ExpeditionLog.tsx",
+      "source_location": "L18",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_workspace_generationscene_generationsceneprops",
+      "label": "GenerationSceneProps",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/GenerationScene.tsx",
+      "source_location": "L86",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_workspace_journeycard_journeycard",
+      "label": "JourneyCard",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/JourneyCard.tsx",
+      "source_location": "L16",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_workspace_selectioncard_candidate",
+      "label": "Candidate",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/SelectionCard.tsx",
+      "source_location": "L7",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_workspace_selectioncard_selectioncard",
+      "label": "SelectionCard",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/SelectionCard.tsx",
+      "source_location": "L32",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_workspace_splashscreen_splashscreen",
+      "label": "SplashScreen",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/SplashScreen.tsx",
+      "source_location": "L7",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_workspace_design_slotkind",
+      "label": "SlotKind",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/design.tsx",
+      "source_location": "L14",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_workspace_design_categorymeta",
+      "label": "categoryMeta",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/design.tsx",
+      "source_location": "L27",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_workspace_design_deriveaireason",
+      "label": "deriveAiReason",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/design.tsx",
+      "source_location": "L66",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_components_workspace_design_travelscore",
+      "label": "TravelScore",
+      "file_type": "code",
+      "source_file": "frontend/components/workspace/design.tsx",
+      "source_location": "L82",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_hooks_usekeyboard_usekeyboard",
+      "label": "useKeyboard",
+      "file_type": "code",
+      "source_file": "frontend/hooks/useKeyboard.ts",
+      "source_location": "L11",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_hooks_usesse_usesse",
+      "label": "useSSE",
+      "file_type": "code",
+      "source_file": "frontend/hooks/useSSE.ts",
+      "source_location": "L6",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_hooks_usesystemstatus_systemstatus",
+      "label": "SystemStatus",
+      "file_type": "code",
+      "source_file": "frontend/hooks/useSystemStatus.ts",
+      "source_location": "L3",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_hooks_usesystemstatus_usesystemstatus",
+      "label": "useSystemStatus",
+      "file_type": "code",
+      "source_file": "frontend/hooks/useSystemStatus.ts",
+      "source_location": "L40",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_lib_api_plantriprequest",
+      "label": "PlanTripRequest",
+      "file_type": "code",
+      "source_file": "frontend/lib/api.ts",
+      "source_location": "L3",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_lib_api_apiresponse",
+      "label": "ApiResponse",
+      "file_type": "code",
+      "source_file": "frontend/lib/api.ts",
+      "source_location": "L12",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_lib_api_request",
+      "label": "request",
+      "file_type": "code",
+      "source_file": "frontend/lib/api.ts",
+      "source_location": "L25",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_lib_utils_cn",
+      "label": "cn",
+      "file_type": "code",
+      "source_file": "frontend/lib/utils.ts",
+      "source_location": "L4",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_store_chatstore_message",
+      "label": "Message",
+      "file_type": "code",
+      "source_file": "frontend/store/chatStore.ts",
+      "source_location": "L4",
+      "_origin": "ast"
+    }
+  ],
+  "edges": [
+    {
+      "source": "frontend_app_layout",
+      "target": "frontend_app_providers_providers",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/layout.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_app_workspace_page",
+      "target": "frontend_hooks_usesse_usesse",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/workspace/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_app_workspace_page",
+      "target": "frontend_components_workspace_splashscreen_splashscreen",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/workspace/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_app_workspace_page",
+      "target": "frontend_components_workspace_expeditionlog_expeditionlog",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/workspace/page.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_chat_chatinput",
+      "target": "frontend_lib_utils_cn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/chat/ChatInput.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_chat_messagelist",
+      "target": "frontend_store_chatstore_message",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/chat/MessageList.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_chat_messagelist",
+      "target": "frontend_components_ui_skeletoncard_skeletoncard",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/chat/MessageList.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_chat_messagelist",
+      "target": "frontend_components_workspace_selectioncard_selectioncard",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/chat/MessageList.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_chat_messagelist",
+      "target": "frontend_components_workspace_selectioncard_candidate",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/chat/MessageList.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_itinerary_budgetsummary",
+      "target": "frontend_lib_utils_cn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/itinerary/BudgetSummary.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_itinerary_itinerarytimeline",
+      "target": "frontend_components_itinerary_slotcard_slotcard",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/itinerary/ItineraryTimeline.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_itinerary_slotcard",
+      "target": "frontend_lib_utils_cn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/itinerary/SlotCard.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_status_statusdetailspanel",
+      "target": "frontend_hooks_usesystemstatus_systemstatus",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/status/StatusDetailsPanel.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_status_systemstatuswidget",
+      "target": "frontend_hooks_usesystemstatus_usesystemstatus",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/status/SystemStatusWidget.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_status_systemstatuswidget",
+      "target": "frontend_components_status_statusdetailspanel_statusdetailspanel",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/status/SystemStatusWidget.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_ui_skeletoncard",
+      "target": "frontend_lib_utils_cn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/ui/SkeletonCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_ui_button",
+      "target": "frontend_lib_utils_cn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/ui/button.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_workspace_homeview",
+      "target": "frontend_lib_utils_cn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/workspace/HomeView.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_workspace_intelligencepanel",
+      "target": "frontend_lib_utils_cn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/workspace/IntelligencePanel.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_workspace_intelligencepanel",
+      "target": "frontend_hooks_usesystemstatus_usesystemstatus",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/workspace/IntelligencePanel.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_workspace_journeycard",
+      "target": "frontend_lib_utils_cn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/workspace/JourneyCard.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_workspace_journeycard",
+      "target": "frontend_components_workspace_design_categorymeta",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/workspace/JourneyCard.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_workspace_journeycard",
+      "target": "frontend_components_workspace_design_deriveaireason",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/workspace/JourneyCard.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_workspace_journeymap",
+      "target": "frontend_lib_utils_cn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/workspace/JourneyMap.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_workspace_journeymap",
+      "target": "frontend_components_workspace_design_categorymeta",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/workspace/JourneyMap.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_workspace_journeyview",
+      "target": "frontend_components_workspace_journeycard_journeycard",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/workspace/JourneyView.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_workspace_journeyview",
+      "target": "frontend_lib_utils_cn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/workspace/JourneyView.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_workspace_leftrail",
+      "target": "frontend_lib_utils_cn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/workspace/LeftRail.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_components_workspace_mobilenav",
+      "target": "frontend_lib_utils_cn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/workspace/MobileNav.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "d_project_ai_frontend_components_chat_messagelist_messagelistprops",
+      "target": "frontend_store_chatstore_message",
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/chat/MessageList.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "d_project_ai_frontend_components_chat_messagelist_clarificationconfig",
+      "target": "frontend_components_workspace_selectioncard_candidate",
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/chat/MessageList.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "d_project_ai_frontend_components_status_statusdetailspanel_statusdetailspanelprops",
+      "target": "frontend_hooks_usesystemstatus_systemstatus",
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/components/status/StatusDetailsPanel.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast"
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

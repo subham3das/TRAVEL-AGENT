@@ -38,19 +38,42 @@ class BookingEngine {
       }
 
       // 2. Query Stays / Hotels
-      const hotelProvider = providerRegistry.getProvider("hotel");
-      const hotelOptions = hotelProvider ? hotelProvider.getOptions({ destinationId }) : [];
-      const rankedHotels = this.rankOptions(hotelOptions, "hotel", travelStyle);
-      const recommendedHotels = rankedHotels.slice(0, 1); // Best match
+      let recommendedHotels = [];
+      let hotelOptions = [];
+      try {
+        const hotelProvider = providerRegistry.getProvider("hotel");
+        hotelOptions = hotelProvider ? hotelProvider.getOptions({ destinationId }) : [];
+        const rankedHotels = this.rankOptions(hotelOptions, "hotel", travelStyle);
+        recommendedHotels = rankedHotels.slice(0, 1); // Best match
+      } catch (err) {
+        warnings.push(`Hotel provider failed: ${err.message}`);
+      }
 
-      // 3. Query Transit Options (Flights / Trains / Buses)
       const flightProvider = providerRegistry.getProvider("flight");
       const trainProvider = providerRegistry.getProvider("train");
       const busProvider = providerRegistry.getProvider("bus");
 
-      const flights = flightProvider ? flightProvider.getOptions({ destinationId }) : [];
-      const trains = trainProvider ? trainProvider.getOptions({ destinationId }) : [];
-      const buses = busProvider ? busProvider.getOptions({ destinationId }) : [];
+      let flights = [];
+      let trains = [];
+      let buses = [];
+
+      try {
+        flights = flightProvider ? flightProvider.getOptions({ destinationId }) : [];
+      } catch (err) {
+        warnings.push(`Flight provider failed: ${err.message}`);
+      }
+
+      try {
+        trains = trainProvider ? trainProvider.getOptions({ destinationId }) : [];
+      } catch (err) {
+        warnings.push(`Train provider failed: ${err.message}`);
+      }
+
+      try {
+        buses = busProvider ? busProvider.getOptions({ destinationId }) : [];
+      } catch (err) {
+        warnings.push(`Bus provider failed: ${err.message}`);
+      }
 
       let transitOptions = [];
       if (travelStyle === "luxury") {

@@ -1,0 +1,4243 @@
+[
+  {
+    "id": "trip_761b99a111181100",
+    "destination": "Goa",
+    "conversation": [],
+    "selections": {
+      "hotels": [],
+      "flights": [],
+      "activities": []
+    },
+    "budget": 20000,
+    "timeline": [],
+    "status": "finalized",
+    "version": 1,
+    "createdAt": "2026-07-16T05:36:02.431Z",
+    "updatedAt": "2026-07-16T05:36:02.431Z"
+  },
+  {
+    "id": "trip_4c46c386963a543a",
+    "destination": "goa",
+    "conversation": [
+      {
+        "id": "msg-1",
+        "role": "system",
+        "text": "Travel Intelligence OS active. Welcome to your journey.",
+        "timestamp": "2026-07-16T05:11:37.470Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784178859146-wic5nrkjm",
+        "role": "user",
+        "text": "Plan a trip to Goa",
+        "timestamp": "2026-07-16T05:14:19.146Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784178859146-gdie8k6p4",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T05:14:19.146Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784178861993-rwjdo4bov",
+        "role": "user",
+        "text": "Family",
+        "timestamp": "2026-07-16T05:14:21.993Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784178861993-41qer9ryw",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 📅 When would you like to travel?\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T05:14:21.993Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784178864230-im32lcotd",
+        "role": "user",
+        "text": "Next month",
+        "timestamp": "2026-07-16T05:14:24.230Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784178864230-ks8x85xav",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T05:14:24.230Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784178865445-qizyk6sl1",
+        "role": "user",
+        "text": "7 days",
+        "timestamp": "2026-07-16T05:14:25.445Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784178865445-o7ipjqk7e",
+        "role": "assistant",
+        "text": "## ✈️ Your 7 Day Goa Trip\n\n🏷️ budget • 👥 family\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T05:14:25.445Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784180332976-mww7naqgs",
+        "role": "user",
+        "text": "Plan a 5 day Goa trip",
+        "timestamp": "2026-07-16T05:38:52.976Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784180332976-oefoxinav",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T05:38:52.976Z",
+        "status": "error"
+      }
+    ],
+    "selections": {
+      "hotels": [],
+      "flights": [],
+      "activities": []
+    },
+    "budget": 40000,
+    "timeline": [
+      {
+        "day": 1,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via walking",
+            "transportMode": "walking",
+            "distanceKm": 0.46,
+            "durationMinutes": 6,
+            "cost": 0,
+            "nodeId": "day-1-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-1-idx-1-goa_attraction_bom_jesus",
+            "name": "Basilica of Bom Jesus",
+            "transitFromPreviousMinutes": 1,
+            "score": 90
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-1-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-1-idx-3-goa_attraction_anjuna_beach",
+            "name": "Anjuna Beach",
+            "transitFromPreviousMinutes": 0,
+            "score": 84
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.24,
+            "durationMinutes": 2,
+            "cost": 31,
+            "nodeId": "day-1-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-1-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 1
+          }
+        ],
+        "metrics": {
+          "distanceKm": 1.7,
+          "travelTimeMinutes": 8,
+          "walkingDistanceKm": 0.46,
+          "transportCost": 31,
+          "feasible": true
+        }
+      },
+      {
+        "day": 2,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 2.01,
+            "durationMinutes": 4,
+            "cost": 50,
+            "nodeId": "day-2-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-2-idx-1-goa_attraction_baga_beach",
+            "name": "Baga Beach",
+            "transitFromPreviousMinutes": 4,
+            "score": 89
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-2-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-2-idx-3-goa_attraction_bom_jesus",
+            "name": "Basilica of Bom Jesus",
+            "transitFromPreviousMinutes": 0,
+            "score": 88
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via walking",
+            "transportMode": "walking",
+            "distanceKm": 0.46,
+            "durationMinutes": 6,
+            "cost": 0,
+            "nodeId": "day-2-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-2-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 2
+          }
+        ],
+        "metrics": {
+          "distanceKm": 2.47,
+          "travelTimeMinutes": 10,
+          "walkingDistanceKm": 0.46,
+          "transportCost": 50,
+          "feasible": true
+        }
+      },
+      {
+        "day": 3,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.08,
+            "durationMinutes": 2,
+            "cost": 27,
+            "nodeId": "day-3-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-3-idx-1-goa_attraction_nature_5",
+            "name": "Goa Attraction NATURE 5",
+            "transitFromPreviousMinutes": 2,
+            "score": 85
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-3-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-3-idx-3-goa_attraction_temple_6",
+            "name": "Goa Attraction TEMPLE 6",
+            "transitFromPreviousMinutes": 0,
+            "score": 86
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.85,
+            "durationMinutes": 4,
+            "cost": 46,
+            "nodeId": "day-3-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-3-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 4
+          }
+        ],
+        "metrics": {
+          "distanceKm": 2.93,
+          "travelTimeMinutes": 6,
+          "walkingDistanceKm": 0,
+          "transportCost": 73,
+          "feasible": true
+        }
+      },
+      {
+        "day": 4,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 2.63,
+            "durationMinutes": 5,
+            "cost": 66,
+            "nodeId": "day-4-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-4-idx-1-goa_attraction_palace_7",
+            "name": "Goa Attraction PALACE 7",
+            "transitFromPreviousMinutes": 5,
+            "score": 87
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-4-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-4-idx-3-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 0
+          }
+        ],
+        "metrics": {
+          "distanceKm": 2.63,
+          "travelTimeMinutes": 5,
+          "walkingDistanceKm": 0,
+          "transportCost": 66,
+          "feasible": true
+        }
+      },
+      {
+        "day": 5,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 3.4,
+            "durationMinutes": 7,
+            "cost": 85,
+            "nodeId": "day-5-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-5-idx-1-goa_attraction_market_8",
+            "name": "Goa Attraction MARKET 8",
+            "transitFromPreviousMinutes": 7,
+            "score": 88
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-5-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-5-idx-3-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 0
+          }
+        ],
+        "metrics": {
+          "distanceKm": 3.4,
+          "travelTimeMinutes": 7,
+          "walkingDistanceKm": 0,
+          "transportCost": 85,
+          "feasible": true
+        }
+      },
+      {
+        "day": 6,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 4.17,
+            "durationMinutes": 8,
+            "cost": 104,
+            "nodeId": "day-6-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-6-idx-1-goa_attraction_beach_9",
+            "name": "Goa Attraction BEACH 9",
+            "transitFromPreviousMinutes": 8,
+            "score": 89
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-6-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-6-idx-3-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 0
+          }
+        ],
+        "metrics": {
+          "distanceKm": 4.17,
+          "travelTimeMinutes": 8,
+          "walkingDistanceKm": 0,
+          "transportCost": 104,
+          "feasible": true
+        }
+      },
+      {
+        "day": 7,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 4.94,
+            "durationMinutes": 10,
+            "cost": 124,
+            "nodeId": "day-7-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-7-idx-1-goa_attraction_cultural_10",
+            "name": "Goa Attraction CULTURAL 10",
+            "transitFromPreviousMinutes": 10,
+            "score": 76
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-7-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-7-idx-3-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 0
+          }
+        ],
+        "metrics": {
+          "distanceKm": 4.94,
+          "travelTimeMinutes": 10,
+          "walkingDistanceKm": 0,
+          "transportCost": 124,
+          "feasible": true
+        }
+      }
+    ],
+    "status": "finalized",
+    "version": 1,
+    "createdAt": "2026-07-16T05:38:58.267Z",
+    "updatedAt": "2026-07-16T05:38:58.267Z"
+  },
+  {
+    "id": "trip_c6780f96a200d0d8",
+    "destination": "goa",
+    "conversation": [
+      {
+        "id": "msg-1",
+        "role": "system",
+        "text": "Travel Intelligence OS active. Welcome to your journey.",
+        "timestamp": "2026-07-16T05:11:37.470Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784178859146-wic5nrkjm",
+        "role": "user",
+        "text": "Plan a trip to Goa",
+        "timestamp": "2026-07-16T05:14:19.146Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784178859146-gdie8k6p4",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T05:14:19.146Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784178861993-rwjdo4bov",
+        "role": "user",
+        "text": "Family",
+        "timestamp": "2026-07-16T05:14:21.993Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784178861993-41qer9ryw",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 📅 When would you like to travel?\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T05:14:21.993Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784178864230-im32lcotd",
+        "role": "user",
+        "text": "Next month",
+        "timestamp": "2026-07-16T05:14:24.230Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784178864230-ks8x85xav",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T05:14:24.230Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784178865445-qizyk6sl1",
+        "role": "user",
+        "text": "7 days",
+        "timestamp": "2026-07-16T05:14:25.445Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784178865445-o7ipjqk7e",
+        "role": "assistant",
+        "text": "## ✈️ Your 7 Day Goa Trip\n\n🏷️ budget • 👥 family\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T05:14:25.445Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784180332976-mww7naqgs",
+        "role": "user",
+        "text": "Plan a 5 day Goa trip",
+        "timestamp": "2026-07-16T05:38:52.976Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784180332976-oefoxinav",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T05:38:52.976Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784180353247-nzmeuyxky",
+        "role": "user",
+        "text": "plan",
+        "timestamp": "2026-07-16T05:39:13.247Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784180353248-ee82jmsoh",
+        "role": "assistant",
+        "text": "Great! I can definitely help you plan a trip. To get started, I'll need a little more information. Tell me:\n\n*   **Where** are you hoping to go? (e.g., Paris, a beach in Mexico, a national park)\n*   **When** are you planning to travel, and for how long? (e.g., \"next summer for 10 days,\" \"a long weekend in October\")\n*   **Who** is traveling? (e.g., solo, with family, a couple, friends)\n*   What kind of **budget** are you thinking of? (e.g., budget-friendly, mid-range, luxury)\n*   What kind of **trip** are you looking for? (e.g., relaxing, adventurous, cultural, city break, nature, food-focused)\n\nOnce I have these details, I can start putting together some ideas for you!",
+        "timestamp": "2026-07-16T05:39:13.248Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784180366848-c7sypeueh",
+        "role": "user",
+        "text": "plan a trip to goa",
+        "timestamp": "2026-07-16T05:39:26.848Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784180366848-zh7r33iy5",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T05:39:26.849Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784180369649-hl6rv6trc",
+        "role": "user",
+        "text": "Solo",
+        "timestamp": "2026-07-16T05:39:29.649Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784180369649-s64phggf2",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 📅 When would you like to travel?\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T05:39:29.649Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784180371253-31kmsq1yx",
+        "role": "user",
+        "text": "Next month",
+        "timestamp": "2026-07-16T05:39:31.253Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784180371254-t31n7ehv7",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T05:39:31.254Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784180372605-thxnahlws",
+        "role": "user",
+        "text": "5 days",
+        "timestamp": "2026-07-16T05:39:32.605Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784180372605-goisgs8gj",
+        "role": "assistant",
+        "text": "## ✈️ Your 5 Day Goa Trip\n\n🏷️ budget • 👥 solo\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T05:39:32.605Z",
+        "status": "complete"
+      }
+    ],
+    "selections": {
+      "hotels": [],
+      "flights": [],
+      "activities": []
+    },
+    "budget": 40000,
+    "timeline": [
+      {
+        "day": 1,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via walking",
+            "transportMode": "walking",
+            "distanceKm": 0.46,
+            "durationMinutes": 6,
+            "cost": 0,
+            "nodeId": "day-1-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-1-idx-1-goa_attraction_bom_jesus",
+            "name": "Basilica of Bom Jesus",
+            "transitFromPreviousMinutes": 1,
+            "score": 90
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-1-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-1-idx-3-goa_attraction_anjuna_beach",
+            "name": "Anjuna Beach",
+            "transitFromPreviousMinutes": 0,
+            "score": 84
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.24,
+            "durationMinutes": 2,
+            "cost": 31,
+            "nodeId": "day-1-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-1-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 1
+          }
+        ],
+        "metrics": {
+          "distanceKm": 1.7,
+          "travelTimeMinutes": 8,
+          "walkingDistanceKm": 0.46,
+          "transportCost": 31,
+          "feasible": true
+        }
+      },
+      {
+        "day": 2,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 2.01,
+            "durationMinutes": 4,
+            "cost": 50,
+            "nodeId": "day-2-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-2-idx-1-goa_attraction_baga_beach",
+            "name": "Baga Beach",
+            "transitFromPreviousMinutes": 4,
+            "score": 89
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-2-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-2-idx-3-goa_attraction_bom_jesus",
+            "name": "Basilica of Bom Jesus",
+            "transitFromPreviousMinutes": 0,
+            "score": 88
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via walking",
+            "transportMode": "walking",
+            "distanceKm": 0.46,
+            "durationMinutes": 6,
+            "cost": 0,
+            "nodeId": "day-2-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-2-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 2
+          }
+        ],
+        "metrics": {
+          "distanceKm": 2.47,
+          "travelTimeMinutes": 10,
+          "walkingDistanceKm": 0.46,
+          "transportCost": 50,
+          "feasible": true
+        }
+      },
+      {
+        "day": 3,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.08,
+            "durationMinutes": 2,
+            "cost": 27,
+            "nodeId": "day-3-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-3-idx-1-goa_attraction_nature_5",
+            "name": "Goa Attraction NATURE 5",
+            "transitFromPreviousMinutes": 2,
+            "score": 85
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-3-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-3-idx-3-goa_attraction_temple_6",
+            "name": "Goa Attraction TEMPLE 6",
+            "transitFromPreviousMinutes": 0,
+            "score": 86
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.85,
+            "durationMinutes": 4,
+            "cost": 46,
+            "nodeId": "day-3-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-3-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 4
+          }
+        ],
+        "metrics": {
+          "distanceKm": 2.93,
+          "travelTimeMinutes": 6,
+          "walkingDistanceKm": 0,
+          "transportCost": 73,
+          "feasible": true
+        }
+      },
+      {
+        "day": 4,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 2.63,
+            "durationMinutes": 5,
+            "cost": 66,
+            "nodeId": "day-4-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-4-idx-1-goa_attraction_palace_7",
+            "name": "Goa Attraction PALACE 7",
+            "transitFromPreviousMinutes": 5,
+            "score": 87
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-4-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-4-idx-3-goa_attraction_market_8",
+            "name": "Goa Attraction MARKET 8",
+            "transitFromPreviousMinutes": 0,
+            "score": 88
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 3.4,
+            "durationMinutes": 7,
+            "cost": 85,
+            "nodeId": "day-4-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-4-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 7
+          }
+        ],
+        "metrics": {
+          "distanceKm": 6.03,
+          "travelTimeMinutes": 12,
+          "walkingDistanceKm": 0,
+          "transportCost": 151,
+          "feasible": true
+        }
+      },
+      {
+        "day": 5,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 4.17,
+            "durationMinutes": 8,
+            "cost": 104,
+            "nodeId": "day-5-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-5-idx-1-goa_attraction_beach_9",
+            "name": "Goa Attraction BEACH 9",
+            "transitFromPreviousMinutes": 8,
+            "score": 89
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-5-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-5-idx-3-goa_attraction_cultural_10",
+            "name": "Goa Attraction CULTURAL 10",
+            "transitFromPreviousMinutes": 0,
+            "score": 76
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 4.94,
+            "durationMinutes": 10,
+            "cost": 124,
+            "nodeId": "day-5-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-5-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 10
+          }
+        ],
+        "metrics": {
+          "distanceKm": 9.11,
+          "travelTimeMinutes": 18,
+          "walkingDistanceKm": 0,
+          "transportCost": 228,
+          "feasible": true
+        }
+      }
+    ],
+    "status": "finalized",
+    "version": 1,
+    "createdAt": "2026-07-16T05:50:02.855Z",
+    "updatedAt": "2026-07-16T05:50:02.855Z"
+  },
+  {
+    "id": "trip_82dc62fafd50faed",
+    "destination": "goa",
+    "conversation": [
+      {
+        "id": "msg-user-1784183814407-tgobwpab9",
+        "role": "user",
+        "text": "I want to go to Goa for 5 days as a solo traveler starting July 20",
+        "timestamp": "2026-07-16T06:36:54.407Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183814407-d84wd3ewm",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:36:54.407Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784183826242-3uvlx84qz",
+        "role": "user",
+        "text": "Anjuna Beach",
+        "timestamp": "2026-07-16T06:37:06.242Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183826242-54pwdjq2n",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:37:06.242Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784183840365-g71lk7wd6",
+        "role": "user",
+        "text": "50000",
+        "timestamp": "2026-07-16T06:37:20.365Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183840365-mr67hkbj8",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:37:20.365Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184009746-niqy8yepp",
+        "role": "user",
+        "text": "Goa BUDGET Hotel 1",
+        "timestamp": "2026-07-16T06:40:09.746Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184009746-ba1kfc3lg",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:09.746Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184012920-vgh5dne1e",
+        "role": "user",
+        "text": "Morning Direct (₹5,000)",
+        "timestamp": "2026-07-16T06:40:12.920Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184012920-2d2bx92yv",
+        "role": "assistant",
+        "text": "## ✈️ Your 5 Day Goa Trip\n\n🏷️ budget • 👥 solo\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T06:40:12.920Z",
+        "status": "complete"
+      }
+    ],
+    "selections": {
+      "hotels": [],
+      "flights": [],
+      "activities": []
+    },
+    "budget": 40000,
+    "timeline": [
+      {
+        "day": 1,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via walking",
+            "transportMode": "walking",
+            "distanceKm": 0.46,
+            "durationMinutes": 6,
+            "cost": 0,
+            "nodeId": "day-1-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-1-idx-1-goa_attraction_bom_jesus",
+            "name": "Basilica of Bom Jesus",
+            "transitFromPreviousMinutes": 1,
+            "score": 90
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-1-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-1-idx-3-goa_attraction_anjuna_beach",
+            "name": "Anjuna Beach",
+            "transitFromPreviousMinutes": 0,
+            "score": 84
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via transit",
+            "transportMode": "transit",
+            "distanceKm": 1.24,
+            "durationMinutes": 4,
+            "cost": 12,
+            "nodeId": "day-1-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-1-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 1
+          }
+        ],
+        "metrics": {
+          "distanceKm": 1.7,
+          "travelTimeMinutes": 10,
+          "walkingDistanceKm": 0.46,
+          "transportCost": 12,
+          "feasible": true
+        }
+      },
+      {
+        "day": 2,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via transit",
+            "transportMode": "transit",
+            "distanceKm": 2.01,
+            "durationMinutes": 6,
+            "cost": 20,
+            "nodeId": "day-2-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-2-idx-1-goa_attraction_baga_beach",
+            "name": "Baga Beach",
+            "transitFromPreviousMinutes": 4,
+            "score": 89
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-2-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-2-idx-3-goa_attraction_bom_jesus",
+            "name": "Basilica of Bom Jesus",
+            "transitFromPreviousMinutes": 0,
+            "score": 88
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via walking",
+            "transportMode": "walking",
+            "distanceKm": 0.46,
+            "durationMinutes": 6,
+            "cost": 0,
+            "nodeId": "day-2-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-2-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 2
+          }
+        ],
+        "metrics": {
+          "distanceKm": 2.47,
+          "travelTimeMinutes": 12,
+          "walkingDistanceKm": 0.46,
+          "transportCost": 20,
+          "feasible": true
+        }
+      },
+      {
+        "day": 3,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via transit",
+            "transportMode": "transit",
+            "distanceKm": 1.08,
+            "durationMinutes": 3,
+            "cost": 11,
+            "nodeId": "day-3-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-3-idx-1-goa_attraction_nature_5",
+            "name": "Goa Attraction NATURE 5",
+            "transitFromPreviousMinutes": 2,
+            "score": 85
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-3-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-3-idx-3-goa_attraction_temple_6",
+            "name": "Goa Attraction TEMPLE 6",
+            "transitFromPreviousMinutes": 0,
+            "score": 86
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via transit",
+            "transportMode": "transit",
+            "distanceKm": 1.85,
+            "durationMinutes": 6,
+            "cost": 19,
+            "nodeId": "day-3-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-3-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 4
+          }
+        ],
+        "metrics": {
+          "distanceKm": 2.93,
+          "travelTimeMinutes": 9,
+          "walkingDistanceKm": 0,
+          "transportCost": 30,
+          "feasible": true
+        }
+      },
+      {
+        "day": 4,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via transit",
+            "transportMode": "transit",
+            "distanceKm": 2.63,
+            "durationMinutes": 8,
+            "cost": 26,
+            "nodeId": "day-4-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-4-idx-1-goa_attraction_palace_7",
+            "name": "Goa Attraction PALACE 7",
+            "transitFromPreviousMinutes": 5,
+            "score": 87
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-4-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-4-idx-3-goa_attraction_market_8",
+            "name": "Goa Attraction MARKET 8",
+            "transitFromPreviousMinutes": 0,
+            "score": 88
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via transit",
+            "transportMode": "transit",
+            "distanceKm": 3.4,
+            "durationMinutes": 10,
+            "cost": 34,
+            "nodeId": "day-4-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-4-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 7
+          }
+        ],
+        "metrics": {
+          "distanceKm": 6.03,
+          "travelTimeMinutes": 18,
+          "walkingDistanceKm": 0,
+          "transportCost": 60,
+          "feasible": true
+        }
+      },
+      {
+        "day": 5,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via transit",
+            "transportMode": "transit",
+            "distanceKm": 4.17,
+            "durationMinutes": 13,
+            "cost": 42,
+            "nodeId": "day-5-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-5-idx-1-goa_attraction_beach_9",
+            "name": "Goa Attraction BEACH 9",
+            "transitFromPreviousMinutes": 8,
+            "score": 89
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-5-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-5-idx-3-goa_attraction_cultural_10",
+            "name": "Goa Attraction CULTURAL 10",
+            "transitFromPreviousMinutes": 0,
+            "score": 76
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via transit",
+            "transportMode": "transit",
+            "distanceKm": 4.94,
+            "durationMinutes": 15,
+            "cost": 49,
+            "nodeId": "day-5-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-5-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 10
+          }
+        ],
+        "metrics": {
+          "distanceKm": 9.11,
+          "travelTimeMinutes": 28,
+          "walkingDistanceKm": 0,
+          "transportCost": 91,
+          "feasible": true
+        }
+      }
+    ],
+    "status": "finalized",
+    "version": 1,
+    "createdAt": "2026-07-16T06:40:15.891Z",
+    "updatedAt": "2026-07-16T06:40:15.891Z"
+  },
+  {
+    "id": "trip_b39b7777c8b61f05",
+    "destination": "goa",
+    "conversation": [
+      {
+        "id": "msg-user-1784183814407-tgobwpab9",
+        "role": "user",
+        "text": "I want to go to Goa for 5 days as a solo traveler starting July 20",
+        "timestamp": "2026-07-16T06:36:54.407Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183814407-d84wd3ewm",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:36:54.407Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784183826242-3uvlx84qz",
+        "role": "user",
+        "text": "Anjuna Beach",
+        "timestamp": "2026-07-16T06:37:06.242Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183826242-54pwdjq2n",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:37:06.242Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784183840365-g71lk7wd6",
+        "role": "user",
+        "text": "50000",
+        "timestamp": "2026-07-16T06:37:20.365Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183840365-mr67hkbj8",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:37:20.365Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184009746-niqy8yepp",
+        "role": "user",
+        "text": "Goa BUDGET Hotel 1",
+        "timestamp": "2026-07-16T06:40:09.746Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184009746-ba1kfc3lg",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:09.746Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184012920-vgh5dne1e",
+        "role": "user",
+        "text": "Morning Direct (₹5,000)",
+        "timestamp": "2026-07-16T06:40:12.920Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184012920-2d2bx92yv",
+        "role": "assistant",
+        "text": "## ✈️ Your 5 Day Goa Trip\n\n🏷️ budget • 👥 solo\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T06:40:12.920Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184020966-5sbupsps5",
+        "role": "user",
+        "text": "Plan a 5 day Goa trip",
+        "timestamp": "2026-07-16T06:40:20.966Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184020966-07m2g8343",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T06:40:20.966Z",
+        "status": "complete"
+      }
+    ],
+    "selections": {
+      "hotels": [],
+      "flights": [],
+      "activities": []
+    },
+    "budget": 40000,
+    "timeline": [],
+    "status": "finalized",
+    "version": 1,
+    "createdAt": "2026-07-16T06:40:31.501Z",
+    "updatedAt": "2026-07-16T06:40:31.501Z"
+  },
+  {
+    "id": "trip_74e50763c84ed002",
+    "destination": "goa",
+    "conversation": [
+      {
+        "id": "msg-user-1784183814407-tgobwpab9",
+        "role": "user",
+        "text": "I want to go to Goa for 5 days as a solo traveler starting July 20",
+        "timestamp": "2026-07-16T06:36:54.407Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183814407-d84wd3ewm",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:36:54.407Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784183826242-3uvlx84qz",
+        "role": "user",
+        "text": "Anjuna Beach",
+        "timestamp": "2026-07-16T06:37:06.242Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183826242-54pwdjq2n",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:37:06.242Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784183840365-g71lk7wd6",
+        "role": "user",
+        "text": "50000",
+        "timestamp": "2026-07-16T06:37:20.365Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183840365-mr67hkbj8",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:37:20.365Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184009746-niqy8yepp",
+        "role": "user",
+        "text": "Goa BUDGET Hotel 1",
+        "timestamp": "2026-07-16T06:40:09.746Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184009746-ba1kfc3lg",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:09.746Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184012920-vgh5dne1e",
+        "role": "user",
+        "text": "Morning Direct (₹5,000)",
+        "timestamp": "2026-07-16T06:40:12.920Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184012920-2d2bx92yv",
+        "role": "assistant",
+        "text": "## ✈️ Your 5 Day Goa Trip\n\n🏷️ budget • 👥 solo\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T06:40:12.920Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184020966-5sbupsps5",
+        "role": "user",
+        "text": "Plan a 5 day Goa trip",
+        "timestamp": "2026-07-16T06:40:20.966Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184020966-07m2g8343",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T06:40:20.966Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184033014-vvqu465kb",
+        "role": "user",
+        "text": "Plan a 5 day Goa trip",
+        "timestamp": "2026-07-16T06:40:33.014Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184033014-ip10x7gfq",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T06:40:33.014Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184036802-ijibeig0e",
+        "role": "user",
+        "text": "Anjuna Beach",
+        "timestamp": "2026-07-16T06:40:36.802Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184036802-flx62ig6w",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T06:40:36.802Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184037736-qronpas81",
+        "role": "user",
+        "text": "Baga Beach",
+        "timestamp": "2026-07-16T06:40:37.736Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184037736-u7n2730b6",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:37.736Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184038464-jc6yvnk09",
+        "role": "user",
+        "text": "Goa Attraction BEACH 9",
+        "timestamp": "2026-07-16T06:40:38.464Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184038464-rj7jhxx9r",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:38.464Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184043027-l8bsut2yp",
+        "role": "user",
+        "text": "20000",
+        "timestamp": "2026-07-16T06:40:43.027Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184043027-uztquc4bn",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:43.027Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184045224-8ytt3uzmg",
+        "role": "user",
+        "text": "Goa LUXURY Hotel 5",
+        "timestamp": "2026-07-16T06:40:45.224Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184045224-ck0qcxzjh",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:45.224Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184051840-8g3fx0k0e",
+        "role": "user",
+        "text": "Morning Direct (₹5,000)",
+        "timestamp": "2026-07-16T06:40:51.840Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184051840-svf6ruk5x",
+        "role": "assistant",
+        "text": "## ✈️ Your 5 Day Goa Trip\n\n🏷️ luxury • 👥 plan a 5 day goa trip\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T06:40:51.840Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184055819-i54wpm5bb",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹50000",
+        "timestamp": "2026-07-16T06:40:55.819Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184055819-lr7nbjujw",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:40:55.819Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184057892-46j0v3qrk",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹70000",
+        "timestamp": "2026-07-16T06:40:57.892Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184057892-d2u0l4f9b",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:40:57.892Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184059252-ld53d79tv",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹95000",
+        "timestamp": "2026-07-16T06:40:59.252Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184059252-9ks9nh492",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:40:59.252Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184060243-6qxin4clf",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹100000",
+        "timestamp": "2026-07-16T06:41:00.243Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184060243-2m3yleis7",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:00.243Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184061113-jc7u9vecb",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹115000",
+        "timestamp": "2026-07-16T06:41:01.113Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184061113-mccrp5ayd",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:01.113Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184061568-vjasz5sv4",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹120000",
+        "timestamp": "2026-07-16T06:41:01.568Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184061568-hzkacuooj",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:01.568Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184062018-8pwv95l57",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹135000",
+        "timestamp": "2026-07-16T06:41:02.018Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184062018-a6mb0piyk",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:02.018Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184062717-1j3mx1ixp",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹115000",
+        "timestamp": "2026-07-16T06:41:02.717Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184062717-dbzt049gg",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:02.717Z",
+        "status": "error"
+      }
+    ],
+    "selections": {
+      "hotels": [],
+      "flights": [],
+      "activities": []
+    },
+    "budget": 115000,
+    "timeline": [
+      {
+        "day": 1,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.85,
+            "durationMinutes": 4,
+            "cost": 46,
+            "nodeId": "day-1-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-1-idx-1-goa_attraction_temple_6",
+            "name": "Goa Attraction TEMPLE 6",
+            "transitFromPreviousMinutes": 4,
+            "score": 75
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-1-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-1-idx-3-goa_attraction_palace_7",
+            "name": "Goa Attraction PALACE 7",
+            "transitFromPreviousMinutes": 0,
+            "score": 48
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 2.63,
+            "durationMinutes": 5,
+            "cost": 66,
+            "nodeId": "day-1-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-1-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 5
+          }
+        ],
+        "metrics": {
+          "distanceKm": 4.48,
+          "travelTimeMinutes": 9,
+          "walkingDistanceKm": 0,
+          "transportCost": 112,
+          "feasible": true
+        }
+      },
+      {
+        "day": 2,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.08,
+            "durationMinutes": 2,
+            "cost": 27,
+            "nodeId": "day-2-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-2-idx-1-goa_attraction_nature_5",
+            "name": "Goa Attraction NATURE 5",
+            "transitFromPreviousMinutes": 2,
+            "score": 73
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-2-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-2-idx-3-goa_attraction_historical_4",
+            "name": "Goa Attraction HISTORICAL 4",
+            "transitFromPreviousMinutes": 0,
+            "score": 70
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via walking",
+            "transportMode": "walking",
+            "distanceKm": 0.31,
+            "durationMinutes": 4,
+            "cost": 0,
+            "nodeId": "day-2-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-2-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 1
+          }
+        ],
+        "metrics": {
+          "distanceKm": 1.39,
+          "travelTimeMinutes": 6,
+          "walkingDistanceKm": 0.31,
+          "transportCost": 27,
+          "feasible": true
+        }
+      },
+      {
+        "day": 3,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via walking",
+            "transportMode": "walking",
+            "distanceKm": 0.46,
+            "durationMinutes": 6,
+            "cost": 0,
+            "nodeId": "day-3-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-3-idx-1-goa_attraction_bom_jesus",
+            "name": "Basilica of Bom Jesus",
+            "transitFromPreviousMinutes": 1,
+            "score": 71
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-3-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-3-idx-3-goa_attraction_anjuna_beach",
+            "name": "Anjuna Beach",
+            "transitFromPreviousMinutes": 0,
+            "score": 67
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.24,
+            "durationMinutes": 2,
+            "cost": 31,
+            "nodeId": "day-3-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-3-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 2
+          }
+        ],
+        "metrics": {
+          "distanceKm": 1.7,
+          "travelTimeMinutes": 8,
+          "walkingDistanceKm": 0.46,
+          "transportCost": 31,
+          "feasible": true
+        }
+      },
+      {
+        "day": 4,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 2.01,
+            "durationMinutes": 4,
+            "cost": 50,
+            "nodeId": "day-4-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-4-idx-1-goa_attraction_baga_beach",
+            "name": "Baga Beach",
+            "transitFromPreviousMinutes": 4,
+            "score": 68
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-4-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-4-idx-3-goa_attraction_market_8",
+            "name": "Goa Attraction MARKET 8",
+            "transitFromPreviousMinutes": 0,
+            "score": 51
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 3.4,
+            "durationMinutes": 7,
+            "cost": 85,
+            "nodeId": "day-4-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-4-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 7
+          }
+        ],
+        "metrics": {
+          "distanceKm": 5.41,
+          "travelTimeMinutes": 11,
+          "walkingDistanceKm": 0,
+          "transportCost": 135,
+          "feasible": true
+        }
+      },
+      {
+        "day": 5,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 4.17,
+            "durationMinutes": 8,
+            "cost": 104,
+            "nodeId": "day-5-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-5-idx-1-goa_attraction_beach_9",
+            "name": "Goa Attraction BEACH 9",
+            "transitFromPreviousMinutes": 8,
+            "score": 53
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-5-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-5-idx-3-goa_attraction_cultural_10",
+            "name": "Goa Attraction CULTURAL 10",
+            "transitFromPreviousMinutes": 0,
+            "score": 56
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 4.94,
+            "durationMinutes": 10,
+            "cost": 124,
+            "nodeId": "day-5-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-5-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 10
+          }
+        ],
+        "metrics": {
+          "distanceKm": 9.11,
+          "travelTimeMinutes": 18,
+          "walkingDistanceKm": 0,
+          "transportCost": 228,
+          "feasible": true
+        }
+      }
+    ],
+    "status": "draft",
+    "version": 1,
+    "createdAt": "2026-07-16T07:17:08.885Z",
+    "updatedAt": "2026-07-16T07:17:08.885Z"
+  },
+  {
+    "id": "trip_0e0a11b4f9458445",
+    "destination": "goa",
+    "conversation": [
+      {
+        "id": "msg-user-1784183814407-tgobwpab9",
+        "role": "user",
+        "text": "I want to go to Goa for 5 days as a solo traveler starting July 20",
+        "timestamp": "2026-07-16T06:36:54.407Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183814407-d84wd3ewm",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:36:54.407Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784183826242-3uvlx84qz",
+        "role": "user",
+        "text": "Anjuna Beach",
+        "timestamp": "2026-07-16T06:37:06.242Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183826242-54pwdjq2n",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:37:06.242Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784183840365-g71lk7wd6",
+        "role": "user",
+        "text": "50000",
+        "timestamp": "2026-07-16T06:37:20.365Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183840365-mr67hkbj8",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:37:20.365Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184009746-niqy8yepp",
+        "role": "user",
+        "text": "Goa BUDGET Hotel 1",
+        "timestamp": "2026-07-16T06:40:09.746Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184009746-ba1kfc3lg",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:09.746Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184012920-vgh5dne1e",
+        "role": "user",
+        "text": "Morning Direct (₹5,000)",
+        "timestamp": "2026-07-16T06:40:12.920Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184012920-2d2bx92yv",
+        "role": "assistant",
+        "text": "## ✈️ Your 5 Day Goa Trip\n\n🏷️ budget • 👥 solo\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T06:40:12.920Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184020966-5sbupsps5",
+        "role": "user",
+        "text": "Plan a 5 day Goa trip",
+        "timestamp": "2026-07-16T06:40:20.966Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184020966-07m2g8343",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T06:40:20.966Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184033014-vvqu465kb",
+        "role": "user",
+        "text": "Plan a 5 day Goa trip",
+        "timestamp": "2026-07-16T06:40:33.014Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184033014-ip10x7gfq",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T06:40:33.014Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184036802-ijibeig0e",
+        "role": "user",
+        "text": "Anjuna Beach",
+        "timestamp": "2026-07-16T06:40:36.802Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184036802-flx62ig6w",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T06:40:36.802Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184037736-qronpas81",
+        "role": "user",
+        "text": "Baga Beach",
+        "timestamp": "2026-07-16T06:40:37.736Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184037736-u7n2730b6",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:37.736Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184038464-jc6yvnk09",
+        "role": "user",
+        "text": "Goa Attraction BEACH 9",
+        "timestamp": "2026-07-16T06:40:38.464Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184038464-rj7jhxx9r",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:38.464Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184043027-l8bsut2yp",
+        "role": "user",
+        "text": "20000",
+        "timestamp": "2026-07-16T06:40:43.027Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184043027-uztquc4bn",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:43.027Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184045224-8ytt3uzmg",
+        "role": "user",
+        "text": "Goa LUXURY Hotel 5",
+        "timestamp": "2026-07-16T06:40:45.224Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184045224-ck0qcxzjh",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:45.224Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184051840-8g3fx0k0e",
+        "role": "user",
+        "text": "Morning Direct (₹5,000)",
+        "timestamp": "2026-07-16T06:40:51.840Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184051840-svf6ruk5x",
+        "role": "assistant",
+        "text": "## ✈️ Your 5 Day Goa Trip\n\n🏷️ luxury • 👥 plan a 5 day goa trip\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T06:40:51.840Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184055819-i54wpm5bb",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹50000",
+        "timestamp": "2026-07-16T06:40:55.819Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184055819-lr7nbjujw",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:40:55.819Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184057892-46j0v3qrk",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹70000",
+        "timestamp": "2026-07-16T06:40:57.892Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184057892-d2u0l4f9b",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:40:57.892Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184059252-ld53d79tv",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹95000",
+        "timestamp": "2026-07-16T06:40:59.252Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184059252-9ks9nh492",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:40:59.252Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184060243-6qxin4clf",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹100000",
+        "timestamp": "2026-07-16T06:41:00.243Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184060243-2m3yleis7",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:00.243Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184061113-jc7u9vecb",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹115000",
+        "timestamp": "2026-07-16T06:41:01.113Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184061113-mccrp5ayd",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:01.113Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184061568-vjasz5sv4",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹120000",
+        "timestamp": "2026-07-16T06:41:01.568Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184061568-hzkacuooj",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:01.568Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184062018-8pwv95l57",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹135000",
+        "timestamp": "2026-07-16T06:41:02.018Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184062018-a6mb0piyk",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:02.018Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184062717-1j3mx1ixp",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹115000",
+        "timestamp": "2026-07-16T06:41:02.717Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184062717-dbzt049gg",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:02.717Z",
+        "status": "error"
+      }
+    ],
+    "selections": {
+      "hotels": [],
+      "flights": [],
+      "activities": []
+    },
+    "budget": 115000,
+    "timeline": [
+      {
+        "day": 1,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.85,
+            "durationMinutes": 4,
+            "cost": 46,
+            "nodeId": "day-1-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-1-idx-1-goa_attraction_temple_6",
+            "name": "Goa Attraction TEMPLE 6",
+            "transitFromPreviousMinutes": 4,
+            "score": 75
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-1-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-1-idx-3-goa_attraction_palace_7",
+            "name": "Goa Attraction PALACE 7",
+            "transitFromPreviousMinutes": 0,
+            "score": 48
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 2.63,
+            "durationMinutes": 5,
+            "cost": 66,
+            "nodeId": "day-1-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-1-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 5
+          }
+        ],
+        "metrics": {
+          "distanceKm": 4.48,
+          "travelTimeMinutes": 9,
+          "walkingDistanceKm": 0,
+          "transportCost": 112,
+          "feasible": true
+        }
+      },
+      {
+        "day": 2,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.08,
+            "durationMinutes": 2,
+            "cost": 27,
+            "nodeId": "day-2-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-2-idx-1-goa_attraction_nature_5",
+            "name": "Goa Attraction NATURE 5",
+            "transitFromPreviousMinutes": 2,
+            "score": 73
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-2-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-2-idx-3-goa_attraction_historical_4",
+            "name": "Goa Attraction HISTORICAL 4",
+            "transitFromPreviousMinutes": 0,
+            "score": 70
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via walking",
+            "transportMode": "walking",
+            "distanceKm": 0.31,
+            "durationMinutes": 4,
+            "cost": 0,
+            "nodeId": "day-2-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-2-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 1
+          }
+        ],
+        "metrics": {
+          "distanceKm": 1.39,
+          "travelTimeMinutes": 6,
+          "walkingDistanceKm": 0.31,
+          "transportCost": 27,
+          "feasible": true
+        }
+      },
+      {
+        "day": 3,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via walking",
+            "transportMode": "walking",
+            "distanceKm": 0.46,
+            "durationMinutes": 6,
+            "cost": 0,
+            "nodeId": "day-3-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-3-idx-1-goa_attraction_bom_jesus",
+            "name": "Basilica of Bom Jesus",
+            "transitFromPreviousMinutes": 1,
+            "score": 71
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-3-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-3-idx-3-goa_attraction_anjuna_beach",
+            "name": "Anjuna Beach",
+            "transitFromPreviousMinutes": 0,
+            "score": 67
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.24,
+            "durationMinutes": 2,
+            "cost": 31,
+            "nodeId": "day-3-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-3-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 2
+          }
+        ],
+        "metrics": {
+          "distanceKm": 1.7,
+          "travelTimeMinutes": 8,
+          "walkingDistanceKm": 0.46,
+          "transportCost": 31,
+          "feasible": true
+        }
+      },
+      {
+        "day": 4,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 2.01,
+            "durationMinutes": 4,
+            "cost": 50,
+            "nodeId": "day-4-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-4-idx-1-goa_attraction_baga_beach",
+            "name": "Baga Beach",
+            "transitFromPreviousMinutes": 4,
+            "score": 68
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-4-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-4-idx-3-goa_attraction_market_8",
+            "name": "Goa Attraction MARKET 8",
+            "transitFromPreviousMinutes": 0,
+            "score": 51
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 3.4,
+            "durationMinutes": 7,
+            "cost": 85,
+            "nodeId": "day-4-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-4-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 7
+          }
+        ],
+        "metrics": {
+          "distanceKm": 5.41,
+          "travelTimeMinutes": 11,
+          "walkingDistanceKm": 0,
+          "transportCost": 135,
+          "feasible": true
+        }
+      },
+      {
+        "day": 5,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 4.17,
+            "durationMinutes": 8,
+            "cost": 104,
+            "nodeId": "day-5-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-5-idx-1-goa_attraction_beach_9",
+            "name": "Goa Attraction BEACH 9",
+            "transitFromPreviousMinutes": 8,
+            "score": 53
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-5-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-5-idx-3-goa_attraction_cultural_10",
+            "name": "Goa Attraction CULTURAL 10",
+            "transitFromPreviousMinutes": 0,
+            "score": 56
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 4.94,
+            "durationMinutes": 10,
+            "cost": 124,
+            "nodeId": "day-5-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-5-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 10
+          }
+        ],
+        "metrics": {
+          "distanceKm": 9.11,
+          "travelTimeMinutes": 18,
+          "walkingDistanceKm": 0,
+          "transportCost": 228,
+          "feasible": true
+        }
+      }
+    ],
+    "status": "finalized",
+    "version": 1,
+    "createdAt": "2026-07-16T07:17:09.507Z",
+    "updatedAt": "2026-07-16T07:17:09.507Z"
+  },
+  {
+    "id": "trip_7052eb89ddf85d68",
+    "destination": "goa",
+    "conversation": [
+      {
+        "id": "msg-user-1784183814407-tgobwpab9",
+        "role": "user",
+        "text": "I want to go to Goa for 5 days as a solo traveler starting July 20",
+        "timestamp": "2026-07-16T06:36:54.407Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183814407-d84wd3ewm",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:36:54.407Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784183826242-3uvlx84qz",
+        "role": "user",
+        "text": "Anjuna Beach",
+        "timestamp": "2026-07-16T06:37:06.242Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183826242-54pwdjq2n",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:37:06.242Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784183840365-g71lk7wd6",
+        "role": "user",
+        "text": "50000",
+        "timestamp": "2026-07-16T06:37:20.365Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183840365-mr67hkbj8",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:37:20.365Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184009746-niqy8yepp",
+        "role": "user",
+        "text": "Goa BUDGET Hotel 1",
+        "timestamp": "2026-07-16T06:40:09.746Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184009746-ba1kfc3lg",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:09.746Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184012920-vgh5dne1e",
+        "role": "user",
+        "text": "Morning Direct (₹5,000)",
+        "timestamp": "2026-07-16T06:40:12.920Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184012920-2d2bx92yv",
+        "role": "assistant",
+        "text": "## ✈️ Your 5 Day Goa Trip\n\n🏷️ budget • 👥 solo\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T06:40:12.920Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184020966-5sbupsps5",
+        "role": "user",
+        "text": "Plan a 5 day Goa trip",
+        "timestamp": "2026-07-16T06:40:20.966Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184020966-07m2g8343",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T06:40:20.966Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184033014-vvqu465kb",
+        "role": "user",
+        "text": "Plan a 5 day Goa trip",
+        "timestamp": "2026-07-16T06:40:33.014Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184033014-ip10x7gfq",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T06:40:33.014Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184036802-ijibeig0e",
+        "role": "user",
+        "text": "Anjuna Beach",
+        "timestamp": "2026-07-16T06:40:36.802Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184036802-flx62ig6w",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T06:40:36.802Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184037736-qronpas81",
+        "role": "user",
+        "text": "Baga Beach",
+        "timestamp": "2026-07-16T06:40:37.736Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184037736-u7n2730b6",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:37.736Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184038464-jc6yvnk09",
+        "role": "user",
+        "text": "Goa Attraction BEACH 9",
+        "timestamp": "2026-07-16T06:40:38.464Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184038464-rj7jhxx9r",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:38.464Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184043027-l8bsut2yp",
+        "role": "user",
+        "text": "20000",
+        "timestamp": "2026-07-16T06:40:43.027Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184043027-uztquc4bn",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:43.027Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184045224-8ytt3uzmg",
+        "role": "user",
+        "text": "Goa LUXURY Hotel 5",
+        "timestamp": "2026-07-16T06:40:45.224Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184045224-ck0qcxzjh",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:45.224Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184051840-8g3fx0k0e",
+        "role": "user",
+        "text": "Morning Direct (₹5,000)",
+        "timestamp": "2026-07-16T06:40:51.840Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184051840-svf6ruk5x",
+        "role": "assistant",
+        "text": "## ✈️ Your 5 Day Goa Trip\n\n🏷️ luxury • 👥 plan a 5 day goa trip\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T06:40:51.840Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184055819-i54wpm5bb",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹50000",
+        "timestamp": "2026-07-16T06:40:55.819Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184055819-lr7nbjujw",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:40:55.819Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184057892-46j0v3qrk",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹70000",
+        "timestamp": "2026-07-16T06:40:57.892Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184057892-d2u0l4f9b",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:40:57.892Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184059252-ld53d79tv",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹95000",
+        "timestamp": "2026-07-16T06:40:59.252Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184059252-9ks9nh492",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:40:59.252Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184060243-6qxin4clf",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹100000",
+        "timestamp": "2026-07-16T06:41:00.243Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184060243-2m3yleis7",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:00.243Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184061113-jc7u9vecb",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹115000",
+        "timestamp": "2026-07-16T06:41:01.113Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184061113-mccrp5ayd",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:01.113Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184061568-vjasz5sv4",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹120000",
+        "timestamp": "2026-07-16T06:41:01.568Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184061568-hzkacuooj",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:01.568Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184062018-8pwv95l57",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹135000",
+        "timestamp": "2026-07-16T06:41:02.018Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184062018-a6mb0piyk",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:02.018Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184062717-1j3mx1ixp",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹115000",
+        "timestamp": "2026-07-16T06:41:02.717Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184062717-dbzt049gg",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:02.717Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784186235401-7bcuwztgo",
+        "role": "user",
+        "text": "places",
+        "timestamp": "2026-07-16T07:17:15.401Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186235401-qlhmfcsc9",
+        "role": "assistant",
+        "text": "To help me suggest the best places for you, could you tell me:\n\n*   **What kind of places are you interested in?** (e.g., cities, beaches, mountains, historical sites, natural parks, adventure destinations)\n*   **What is your budget like?** (e.g., luxury, mid-range, budget-friendly)\n*   **When are you planning to travel?**\n*   **Who are you traveling with?** (e.g., solo, family, couple, friends)\n*   **What activities do you enjoy?** (e.g., hiking, relaxing, sightseeing, food tours, nightlife)",
+        "timestamp": "2026-07-16T07:17:15.401Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186246438-8990npeqr",
+        "role": "user",
+        "text": "mumbsi tripp",
+        "timestamp": "2026-07-16T07:17:26.438Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186246438-svjw6pbpu",
+        "role": "assistant",
+        "text": "Are you planning a trip to **Mumbai** (formerly Bombay), India?\n\nMumbai is a vibrant city known for its rich history, Bollywood film industry, delicious street food, and iconic landmarks.\n\nTo help you with your trip, could you tell me what kind of information you're looking for? For example:\n\n*   **Best time to visit?**\n*   **Top attractions and things to do?**\n*   **Where to stay?**\n*   **Food recommendations?**\n*   **How to get around?**\n*   **Visa information?**\n\nLet me know how I can assist you further!",
+        "timestamp": "2026-07-16T07:17:26.438Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186253449-mdk5q8lci",
+        "role": "user",
+        "text": "yes",
+        "timestamp": "2026-07-16T07:17:33.449Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186253449-lktoqmtnc",
+        "role": "assistant",
+        "text": "Okay, I understand you're saying 'yes'! To help me assist you further, could you please tell me what you're saying 'yes' to, or what you'd like help with?",
+        "timestamp": "2026-07-16T07:17:33.449Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186272306-4xprm3s8q",
+        "role": "user",
+        "text": "i want a trip to mumbai",
+        "timestamp": "2026-07-16T07:17:52.306Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186272306-7h0wggr68",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 📍 Where would you like to go?\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T07:17:52.306Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186276846-a7ov0vuwr",
+        "role": "user",
+        "text": "mumbai",
+        "timestamp": "2026-07-16T07:17:56.846Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186276846-48yy6iqp0",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T07:17:56.846Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186308507-jnn2yyar8",
+        "role": "user",
+        "text": "Plan a trip to Goa",
+        "timestamp": "2026-07-16T07:18:28.507Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186308508-kg0c28j9l",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 📅 When would you like to travel?\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T07:18:28.508Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186310430-6gqryhg81",
+        "role": "user",
+        "text": "Plan a trip to Jaipur",
+        "timestamp": "2026-07-16T07:18:30.430Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186310430-o4vs0c8cn",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T07:18:30.430Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186311423-8re9clu1j",
+        "role": "user",
+        "text": "Plan a trip to Munnar",
+        "timestamp": "2026-07-16T07:18:31.423Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186311423-bulwr5zpc",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T07:18:31.423Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186312942-qgtoji8ue",
+        "role": "user",
+        "text": "Munnar Attraction BEACH 6",
+        "timestamp": "2026-07-16T07:18:32.942Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186312942-29pwrmu01",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T07:18:32.942Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186314239-3fzo08xe7",
+        "role": "user",
+        "text": "50000",
+        "timestamp": "2026-07-16T07:18:34.239Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186314240-gdd9lp89t",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T07:18:34.240Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186314704-kfgzb4rgb",
+        "role": "user",
+        "text": "Munnar BUDGET Hotel 1",
+        "timestamp": "2026-07-16T07:18:34.704Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186314704-kwlrnj1gf",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T07:18:34.704Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186315326-rn8gekgio",
+        "role": "user",
+        "text": "Morning Direct (₹5,000)",
+        "timestamp": "2026-07-16T07:18:35.326Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186315326-xq8ls32fk",
+        "role": "assistant",
+        "text": "## ✈️ Your  Day Munnar Trip\n\n🏷️ budget • 👥 i want a trip to mumbai\n",
+        "timestamp": "2026-07-16T07:18:35.326Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186321738-u3cu8zg0b",
+        "role": "user",
+        "text": "Plan a trip to Goa",
+        "timestamp": "2026-07-16T07:18:41.738Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186321738-hyuixdm56",
+        "role": "assistant",
+        "text": "## ✈️ Your  Day Goa Trip\n\n🏷️ budget • 👥 i want a trip to mumbai\n",
+        "timestamp": "2026-07-16T07:18:41.738Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186337007-9hljj9p6n",
+        "role": "user",
+        "text": "goa trip",
+        "timestamp": "2026-07-16T07:18:57.007Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186337007-p3b7pr8m3",
+        "role": "assistant",
+        "text": "## ✈️ Your  Day Goa Trip\n\n🏷️ budget • 👥 i want a trip to mumbai\n",
+        "timestamp": "2026-07-16T07:18:57.007Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186342144-ho5eanoqd",
+        "role": "user",
+        "text": "plan gia trip",
+        "timestamp": "2026-07-16T07:19:02.144Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186342144-7co4ggzn7",
+        "role": "assistant",
+        "text": "## ✈️ Your  Day Goa Trip\n\n🏷️ budget • 👥 i want a trip to mumbai\n",
+        "timestamp": "2026-07-16T07:19:02.144Z",
+        "status": "complete"
+      }
+    ],
+    "selections": {
+      "hotels": [],
+      "flights": [],
+      "activities": []
+    },
+    "budget": 115000,
+    "timeline": [],
+    "status": "draft",
+    "version": 1,
+    "createdAt": "2026-07-16T07:19:10.291Z",
+    "updatedAt": "2026-07-16T07:19:10.291Z"
+  },
+  {
+    "id": "trip_ce1229d421df7a9d",
+    "destination": "goa",
+    "conversation": [
+      {
+        "id": "msg-user-1784183814407-tgobwpab9",
+        "role": "user",
+        "text": "I want to go to Goa for 5 days as a solo traveler starting July 20",
+        "timestamp": "2026-07-16T06:36:54.407Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183814407-d84wd3ewm",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:36:54.407Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784183826242-3uvlx84qz",
+        "role": "user",
+        "text": "Anjuna Beach",
+        "timestamp": "2026-07-16T06:37:06.242Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183826242-54pwdjq2n",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:37:06.242Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784183840365-g71lk7wd6",
+        "role": "user",
+        "text": "50000",
+        "timestamp": "2026-07-16T06:37:20.365Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784183840365-mr67hkbj8",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:37:20.365Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184009746-niqy8yepp",
+        "role": "user",
+        "text": "Goa BUDGET Hotel 1",
+        "timestamp": "2026-07-16T06:40:09.746Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184009746-ba1kfc3lg",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:09.746Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184012920-vgh5dne1e",
+        "role": "user",
+        "text": "Morning Direct (₹5,000)",
+        "timestamp": "2026-07-16T06:40:12.920Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184012920-2d2bx92yv",
+        "role": "assistant",
+        "text": "## ✈️ Your 5 Day Goa Trip\n\n🏷️ budget • 👥 solo\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T06:40:12.920Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184020966-5sbupsps5",
+        "role": "user",
+        "text": "Plan a 5 day Goa trip",
+        "timestamp": "2026-07-16T06:40:20.966Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184020966-07m2g8343",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T06:40:20.966Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184033014-vvqu465kb",
+        "role": "user",
+        "text": "Plan a 5 day Goa trip",
+        "timestamp": "2026-07-16T06:40:33.014Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184033014-ip10x7gfq",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T06:40:33.014Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184036802-ijibeig0e",
+        "role": "user",
+        "text": "Anjuna Beach",
+        "timestamp": "2026-07-16T06:40:36.802Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184036802-flx62ig6w",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T06:40:36.802Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184037736-qronpas81",
+        "role": "user",
+        "text": "Baga Beach",
+        "timestamp": "2026-07-16T06:40:37.736Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184037736-u7n2730b6",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:37.736Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184038464-jc6yvnk09",
+        "role": "user",
+        "text": "Goa Attraction BEACH 9",
+        "timestamp": "2026-07-16T06:40:38.464Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184038464-rj7jhxx9r",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:38.464Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184043027-l8bsut2yp",
+        "role": "user",
+        "text": "20000",
+        "timestamp": "2026-07-16T06:40:43.027Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184043027-uztquc4bn",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:43.027Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184045224-8ytt3uzmg",
+        "role": "user",
+        "text": "Goa LUXURY Hotel 5",
+        "timestamp": "2026-07-16T06:40:45.224Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184045224-ck0qcxzjh",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T06:40:45.224Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184051840-8g3fx0k0e",
+        "role": "user",
+        "text": "Morning Direct (₹5,000)",
+        "timestamp": "2026-07-16T06:40:51.840Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184051840-svf6ruk5x",
+        "role": "assistant",
+        "text": "## ✈️ Your 5 Day Goa Trip\n\n🏷️ luxury • 👥 plan a 5 day goa trip\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T06:40:51.840Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784184055819-i54wpm5bb",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹50000",
+        "timestamp": "2026-07-16T06:40:55.819Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184055819-lr7nbjujw",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:40:55.819Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184057892-46j0v3qrk",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹70000",
+        "timestamp": "2026-07-16T06:40:57.892Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184057892-d2u0l4f9b",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:40:57.892Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184059252-ld53d79tv",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹95000",
+        "timestamp": "2026-07-16T06:40:59.252Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184059252-9ks9nh492",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:40:59.252Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184060243-6qxin4clf",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹100000",
+        "timestamp": "2026-07-16T06:41:00.243Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184060243-2m3yleis7",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:00.243Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184061113-jc7u9vecb",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹115000",
+        "timestamp": "2026-07-16T06:41:01.113Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184061113-mccrp5ayd",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:01.113Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184061568-vjasz5sv4",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹120000",
+        "timestamp": "2026-07-16T06:41:01.568Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184061568-hzkacuooj",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:01.568Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184062018-8pwv95l57",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹135000",
+        "timestamp": "2026-07-16T06:41:02.018Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184062018-a6mb0piyk",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:02.018Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784184062717-1j3mx1ixp",
+        "role": "user",
+        "text": "Replan the trip to fit within ₹115000",
+        "timestamp": "2026-07-16T06:41:02.717Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784184062717-dbzt049gg",
+        "role": "assistant",
+        "text": "Connection to travel assistant was lost.",
+        "timestamp": "2026-07-16T06:41:02.717Z",
+        "status": "error"
+      },
+      {
+        "id": "msg-user-1784186235401-7bcuwztgo",
+        "role": "user",
+        "text": "places",
+        "timestamp": "2026-07-16T07:17:15.401Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186235401-qlhmfcsc9",
+        "role": "assistant",
+        "text": "To help me suggest the best places for you, could you tell me:\n\n*   **What kind of places are you interested in?** (e.g., cities, beaches, mountains, historical sites, natural parks, adventure destinations)\n*   **What is your budget like?** (e.g., luxury, mid-range, budget-friendly)\n*   **When are you planning to travel?**\n*   **Who are you traveling with?** (e.g., solo, family, couple, friends)\n*   **What activities do you enjoy?** (e.g., hiking, relaxing, sightseeing, food tours, nightlife)",
+        "timestamp": "2026-07-16T07:17:15.401Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186246438-8990npeqr",
+        "role": "user",
+        "text": "mumbsi tripp",
+        "timestamp": "2026-07-16T07:17:26.438Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186246438-svjw6pbpu",
+        "role": "assistant",
+        "text": "Are you planning a trip to **Mumbai** (formerly Bombay), India?\n\nMumbai is a vibrant city known for its rich history, Bollywood film industry, delicious street food, and iconic landmarks.\n\nTo help you with your trip, could you tell me what kind of information you're looking for? For example:\n\n*   **Best time to visit?**\n*   **Top attractions and things to do?**\n*   **Where to stay?**\n*   **Food recommendations?**\n*   **How to get around?**\n*   **Visa information?**\n\nLet me know how I can assist you further!",
+        "timestamp": "2026-07-16T07:17:26.438Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186253449-mdk5q8lci",
+        "role": "user",
+        "text": "yes",
+        "timestamp": "2026-07-16T07:17:33.449Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186253449-lktoqmtnc",
+        "role": "assistant",
+        "text": "Okay, I understand you're saying 'yes'! To help me assist you further, could you please tell me what you're saying 'yes' to, or what you'd like help with?",
+        "timestamp": "2026-07-16T07:17:33.449Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186272306-4xprm3s8q",
+        "role": "user",
+        "text": "i want a trip to mumbai",
+        "timestamp": "2026-07-16T07:17:52.306Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186272306-7h0wggr68",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 📍 Where would you like to go?\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T07:17:52.306Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186276846-a7ov0vuwr",
+        "role": "user",
+        "text": "mumbai",
+        "timestamp": "2026-07-16T07:17:56.846Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186276846-48yy6iqp0",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T07:17:56.846Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186308507-jnn2yyar8",
+        "role": "user",
+        "text": "Plan a trip to Goa",
+        "timestamp": "2026-07-16T07:18:28.507Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186308508-kg0c28j9l",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 📅 When would you like to travel?\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T07:18:28.508Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186310430-6gqryhg81",
+        "role": "user",
+        "text": "Plan a trip to Jaipur",
+        "timestamp": "2026-07-16T07:18:30.430Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186310430-o4vs0c8cn",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- ⏳ How many days?",
+        "timestamp": "2026-07-16T07:18:30.430Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186311423-8re9clu1j",
+        "role": "user",
+        "text": "Plan a trip to Munnar",
+        "timestamp": "2026-07-16T07:18:31.423Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186311423-bulwr5zpc",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T07:18:31.423Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186312942-qgtoji8ue",
+        "role": "user",
+        "text": "Munnar Attraction BEACH 6",
+        "timestamp": "2026-07-16T07:18:32.942Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186312942-29pwrmu01",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T07:18:32.942Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186314239-3fzo08xe7",
+        "role": "user",
+        "text": "50000",
+        "timestamp": "2026-07-16T07:18:34.239Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186314240-gdd9lp89t",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T07:18:34.240Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186314704-kfgzb4rgb",
+        "role": "user",
+        "text": "Munnar BUDGET Hotel 1",
+        "timestamp": "2026-07-16T07:18:34.704Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186314704-kwlrnj1gf",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T07:18:34.704Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186315326-rn8gekgio",
+        "role": "user",
+        "text": "Morning Direct (₹5,000)",
+        "timestamp": "2026-07-16T07:18:35.326Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186315326-xq8ls32fk",
+        "role": "assistant",
+        "text": "## ✈️ Your  Day Munnar Trip\n\n🏷️ budget • 👥 i want a trip to mumbai\n",
+        "timestamp": "2026-07-16T07:18:35.326Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186321738-u3cu8zg0b",
+        "role": "user",
+        "text": "Plan a trip to Goa",
+        "timestamp": "2026-07-16T07:18:41.738Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186321738-hyuixdm56",
+        "role": "assistant",
+        "text": "## ✈️ Your  Day Goa Trip\n\n🏷️ budget • 👥 i want a trip to mumbai\n",
+        "timestamp": "2026-07-16T07:18:41.738Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186337007-9hljj9p6n",
+        "role": "user",
+        "text": "goa trip",
+        "timestamp": "2026-07-16T07:18:57.007Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186337007-p3b7pr8m3",
+        "role": "assistant",
+        "text": "## ✈️ Your  Day Goa Trip\n\n🏷️ budget • 👥 i want a trip to mumbai\n",
+        "timestamp": "2026-07-16T07:18:57.007Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784186342144-ho5eanoqd",
+        "role": "user",
+        "text": "plan gia trip",
+        "timestamp": "2026-07-16T07:19:02.144Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784186342144-7co4ggzn7",
+        "role": "assistant",
+        "text": "## ✈️ Your  Day Goa Trip\n\n🏷️ budget • 👥 i want a trip to mumbai\n",
+        "timestamp": "2026-07-16T07:19:02.144Z",
+        "status": "complete"
+      }
+    ],
+    "selections": {
+      "hotels": [],
+      "flights": [],
+      "activities": []
+    },
+    "budget": 115000,
+    "timeline": [],
+    "status": "finalized",
+    "version": 1,
+    "createdAt": "2026-07-16T07:19:11.461Z",
+    "updatedAt": "2026-07-16T07:19:11.461Z"
+  },
+  {
+    "id": "trip_1e99609ca62b19b7",
+    "destination": "goa",
+    "conversation": [
+      {
+        "id": "msg-user-1784187764688-epf7w7ykg",
+        "role": "user",
+        "text": "Plan a trip to Goa for 5 days",
+        "timestamp": "2026-07-16T07:42:44.688Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784187764688-i8965spsy",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 👥 Who's traveling? (solo, couple, family, group)\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T07:42:44.688Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784187841665-z6i8tqxkw",
+        "role": "user",
+        "text": "Goa Attraction BEACH 9",
+        "timestamp": "2026-07-16T07:44:01.665Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784187841666-2rnm85z5i",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n\n- 📅 When would you like to travel?",
+        "timestamp": "2026-07-16T07:44:01.666Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784187860128-ak04yi2qo",
+        "role": "user",
+        "text": "next week",
+        "timestamp": "2026-07-16T07:44:20.128Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784187860129-vcquzpji1",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T07:44:20.129Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784187885743-4dat5gsj4",
+        "role": "user",
+        "text": "Goa Attraction BEACH 9",
+        "timestamp": "2026-07-16T07:44:45.743Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784187885743-lz42rp6th",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T07:44:45.743Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784187897412-lj3v8fn61",
+        "role": "user",
+        "text": "18000",
+        "timestamp": "2026-07-16T07:44:57.412Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784187897413-vlfc69m6u",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T07:44:57.413Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784187948491-35cuo7xjw",
+        "role": "user",
+        "text": "Goa BUDGET Hotel 1",
+        "timestamp": "2026-07-16T07:45:48.491Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784187948491-ck7yipgc6",
+        "role": "assistant",
+        "text": "I need a few more details to plan your trip:\n",
+        "timestamp": "2026-07-16T07:45:48.491Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-user-1784187969674-w60ecmqiu",
+        "role": "user",
+        "text": "Indigo 6E-241",
+        "timestamp": "2026-07-16T07:46:09.674Z",
+        "status": "complete"
+      },
+      {
+        "id": "msg-assistant-1784187969674-5u604yq8f",
+        "role": "assistant",
+        "text": "## ✈️ Your 7 Day Goa Trip\n\n🏷️ budget • 👥 plan a trip to goa for 5 days\n\n### 🏨 Accommodation\n- **Goa BUDGET Hotel 1**\n",
+        "timestamp": "2026-07-16T07:46:09.674Z",
+        "status": "complete"
+      }
+    ],
+    "selections": {
+      "hotels": [],
+      "flights": [],
+      "activities": []
+    },
+    "budget": 40000,
+    "timeline": [
+      {
+        "day": 1,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via walking",
+            "transportMode": "walking",
+            "distanceKm": 0.46,
+            "durationMinutes": 6,
+            "cost": 0,
+            "nodeId": "day-1-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-1-idx-1-goa_attraction_bom_jesus",
+            "name": "Basilica of Bom Jesus",
+            "transitFromPreviousMinutes": 1,
+            "score": 90
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-1-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-1-idx-3-goa_attraction_anjuna_beach",
+            "name": "Anjuna Beach",
+            "transitFromPreviousMinutes": 0,
+            "score": 84
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.24,
+            "durationMinutes": 2,
+            "cost": 31,
+            "nodeId": "day-1-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-1-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 1
+          }
+        ],
+        "metrics": {
+          "distanceKm": 1.7,
+          "travelTimeMinutes": 8,
+          "walkingDistanceKm": 0.46,
+          "transportCost": 31,
+          "feasible": true
+        }
+      },
+      {
+        "day": 2,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 2.01,
+            "durationMinutes": 4,
+            "cost": 50,
+            "nodeId": "day-2-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-2-idx-1-goa_attraction_baga_beach",
+            "name": "Baga Beach",
+            "transitFromPreviousMinutes": 4,
+            "score": 89
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-2-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-2-idx-3-goa_attraction_bom_jesus",
+            "name": "Basilica of Bom Jesus",
+            "transitFromPreviousMinutes": 0,
+            "score": 88
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via walking",
+            "transportMode": "walking",
+            "distanceKm": 0.46,
+            "durationMinutes": 6,
+            "cost": 0,
+            "nodeId": "day-2-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-2-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 2
+          }
+        ],
+        "metrics": {
+          "distanceKm": 2.47,
+          "travelTimeMinutes": 10,
+          "walkingDistanceKm": 0.46,
+          "transportCost": 50,
+          "feasible": true
+        }
+      },
+      {
+        "day": 3,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.08,
+            "durationMinutes": 2,
+            "cost": 27,
+            "nodeId": "day-3-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-3-idx-1-goa_attraction_nature_5",
+            "name": "Goa Attraction NATURE 5",
+            "transitFromPreviousMinutes": 2,
+            "score": 85
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-3-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "01:30 PM - 05:00 PM",
+            "type": "activity",
+            "nodeId": "day-3-idx-3-goa_attraction_temple_6",
+            "name": "Goa Attraction TEMPLE 6",
+            "transitFromPreviousMinutes": 0,
+            "score": 86
+          },
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 1.85,
+            "durationMinutes": 4,
+            "cost": 46,
+            "nodeId": "day-3-idx-4-unknown"
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-3-idx-5-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 4
+          }
+        ],
+        "metrics": {
+          "distanceKm": 2.93,
+          "travelTimeMinutes": 6,
+          "walkingDistanceKm": 0,
+          "transportCost": 73,
+          "feasible": true
+        }
+      },
+      {
+        "day": 4,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 2.63,
+            "durationMinutes": 5,
+            "cost": 66,
+            "nodeId": "day-4-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-4-idx-1-goa_attraction_palace_7",
+            "name": "Goa Attraction PALACE 7",
+            "transitFromPreviousMinutes": 5,
+            "score": 87
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-4-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-4-idx-3-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 0
+          }
+        ],
+        "metrics": {
+          "distanceKm": 2.63,
+          "travelTimeMinutes": 5,
+          "walkingDistanceKm": 0,
+          "transportCost": 66,
+          "feasible": true
+        }
+      },
+      {
+        "day": 5,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 3.4,
+            "durationMinutes": 7,
+            "cost": 85,
+            "nodeId": "day-5-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-5-idx-1-goa_attraction_market_8",
+            "name": "Goa Attraction MARKET 8",
+            "transitFromPreviousMinutes": 7,
+            "score": 88
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-5-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-5-idx-3-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 0
+          }
+        ],
+        "metrics": {
+          "distanceKm": 3.4,
+          "travelTimeMinutes": 7,
+          "walkingDistanceKm": 0,
+          "transportCost": 85,
+          "feasible": true
+        }
+      },
+      {
+        "day": 6,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 4.17,
+            "durationMinutes": 8,
+            "cost": 104,
+            "nodeId": "day-6-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-6-idx-1-goa_attraction_beach_9",
+            "name": "Goa Attraction BEACH 9",
+            "transitFromPreviousMinutes": 8,
+            "score": 89
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-6-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-6-idx-3-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 0
+          }
+        ],
+        "metrics": {
+          "distanceKm": 4.17,
+          "travelTimeMinutes": 8,
+          "walkingDistanceKm": 0,
+          "transportCost": 104,
+          "feasible": true
+        }
+      },
+      {
+        "day": 7,
+        "slots": [
+          {
+            "time": "Transit Slot",
+            "type": "travel",
+            "name": "Travel via driving",
+            "transportMode": "driving",
+            "distanceKm": 4.94,
+            "durationMinutes": 10,
+            "cost": 124,
+            "nodeId": "day-7-idx-0-unknown"
+          },
+          {
+            "time": "09:00 AM - 12:00 PM",
+            "type": "activity",
+            "nodeId": "day-7-idx-1-goa_attraction_cultural_10",
+            "name": "Goa Attraction CULTURAL 10",
+            "transitFromPreviousMinutes": 10,
+            "score": 76
+          },
+          {
+            "time": "12:00 PM - 01:30 PM",
+            "type": "lunch",
+            "nodeId": "day-7-idx-2-goa_restaurant_2",
+            "name": "Goa Fine Dining 2",
+            "transitFromPreviousMinutes": 0
+          },
+          {
+            "time": "07:00 PM onwards",
+            "type": "stay",
+            "nodeId": "day-7-idx-3-goa_hotel_budget_1",
+            "name": "Goa BUDGET Hotel 1",
+            "transitFromPreviousMinutes": 0
+          }
+        ],
+        "metrics": {
+          "distanceKm": 4.94,
+          "travelTimeMinutes": 10,
+          "walkingDistanceKm": 0,
+          "transportCost": 124,
+          "feasible": true
+        }
+      }
+    ],
+    "status": "finalized",
+    "version": 1,
+    "createdAt": "2026-07-16T07:48:15.914Z",
+    "updatedAt": "2026-07-16T07:48:15.914Z"
+  },
+  {
+    "id": "trip-1784189311879",
+    "status": "finalized",
+    "version": 1,
+    "journeyState": "START",
+    "intent": null,
+    "timeline": null,
+    "budgetSummary": null,
+    "bookings": [],
+    "conversation": [],
+    "metadata": {
+      "createdAt": "2026-07-16T08:08:31.879Z",
+      "updatedAt": "2026-07-16T08:08:31.879Z"
+    }
+  },
+  {
+    "id": "trip-1784189365985",
+    "status": "finalized",
+    "version": 1,
+    "journeyState": "START",
+    "intent": null,
+    "timeline": null,
+    "budgetSummary": null,
+    "bookings": [],
+    "conversation": [],
+    "metadata": {
+      "createdAt": "2026-07-16T08:09:25.985Z",
+      "updatedAt": "2026-07-16T08:09:25.985Z"
+    }
+  }
+]

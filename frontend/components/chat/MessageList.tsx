@@ -2,9 +2,10 @@
 
 import * as React from "react";
 import { Message } from "@/store/chatStore";
-import { Terminal, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SkeletonCard } from "@/components/ui/SkeletonCard";
+import { useItineraryStore } from "@/store/itineraryStore";
+import { ConversationalInput } from "../workspace/ConversationalInput";
 
 const smoothTransition = { type: "spring" as const, stiffness: 260, damping: 26 };
 
@@ -13,6 +14,69 @@ interface MessageListProps {
   isStreaming: boolean;
   onSelectOption?: (option: string) => void;
   showClarification?: boolean;
+  clarificationTarget?: string;
+}
+
+function renderMarkdown(text: string) {
+  if (!text) return null;
+
+  const rawLines = text.split("\n");
+  const processedLines: string[] = [];
+
+  for (const line of rawLines) {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      processedLines.push("");
+      continue;
+    }
+
+    const parts = trimmed.split(/(?=\b\d+\.\s+\*\*)/g);
+    for (const part of parts) {
+      if (part.trim()) {
+        processedLines.push(part.trim());
+      }
+    }
+  }
+
+  return (
+    <div className="space-y-2 font-sans text-[13px] md:text-sm">
+      {processedLines.map((line, idx) => {
+        if (!line) return <div key={idx} className="h-1.5" />;
+
+        const listMatch = line.match(/^([-*]|\d+\.)\s+(.*)$/);
+        const isListItem = !!listMatch;
+        const listIndicator = isListItem ? listMatch[1] : null;
+        let contentText = isListItem ? listMatch[2] : line;
+
+        const boldParts = contentText.split("**");
+        const renderedContent = boldParts.map((part, index) => {
+          if (index % 2 === 1) {
+            return (
+              <strong key={index} className="font-bold text-foreground">
+                {part}
+              </strong>
+            );
+          }
+          return part;
+        });
+
+        if (isListItem) {
+          return (
+            <div key={idx} className="flex items-start gap-2 pl-4 py-0.5">
+              <span className="text-foreground/80 font-semibold select-none">{listIndicator}</span>
+              <span className="flex-1 text-foreground/90">{renderedContent}</span>
+            </div>
+          );
+        }
+
+        return (
+          <p key={idx} className="text-foreground/90 leading-relaxed">
+            {renderedContent}
+          </p>
+        );
+      })}
+    </div>
+  );
 }
 
 export function MessageList({
@@ -20,12 +84,14 @@ export function MessageList({
   isStreaming,
   onSelectOption,
   showClarification = false,
+  clarificationTarget,
 }: MessageListProps) {
   const listEndRef = React.useRef<HTMLDivElement>(null);
+  const activeContext = useItineraryStore((s) => s.activeContext);
 
   React.useEffect(() => {
     listEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, showClarification]);
+  }, [messages, showClarification, clarificationTarget]);
 
   return (
     <div
@@ -35,7 +101,6 @@ export function MessageList({
     >
       <AnimatePresence initial={false}>
         {messages.map((msg) => {
-          // If the message is currently streaming but carries empty text, render a placeholder skeleton card
           if (msg.status === "streaming" && !msg.text) {
             return (
               <motion.div
@@ -66,15 +131,15 @@ export function MessageList({
               }`}
             >
               <div
-                className={`max-w-[85%] px-4 py-2.5 rounded-lg text-sm leading-relaxed ${
+                className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
                   msg.role === "user"
-                    ? "bg-card text-foreground border border-border"
+                    ? "bg-gold/10 text-foreground border border-gold/20"
                     : msg.role === "system"
-                    ? "text-primary font-mono text-xs"
-                    : "text-foreground font-heading border border-border bg-card/50"
+                    ? "text-gold/80 font-mono text-xs"
+                    : "text-foreground border border-border-soft bg-card-elevated/60"
                 }`}
               >
-                {msg.text}
+                {renderMarkdown(msg.text)}
                 {msg.status === "streaming" && (
                   <span className="inline-block w-1.5 h-4 bg-primary animate-pulse ml-0.5" />
                 )}
@@ -89,56 +154,25 @@ export function MessageList({
           );
         })}
 
-        {/* Collapsible System Logs */}
-        {isStreaming && (
+        {showClarification && clarificationTarget && onSelectOption && (
           <motion.div
-            key="system-intercept-logs"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            className="w-full bg-card/40 border border-border rounded-lg p-3 font-mono text-xs text-muted/80 space-y-1.5"
-          >
-            <div className="flex items-center gap-2 text-primary font-semibold">
-              <Terminal className="h-3.5 w-3.5" />
-              <span>System Intercept Log</span>
-            </div>
-            <div className="space-y-1 pl-5">
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="h-3 w-3 text-emerald-500" />
-                <span>Execution Engine initialized</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="h-2 w-2 rounded-full bg-primary animate-ping" />
-                <span>Planner calculating route matrices...</span>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Inline Clarification Pills */}
-        {showClarification && onSelectOption && (
-          <motion.div
-            key="clarification-required-pills"
-            initial={{ opacity: 0, y: 10 }}
+            key="conversational-clarification"
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="w-full border border-border bg-card p-4 rounded-lg space-y-3"
+            exit={{ opacity: 0, y: -8 }}
+            className="w-full border border-border-soft bg-card-elevated/45 backdrop-blur-md p-5 rounded-2xl space-y-4 shadow-xl max-w-[85%] mt-2 ml-1"
           >
-            <span className="text-xs font-semibold text-primary uppercase tracking-wider">
-              Clarification Required
-            </span>
-            <div className="text-sm font-medium text-foreground">
-              Please specify your travel group size to structure hotel rates:
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-gold animate-pulse" />
+              <span className="text-[10px] font-semibold text-gold uppercase tracking-[0.2em]">
+                Clarification Required
+              </span>
             </div>
-            <div className="flex gap-2">
-              {["Solo", "Couple", "Family"].map((opt) => (
-                <button
-                  key={opt}
-                  onClick={() => onSelectOption(opt)}
-                  className="py-1.5 px-3 text-xs font-medium border border-border hover:border-primary hover:bg-muted/50 rounded-full transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                >
-                  {opt}
-                </button>
-              ))}
-            </div>
+            <ConversationalInput
+              target={clarificationTarget}
+              config={activeContext?.state?.conversationState?.clarificationConfig}
+              onSelect={onSelectOption}
+            />
           </motion.div>
         )}
       </AnimatePresence>

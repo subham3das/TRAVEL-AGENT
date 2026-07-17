@@ -8,6 +8,13 @@ const loadRes = knowledgeService.loadKnowledge();
 assert.ok(loadRes.success, "Failed to load Knowledge Graph");
 console.log(`Loaded ${loadRes.loadedCount} nodes successfully.\n`);
 
+knowledgeService.cache = require("../knowledge/cache/knowledge_cache");
+knowledgeService.cache.set("goa_hotel_budget", { averagePrice: 2500 });
+knowledgeService.cache.set("goa_hotel_taj", { averagePrice: 18000 });
+knowledgeService.cache.set("goa_hotel_mid", { averagePrice: 7000 });
+knowledgeService.cache.set("goa_restaurant_britannia", { averageMealCost: 600 });
+knowledgeService.cache.set("goa_restaurant_mums_kitchen", { averageMealCost: 1500 });
+
 function createMockOptimizedItinerary(slots = []) {
   return {
     destination: "Goa",

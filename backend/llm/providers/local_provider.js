@@ -14,11 +14,7 @@ class LocalProvider extends BaseLLMProvider {
   }
 
   async generate(prompt, config = {}) {
-    return {
-      success: true,
-      text: "Local Llama mock response",
-      raw: { model: "llama-3-local" }
-    };
+    throw new Error("Local Llama provider is not configured. Falling back to circuit breaker.");
   }
 
   async stream(prompt, config = {}, callback) {

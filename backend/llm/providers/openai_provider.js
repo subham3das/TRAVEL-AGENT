@@ -14,11 +14,7 @@ class OpenAIProvider extends BaseLLMProvider {
   }
 
   async generate(prompt, config = {}) {
-    return {
-      success: true,
-      text: "OpenAI mock response",
-      raw: { model: "gpt-4o" }
-    };
+    throw new Error("OpenAI provider is not configured. Falling back to circuit breaker.");
   }
 
   async stream(prompt, config = {}, callback) {

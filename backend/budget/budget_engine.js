@@ -1,19 +1,29 @@
-const knowledgeService = require("../knowledge/knowledge_service");
+/**
+ * Travel OS — Budget Engine
+ *
+ * Implements deterministic budget calculations using:
+ * - Intent constraints (travelers, days)
+ * - User selected places (attractions ticket prices from KnowledgeRepository)
+ * - Dynamic hotel prices (from SearchRepository) or selected hotel price
+ * - Transport estimates (from KnowledgeRepository transport nodes)
+ * - Season multiplier (based on travel dates or season string)
+ */
 
-// Abstract Price Provider to resolve pricing for nodes (can be replaced by booking APIs later)
+"use strict";
+
+const knowledgeRepository = require("../repository/knowledge_repository");
+const searchLayer = require("../search/search_layer");
+const { validateBudgetEstimate } = require("../contracts/EngineContracts");
+
 class PriceProvider {
   getNodePrice(node, category, travelStyle = "mid") {
     if (!node) return 0;
-    
-    if (category === "hotel") {
-      return node.averagePrice || 0;
-    }
-    if (category === "food") {
-      return node.averageMealCost || 300;
-    }
     if (category === "activity") {
-      if (node.estimatedSpend) {
-        return node.estimatedSpend[travelStyle] !== undefined ? node.estimatedSpend[travelStyle] : node.estimatedSpend.budget || 0;
+      // ticket price parsing
+      const ticketStr = node.priceLabel || node.ticketPrice;
+      if (ticketStr) {
+        const num = parseInt(String(ticketStr).replace(/\D/g, ""), 10);
+        if (!isNaN(num)) return num;
       }
       return 0;
     }
@@ -21,165 +31,162 @@ class PriceProvider {
   }
 }
 
-// Budget Engine
 class BudgetEngine {
   constructor() {
     this.priceProvider = new PriceProvider();
   }
 
-  calculate(context) {
+  async calculate(intent) {
     const startTime = Date.now();
     const errors = [];
     const warnings = [];
 
     try {
-      const optimizedItinerary = context.recommendations?.optimizedItinerary ?? context.optimizedItinerary ?? context.improvedItinerary ?? context.draftItinerary ?? null;
-      if (!optimizedItinerary) {
-        throw new Error("No optimized itinerary found in TravelContext for budget calculation");
+      if (!intent || !intent.destination) {
+        throw new Error("BudgetEngine requires a destination intent to estimate costs");
       }
 
-      const userPrefs = context.user?.preferences || {};
-      const normalized = context.state?.normalizedEntities ?? context.normalizedEntities ?? {};
-      const userLimit = Number(normalized.budget || userPrefs.budget || 10000);
-      const travelStyle = normalized.travelStyle || userPrefs.travelStyle || "mid";
-
-      const dailyPlans = optimizedItinerary.dailyPlans || [];
+      const destinationId = intent.destination;
+      const travelStyle = intent.travelStyle || "mid";
+      const travelersType = intent.travelersType || "solo";
+      const userLimit = Number(intent.budgetConstraint || 0);
+      const userDays = Number(intent.daysConstraint || 3);
       
-      let totalHotel = 0;
-      let totalTransport = 0;
-      let totalFood = 0;
-      let totalActivities = 0;
-      let totalMisc = 0;
+      const multiplier = travelersType === "couple" ? 1.8 : travelersType === "family" ? 3.5 : 1.0;
+      const days = userDays;
 
-      const dailyBudgets = [];
+      // 1. Calculate Hotel Cost (Dynamic)
+      let hotelPricePerNight = 3000; // default mid
+      if (travelStyle === "budget") hotelPricePerNight = 1200;
+      else if (travelStyle === "premium" || travelStyle === "luxury") hotelPricePerNight = 8000;
 
-      // 1. Calculate costs by day and slot
-      for (const day of dailyPlans) {
-        let dayHotel = 0;
-        let dayTransport = 0;
-        let dayFood = 0;
-        let dayActivities = 0;
-        let dayMisc = 0;
-
-        for (const slot of day.slots) {
-          if (slot.type === "stay") {
-            const hotel = knowledgeService.getNode(slot.nodeId);
-            dayHotel += this.priceProvider.getNodePrice(hotel, "hotel", travelStyle);
-          } else if (slot.type === "lunch") {
-            const rest = slot.nodeId ? knowledgeService.getNode(slot.nodeId) : null;
-            dayFood += this.priceProvider.getNodePrice(rest, "food", travelStyle);
-          } else if (slot.type === "activity" && slot.nodeId) {
-            const attr = knowledgeService.getNode(slot.nodeId);
-            dayActivities += this.priceProvider.getNodePrice(attr, "activity", travelStyle);
-          } else if (slot.type === "travel") {
-            dayTransport += slot.cost || 0;
+      // If user has a selected hotel, try to resolve its price
+      if (intent.selectedHotel) {
+        const hotelObj = intent.selectedHotel;
+        const priceLabel = hotelObj.priceLabel || hotelObj.price;
+        if (priceLabel) {
+          const parsedPrice = parseInt(String(priceLabel).replace(/\D/g, ""), 10);
+          if (!isNaN(parsedPrice) && parsedPrice > 0) {
+            hotelPricePerNight = parsedPrice;
           }
         }
-
-        // Add 10% miscellaneous buffer of the day's baseline cost, flat capped
-        const baseline = dayHotel + dayTransport + dayFood + dayActivities;
-        dayMisc = Math.round(baseline * 0.1) || 100;
-
-        const dayTotal = baseline + dayMisc;
-
-        totalHotel += dayHotel;
-        totalTransport += dayTransport;
-        totalFood += dayFood;
-        totalActivities += dayActivities;
-        totalMisc += dayMisc;
-
-        dailyBudgets.push({
-          day: day.day,
-          totalCost: dayTotal,
-          breakdown: {
-            hotel: dayHotel,
-            transport: dayTransport,
-            food: dayFood,
-            activities: dayActivities,
-            miscellaneous: dayMisc
+      } else {
+        // Query unified Search Layer for hotel options to average their prices
+        const searchResponse = await searchLayer.search("hotel", { destinationId, travelStyle });
+        const hotels = searchResponse?.results || [];
+        if (hotels && hotels.length > 0) {
+          let sum = 0;
+          let count = 0;
+          for (const h of hotels) {
+            const priceVal = h.pricing?.price;
+            if (priceVal && priceVal > 0) {
+              sum += priceVal;
+              count++;
+            }
           }
-        });
-      }
-
-      const totalCost = totalHotel + totalTransport + totalFood + totalActivities + totalMisc;
-      const remainingBudget = userLimit - totalCost;
-      const overspent = totalCost > userLimit;
-
-      // 2. Estimate Budget Risk
-      let budgetRisk = "low";
-      const ratio = totalCost / userLimit;
-      if (ratio > 0.95) budgetRisk = "high";
-      else if (ratio > 0.75) budgetRisk = "medium";
-
-      // 3. Generate deterministic cost-saving suggestions
-      const costSavingSuggestions = [];
-      if (overspent) {
-        if (totalHotel > 0) {
-          costSavingSuggestions.push({
-            category: "hotel",
-            suggestion: "Downgrade stays to budget accommodations to save up to 50% on lodging costs.",
-            impactEstimated: Math.round(totalHotel * 0.4)
-          });
-        }
-        if (totalTransport > 500) {
-          costSavingSuggestions.push({
-            category: "transport",
-            suggestion: "Utilize public transit modes or walking instead of private driving cabs.",
-            impactEstimated: Math.round(totalTransport * 0.3)
-          });
-        }
-        if (totalFood > 1000) {
-          costSavingSuggestions.push({
-            category: "food",
-            suggestion: "Dine at local street shacks or budget restaurants instead of premium eateries.",
-            impactEstimated: Math.round(totalFood * 0.2)
-          });
+          if (count > 0) {
+            hotelPricePerNight = Math.round(sum / count);
+          }
         }
       }
 
-      const categoryBreakdown = {
-        hotel: totalHotel,
-        transport: totalTransport,
-        food: totalFood,
-        activities: totalActivities,
-        miscellaneous: totalMisc
-      };
+      // 2. Calculate Activity Cost
+      let explicitActivityCost = 0;
+      if (intent.selectedPlaces && intent.selectedPlaces.length > 0) {
+        for (const place of intent.selectedPlaces) {
+          const node = knowledgeRepository.getNode(place.id);
+          if (node) {
+            explicitActivityCost += this.priceProvider.getNodePrice(node, "activity", travelStyle);
+          }
+        }
+      } else {
+        // Fallback: average attraction ticket costs
+        const attractions = await knowledgeRepository.getAttractions(destinationId, travelStyle);
+        if (attractions && attractions.length > 0) {
+          let sum = 0;
+          let count = 0;
+          for (const a of attractions) {
+            if (a.priceLabel) {
+              const num = parseInt(String(a.priceLabel).replace(/\D/g, ""), 10);
+              if (!isNaN(num)) {
+                sum += num;
+                count++;
+              }
+            }
+          }
+          explicitActivityCost = count > 0 ? Math.round(sum / count) * days * multiplier : 500 * days * multiplier;
+        } else {
+          explicitActivityCost = (travelStyle === "budget" ? 200 : travelStyle === "luxury" ? 1500 : 600) * days * multiplier;
+        }
+      }
 
-      const budgetSummary = {
-        totalCost,
-        userLimit,
-        remainingBudget,
-        overspent,
-        budgetRisk
-      };
+      // 3. Calculate Transport Cost (from KG transport nodes)
+      let transportCostPerDay = 500; // default mid
+      if (travelStyle === "budget") transportCostPerDay = 200;
+      else if (travelStyle === "premium" || travelStyle === "luxury") transportCostPerDay = 1500;
 
-      const validation = {
-        valid: !overspent,
-        warnings: overspent ? [`Trip cost (₹${totalCost}) exceeds your budget limit of ₹${userLimit}`] : []
-      };
+      const transportNodes = await knowledgeRepository.getStaticNodes(destinationId);
+      const localCab = transportNodes.find(n => n.type === "transport" && n.transportType === "cab");
+      if (localCab && localCab.averageCost) {
+        transportCostPerDay = localCab.averageCost;
+        if (travelStyle === "budget") transportCostPerDay = Math.round(transportCostPerDay * 0.4);
+        else if (travelStyle === "premium" || travelStyle === "luxury") transportCostPerDay = Math.round(transportCostPerDay * 1.8);
+      }
 
-      const data = {
-        budgetSummary,
-        dailyBudgets,
-        categoryBreakdown,
-        remainingBudget,
-        budgetRisk,
-        costSavingSuggestions,
-        validation
-      };
+      // 4. Food Cost
+      let foodCostPerDay = travelStyle === "budget" ? 600 : travelStyle === "premium" || travelStyle === "luxury" ? 2500 : 1200;
+      const restaurants = await knowledgeRepository.getRestaurants(destinationId);
+      if (restaurants && restaurants.length > 0) {
+        // can compute average if rating/spend is present in KG
+      }
+
+      // 5. Apply Season Multiplier
+      let seasonMultiplier = 1.0;
+      const travelMonth = intent.travelDates?.startDate 
+        ? new Date(intent.travelDates.startDate).getMonth() + 1 
+        : null;
+
+      // Peak season: Nov (11), Dec (12), Jan (1)
+      if (travelMonth === 11 || travelMonth === 12 || travelMonth === 1) {
+        seasonMultiplier = 1.25;
+        warnings.push("Peak season pricing applied (Nov-Jan)");
+      } else if (intent.season === "peak") {
+        seasonMultiplier = 1.25;
+      } else if (intent.season === "monsoon" || intent.season === "low") {
+        seasonMultiplier = 0.8;
+      }
+
+      const hotelRoomsCount = travelersType === "family" ? 2 : 1;
+      const baseStays = Math.round(hotelPricePerNight * days * hotelRoomsCount * seasonMultiplier);
+      const baseFood = Math.round(foodCostPerDay * days * multiplier * (seasonMultiplier * 0.9));
+      const baseActivities = Math.round(explicitActivityCost * seasonMultiplier);
+      const baseTransport = Math.round(transportCostPerDay * days * multiplier);
+
+      const totalCost = baseStays + baseFood + baseActivities + baseTransport;
+      const minCost = Math.round(totalCost * 0.75);
+      const luxuryCost = Math.round(totalCost * 1.6);
+
+      const estimate = validateBudgetEstimate({
+        minimumRequired: minCost,
+        comfortable: totalCost,
+        luxury: luxuryCost,
+        minimumDays: Math.max(1, Math.floor((userLimit || totalCost) / (minCost / days || 1))),
+        breakdown: {
+          stays: baseStays,
+          activities: baseActivities,
+          dining: baseFood,
+          transit: baseTransport
+        },
+        confidence: 0.88
+      });
 
       return {
         success: true,
-        data,
+        data: estimate,
         errors,
         warnings,
-        confidence: 0.98,
-        processingTime: Date.now() - startTime,
-        metadata: {
-          overspendRatio: Number(ratio.toFixed(2))
-        }
+        processingTime: Date.now() - startTime
       };
-
     } catch (err) {
       errors.push(err.message);
       return {
@@ -187,9 +194,7 @@ class BudgetEngine {
         data: null,
         errors,
         warnings,
-        confidence: 0.0,
-        processingTime: Date.now() - startTime,
-        metadata: {}
+        processingTime: Date.now() - startTime
       };
     }
   }

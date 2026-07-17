@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export interface Message {
   id: string;
@@ -27,7 +28,9 @@ function assertSingleStreaming(messages: Message[]) {
   }
 }
 
-export const useChatStore = create<ChatState>((set) => ({
+export const useChatStore = create<ChatState>()(
+  persist(
+    (set) => ({
   messages: [
     {
       id: "msg-1",
@@ -117,4 +120,14 @@ export const useChatStore = create<ChatState>((set) => ({
       isStreaming: false,
       activeAssistantId: null,
     }),
-}));
+  }),
+  {
+    name: "travel-os-chat",
+      partialize: (state) => ({
+        messages: state.messages.map((m) =>
+          m.status === "streaming" ? { ...m, status: "error" as const, text: m.text || "Connection lost." } : m
+        ),
+      }),
+    }
+  )
+);

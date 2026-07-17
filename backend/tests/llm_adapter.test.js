@@ -178,11 +178,22 @@ async function runAll() {
 
   // 11. Orchestration
   console.log("Running Test: Orchestration Pipeline (processNaturalLanguage)...");
-  res = await adapter.processNaturalLanguage("I want to plan a 3-day budget trip to Goa");
+  res = await adapter.processNaturalLanguage("I want to plan a 3-day budget trip to Goa", {
+    state: {
+      normalizedEntities: {
+        travelDates: { startDate: "2026-07-15" },
+        travelersType: "solo"
+      },
+      conversationState: { currentState: "IDLE" },
+      entityConfidence: { travelDates: 1.0, travelersType: 1.0 }
+    }
+  });
   assert.ok(res.success);
   assert.strictEqual(res.data.toolRequested, "plan_trip");
   assert.strictEqual(res.data.toolArguments.destination, "goa");
-  assert.strictEqual(res.data.text, "Mocked natural language trip explanation.");
+  assert.ok(res.data.text.length > 0, "Trip summary text should not be empty");
+  // ponytail: template renderer produces markdown, not LLM mock text
+  assert.ok(res.data.text.includes("Trip") || res.data.text.includes("Goa") || res.data.text.includes("Day") || res.data.text.includes("planned"), `Summary should reference trip: ${res.data.text.substring(0, 80)}`);
   assert.ok(res.data.backendOutput.tripSummary);
   console.log("  => Orchestration Pipeline passed!");
 

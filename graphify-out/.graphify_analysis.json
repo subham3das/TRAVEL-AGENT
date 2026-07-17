@@ -1,0 +1,190 @@
+{
+  "communities": {
+    "0": [
+      "frontend_app_api_chat_route_get"
+    ],
+    "1": [
+      "frontend_app_api_system_status_route_get"
+    ],
+    "2": [
+      "frontend_app_api_trips_route_get"
+    ],
+    "3": [
+      "frontend_app_api_trips_route_post"
+    ],
+    "4": [
+      "frontend_app_layout_rootlayout"
+    ],
+    "5": [
+      "frontend_app_page_home"
+    ],
+    "6": [
+      "frontend_app_providers_providers"
+    ],
+    "7": [
+      "frontend_app_workspace_layout_workspacelayout"
+    ],
+    "8": [
+      "frontend_components_itinerary_slotcard_slotcard"
+    ],
+    "9": [
+      "frontend_components_status_statusdetailspanel_statusdetailspanel"
+    ],
+    "10": [
+      "frontend_components_ui_button_buttonprops"
+    ],
+    "11": [
+      "frontend_components_ui_skeletoncard_skeletoncard"
+    ],
+    "12": [
+      "frontend_components_workspace_design_categorymeta"
+    ],
+    "13": [
+      "frontend_components_workspace_design_deriveaireason"
+    ],
+    "14": [
+      "frontend_components_workspace_design_slotkind"
+    ],
+    "15": [
+      "frontend_components_workspace_design_travelscore"
+    ],
+    "16": [
+      "frontend_components_workspace_expeditionlog_expeditionlog"
+    ],
+    "17": [
+      "frontend_components_workspace_generationscene_generationsceneprops"
+    ],
+    "18": [
+      "frontend_components_workspace_journeycard_journeycard"
+    ],
+    "19": [
+      "frontend_components_workspace_selectioncard_candidate"
+    ],
+    "20": [
+      "frontend_components_workspace_selectioncard_selectioncard"
+    ],
+    "21": [
+      "frontend_components_workspace_splashscreen_splashscreen"
+    ],
+    "22": [
+      "frontend_hooks_usekeyboard_usekeyboard"
+    ],
+    "23": [
+      "frontend_hooks_usesse_usesse"
+    ],
+    "24": [
+      "frontend_hooks_usesystemstatus_systemstatus"
+    ],
+    "25": [
+      "frontend_hooks_usesystemstatus_usesystemstatus"
+    ],
+    "26": [
+      "frontend_lib_api_apiresponse"
+    ],
+    "27": [
+      "frontend_lib_api_plantriprequest"
+    ],
+    "28": [
+      "frontend_lib_api_request"
+    ],
+    "29": [
+      "frontend_lib_utils_cn"
+    ],
+    "30": [
+      "frontend_store_chatstore_message"
+    ]
+  },
+  "cohesion": {
+    "0": 1.0,
+    "1": 1.0,
+    "2": 1.0,
+    "3": 1.0,
+    "4": 1.0,
+    "5": 1.0,
+    "6": 1.0,
+    "7": 1.0,
+    "8": 1.0,
+    "9": 1.0,
+    "10": 1.0,
+    "11": 1.0,
+    "12": 1.0,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0,
+    "16": 1.0,
+    "17": 1.0,
+    "18": 1.0,
+    "19": 1.0,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 1.0,
+    "28": 1.0,
+    "29": 1.0,
+    "30": 1.0
+  },
+  "gods": [
+    {
+      "id": "frontend_app_api_chat_route_get",
+      "label": "GET",
+      "degree": 0
+    },
+    {
+      "id": "frontend_app_api_system_status_route_get",
+      "label": "GET",
+      "degree": 0
+    },
+    {
+      "id": "frontend_app_api_trips_route_post",
+      "label": "POST",
+      "degree": 0
+    },
+    {
+      "id": "frontend_app_api_trips_route_get",
+      "label": "GET",
+      "degree": 0
+    },
+    {
+      "id": "frontend_app_layout_rootlayout",
+      "label": "RootLayout",
+      "degree": 0
+    },
+    {
+      "id": "frontend_app_page_home",
+      "label": "Home",
+      "degree": 0
+    },
+    {
+      "id": "frontend_app_providers_providers",
+      "label": "Providers",
+      "degree": 0
+    },
+    {
+      "id": "frontend_app_workspace_layout_workspacelayout",
+      "label": "WorkspaceLayout",
+      "degree": 0
+    },
+    {
+      "id": "frontend_components_itinerary_slotcard_slotcard",
+      "label": "SlotCard",
+      "degree": 0
+    },
+    {
+      "id": "frontend_components_status_statusdetailspanel_statusdetailspanel",
+      "label": "StatusDetailsPanel",
+      "degree": 0
+    }
+  ],
+  "surprises": [],
+  "questions": [
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `GET`, `GET`, `POST` to the rest of the system?",
+      "why": "31 weakly-connected nodes found - possible documentation gaps or missing edges."
+    }
+  ]
+}

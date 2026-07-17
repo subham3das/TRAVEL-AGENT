@@ -38,13 +38,20 @@ const ALLOWED_TRANSITIONS = {
  */
 function createConversationState() {
   const now = new Date().toISOString();
+  const reqId = `req-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  console.log(`\n################################`);
+  console.log(`NEW CONVERSATION CREATED`);
+  console.log(`requestId: ${reqId}`);
+  console.log(`time: ${now}`);
+  console.log(`stack trace:\n${new Error().stack}`);
+  console.log(`################################\n`);
   return {
     currentState: STATES.IDLE,
     clarificationCount: 0,
     clarificationTarget: null,
     replanningCount: 0,
     conversationType: "UNKNOWN",
-    requestId: `req-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    requestId: reqId,
     createdAt: now,
     updatedAt: now
   };
@@ -58,18 +65,23 @@ function createConversationState() {
  */
 function getConversationState(context) {
   if (!context || typeof context !== "object") {
+    console.log(`[CS] getConversationState: context is null/undefined → CREATING NEW`);
     return createConversationState();
   }
 
   if (!context.state) {
+    console.log(`[CS] getConversationState: context.state is missing → CREATING NEW`);
     context.state = {};
   }
 
   if (!context.state.conversationState) {
+    console.log(`[CS] getConversationState: context.state.conversationState is missing → CREATING NEW`);
     context.state.conversationState = createConversationState();
   }
 
-  return context.state.conversationState;
+  const cs = context.state.conversationState;
+  console.log(`[CS] getConversationState: EXISTING state currentState=${cs.currentState} candidateFlow=${cs.candidateFlow||"?"} clarTarget=${cs.clarificationTarget||"?"} requestId=${cs.requestId||"?"}`);
+  return cs;
 }
 
 /**

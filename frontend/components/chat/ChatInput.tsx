@@ -29,7 +29,7 @@ export function ChatInput({
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative flex items-center w-full max-w-[720px] mx-auto bg-card border border-border rounded-lg p-1.5 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-sm"
+      className="relative flex items-center w-full max-w-[760px] mx-auto border border-border-soft bg-surface/70 rounded-full p-1.5 pl-4 focus-within:border-gold/50 focus-within:ring-2 focus-within:ring-gold/15 transition-all backdrop-blur-md"
     >
       <input
         type="text"
@@ -37,15 +37,15 @@ export function ChatInput({
         onChange={(e) => setQuery(e.target.value)}
         disabled={disabled}
         placeholder={placeholder}
-        className="flex-1 bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted focus:outline-none disabled:opacity-50 h-11 md:h-9"
+        className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted/70 focus:outline-none disabled:opacity-50 h-11"
         aria-label="Ask Travel Assistant"
       />
       <motion.button
-        whileTap={{ scale: 0.95 }}
+        whileTap={{ scale: 0.94 }}
         type="submit"
         disabled={disabled || !query.trim()}
         className={cn(
-          "p-2.5 rounded-md transition-colors text-white bg-primary hover:bg-primary/95 disabled:bg-muted disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center h-10 w-10 md:h-8 md:w-8 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+          "p-2.5 rounded-full transition-all text-primary-foreground bg-gold hover:brightness-105 disabled:bg-elevated disabled:text-muted disabled:cursor-not-allowed flex items-center justify-center h-10 w-10 focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         )}
       >
         <Send className="h-4 w-4" />

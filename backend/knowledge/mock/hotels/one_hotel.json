@@ -4,8 +4,14 @@
   "destinationId": "goa",
   "name": "Taj Exotica Resort & Spa",
   "category": "luxury",
-  "averagePrice": 18000,
-  "amenities": ["WiFi", "Pool", "Spa", "Gym", "Private Beach", "Bar"],
+  "amenities": [
+    "WiFi",
+    "Pool",
+    "Spa",
+    "Gym",
+    "Private Beach",
+    "Bar"
+  ],
   "location": {
     "latitude": 15.2638,
     "longitude": 73.9348,
@@ -19,7 +25,14 @@
   "version": "1.0.0",
   "updatedAt": "2026-07-13T22:00:00Z",
   "verifiedAt": "2026-07-13T22:00:00Z",
-  "tags": ["resort", "luxury", "beachfront"],
-  "sources": ["Booking.com", "Official Site"],
+  "tags": [
+    "resort",
+    "luxury",
+    "beachfront"
+  ],
+  "sources": [
+    "Booking.com",
+    "Official Site"
+  ],
   "confidence": 0.97
 }

@@ -94,9 +94,18 @@ function updatePreferences(context, updates) {
     return { success: false, error: "Invalid preferences format" };
   }
 
-  const allowedKeys = ["interests", "accommodation", "transport", "foodPreferences"];
+  const allowedKeys = ["interests", "accommodation", "transport", "foodPreferences", "selectedPlaces", "selectedHotel", "selectedFlight"];
   for (const [key, val] of Object.entries(updates)) {
     if (allowedKeys.includes(key)) {
+      console.log("[WRITE:selectedPlaces]", {
+        file: "context_updater.js",
+        function: "updatePreferences",
+        key,
+        previous: normalized[key],
+        next: val,
+        type: typeof val,
+        isArray: Array.isArray(val)
+      });
       normalized[key] = val;
     }
   }
@@ -216,7 +225,7 @@ function applyContextUpdate(context, updates) {
         else if (key === "travelers" || key === "travelersType") res = updateTravelers(updatedContext, value);
         else if (key === "travelStyle") res = updateTravelStyle(updatedContext, value);
         else if (key === "travelDates") res = updateDates(updatedContext, value);
-        else if (["interests", "accommodation", "transport", "foodPreferences"].includes(key)) {
+        else if (["interests", "accommodation", "transport", "foodPreferences", "selectedPlaces", "selectedHotel", "selectedFlight"].includes(key)) {
           res = updatePreferences(updatedContext, { [key]: value });
         } else {
           warnings.push(`Ignored unknown update field: '${key}'`);

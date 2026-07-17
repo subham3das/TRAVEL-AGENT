@@ -4,6 +4,7 @@ const TrainProvider = require("./train_provider");
 const BusProvider = require("./bus_provider");
 const ActivityProvider = require("./activity_provider");
 const RentalProvider = require("./rental_provider");
+const WeatherProvider = require("./weather_provider");
 
 class ProviderRegistry {
   constructor() {
@@ -13,7 +14,8 @@ class ProviderRegistry {
       train: new TrainProvider(),
       bus: new BusProvider(),
       activity: new ActivityProvider(),
-      rental: new RentalProvider()
+      rental: new RentalProvider(),
+      weather: new WeatherProvider()
     };
   }
 

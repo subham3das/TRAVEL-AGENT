@@ -1,30 +1,30 @@
 const conversationState = require("./conversation_state");
 
-// Deterministic templates defined in spec
-const QUESTIONS = {
-  destination: "Which destination would you like to visit?",
-  travelDates: "When are you planning to travel?",
-  durationDays: "How many days will your trip be?",
-  budget: "What is your approximate travel budget?",
-  travelersType: "How many people are travelling (solo, couple, or family)?",
-  travelStyle: "What is your preferred travel style (budget, mid, or luxury)?"
+// Deterministic templates and UI configs defined in spec
+const CLARIFICATION_CONFIG = {
+  destination: { prompt: "Which destination would you like to visit?", allowText: true },
+  travelDates: { prompt: "When are you planning to travel?", options: ["This month", "Next month", "In December"], allowText: true },
+  durationDays: { prompt: "How many days will your trip last?", options: ["3 days", "5 days", "7 days", "10 days"], allowText: true },
+  budget: { prompt: "What is your approximate travel budget?", allowText: true },
+  travelersType: { prompt: "Please specify your travel group size to structure hotel rates:", options: ["Solo", "Couple", "Family", "Group"], allowText: false },
+  travelStyle: { prompt: "What is your preferred travel style (budget, mid, or luxury)?", options: ["Budget", "Mid", "Luxury"], allowText: false }
 };
 
 const PRIORITY_ORDER = [
   "destination",
+  "travelersType",
   "travelDates",
   "durationDays",
   "budget",
-  "travelersType",
   "travelStyle"
 ];
 
 // Required fields for trip planning execution
 const MANDATORY_PLANNING_FIELDS = [
   "destination",
+  "travelersType",
   "travelDates",
-  "durationDays",
-  "travelersType"
+  "durationDays"
 ];
 
 class ClarificationEngine {
@@ -78,9 +78,15 @@ class ClarificationEngine {
           throw new Error(`Max clarification retries exceeded for field: '${targetField}'`);
         }
 
+        const config = CLARIFICATION_CONFIG[targetField] || { prompt: "Please provide more details." };
+        
+        // Pass the full clarification config for the frontend to render dynamically
+        activeState.clarificationConfig = config;
+
         questionsToAsk.push({
           field: targetField,
-          question: QUESTIONS[targetField],
+          question: config.prompt,
+          options: config.options || [],
           clarificationId: `clar_${targetField}_${Date.now()}`,
           stage: "WAITING_FOR_USER",
           retryCount: activeState.clarificationCount

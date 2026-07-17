@@ -29,16 +29,41 @@ export function SystemStatusWidget() {
     };
   }, [isOpen]);
 
-  if (isLoading || error || !status) {
+  if (isLoading) {
+    // Loading state: never render a capacity value until the backend has
+    // been queried, so we never imply a default 100%.
     return (
-      <div className="flex items-center gap-1 opacity-50 select-none text-[10px] font-mono">
-        <div className="w-2.5 h-2.5 rounded-full bg-border animate-pulse" />
-        <span>SYS OFF</span>
+      <div
+        className="flex items-center gap-2.5 p-1.5 rounded-full"
+        role="status"
+        aria-busy="true"
+        aria-label="Loading AI system status"
+      >
+        <div className="w-7 h-7 rounded-full bg-border/40 animate-pulse" />
+        <div className="h-3 w-8 rounded bg-border/40 animate-pulse" />
       </div>
     );
   }
 
-  const { percentage, state } = status.capacity;
+  if (error || !status) {
+    return (
+      <div
+        className="flex items-center gap-1 opacity-60 select-none text-[10px] font-mono"
+        role="status"
+        aria-label="AI system status unavailable"
+      >
+        <div className="w-2.5 h-2.5 rounded-full bg-border" />
+        <span>—</span>
+      </div>
+    );
+  }
+
+  // Capacity is always derived from remaining / limit (single source of truth)
+  // so the ring and the reset timer can never drift apart.
+  const capacity = status.capacity;
+  const percentage =
+    capacity.limit > 0 ? Math.round((capacity.remaining / capacity.limit) * 100) : 0;
+  const state = capacity.state;
 
   return (
     <div className="relative" ref={containerRef}>
